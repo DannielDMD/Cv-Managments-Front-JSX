@@ -10,7 +10,7 @@ export const getCiudades = async () => {
     }
 };
 
-export const getCargosOfrecidos = async () => {
+export const getCargos = async () => {
     try {
         const response = await api.get("/cargo-ofrecido");
         return response.data;
