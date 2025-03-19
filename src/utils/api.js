@@ -1,10 +1,12 @@
+// api.js (Archivo centralizado para la configuración de Axios)
 import axios from "axios";
 
-const api = axios.create({
-  baseURL: "http://localhost:8000/", // Asegúrate de que el backend está corriendo en esta URL
+const API_URL = "http://localhost:8000"; // Ajusta la URL si es diferente
+
+export const axiosInstance = axios.create({
+  baseURL: API_URL,
+  timeout: 5000, // Timeout de 5 segundos
   headers: {
     "Content-Type": "application/json",
   },
 });
-
-export default api;
