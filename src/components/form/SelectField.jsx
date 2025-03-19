@@ -9,8 +9,8 @@ const SelectField = ({ label, fetchFunction, idKey, nameKey, value, onChange, pl
       try {
         const data = await fetchFunction();
         const formattedOptions = data.map((item) => ({
-          value: item,
-          label: String(item[nameKey]), // Convertimos a string para evitar errores
+          value: item[idKey], // Accede dinámicamente a la clave de ID
+          label: String(item[nameKey]), // Convierte el nombre a string
         }));
         setOptions(formattedOptions);
       } catch (error) {
@@ -28,14 +28,10 @@ const SelectField = ({ label, fetchFunction, idKey, nameKey, value, onChange, pl
       <Select
         value={options.find((opt) => opt.value === value) || null}
         options={options}
-        onChange={(selectedOption) => onChange(selectedOption?.value)}
+        onChange={(selectedOption) => onChange(selectedOption?.value || null)}
         placeholder={placeholder}
-        classNames={{
-          control: () => "border rounded-md p-2 text-gray-700 focus:ring-2 focus:ring-blue-500",
-          menu: () => "border rounded-md bg-white shadow-lg",
-          option: ({ isFocused }) =>
-            isFocused ? "bg-blue-100 p-2 cursor-pointer" : "p-2 cursor-pointer",
-        }}
+        isClearable
+        className="w-full"
       />
     </div>
   );

@@ -1,31 +1,28 @@
-import api from "../utils/api";
+import axios from "axios";
+
+const API_URL = "http://localhost:8000"; // Ajusta la URL si es diferente
+
+const axiosInstance = axios.create({
+  baseURL: API_URL,
+  timeout: 5000, // Timeout de 5 segundos
+});
 
 export const getCiudades = async () => {
-    try {
-        const response = await api.get("/ciudades");
-        return response.data;
-    } catch (error) {
-        console.error("Error al obtener las ciudades:", error);
-        throw error;
-    }
+  try {
+    const response = await axiosInstance.get("/ciudades");
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener ciudades:", error.message);
+    return [];
+  }
 };
 
 export const getCargos = async () => {
-    try {
-        const response = await api.get("/cargo-ofrecido");
-        return response.data;
-    } catch (error) {
-        console.error("Error al obtener los cargos ofrecidos:", error);
-        throw error;
-    }
-};
-
-export const postCandidato = async (candidatoData) => {
-    try {
-        const response = await api.post("/candidatos", candidatoData);
-        console.log("Candidato registrado con éxito:", response.data);
-    } catch (error) {
-        console.error("Error al registrar el candidato:", error);
-        throw error;
-    }
+  try {
+    const response = await axiosInstance.get("/cargo-ofrecido");
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener cargos:", error.message);
+    return [];
+  }
 };
