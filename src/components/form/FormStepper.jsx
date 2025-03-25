@@ -1,9 +1,10 @@
 import { useState } from "react";
 import PersonalInfo from "../../pages/FormPages/PersonalInfo";
-import Education from "./Education";
-import WorkExperience from "./Experience";
-import Skills from "./Skills";
-import Preferences from "./Preferences";
+import EducationInfo from "../../pages/FormPages/EducationInfo"
+import ExperienceInfo from "../../pages/FormPages/ExperienceInfo"
+import SkillsInfo from "../../pages/FormPages/SkillsInfo"
+import PreferencesInfo from "../../pages/FormPages/PreferencesInfo"
+
 
 const steps = [
   "Información Personal",
@@ -39,10 +40,10 @@ const FormStepper = ({ setIsFinalStep }) => {
   const renderStep = () => {
     switch (currentStep) {
       case 0: return <PersonalInfo />;
-      case 1: return <Education />;
-      case 2: return <WorkExperience />;
-      case 3: return <Skills />;
-      case 4: return <Preferences />;
+      case 1: return <EducationInfo />;
+      case 2: return <ExperienceInfo />;
+      case 3: return <SkillsInfo />;
+      case 4: return <PreferencesInfo />;
       default: return null;
     }
   };
