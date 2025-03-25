@@ -1,6 +1,6 @@
 
 // candidateService.js (Servicios relacionados con candidatos)
-import { axiosInstance } from "../utils/api";
+import { axiosInstance } from "../../utils/api";
 
 export const getCiudades = async () => {
   try {

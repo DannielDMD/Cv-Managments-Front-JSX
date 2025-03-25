@@ -1,6 +1,6 @@
 import React from "react";
 
-const InputField = ({ label, name, type, value, onChange }) => {
+const InputField = ({ label, name, type, value = "", onChange }) => {
   return (
     <div className="flex flex-col mb-4">
       <label htmlFor={name} className="text-sm font-medium text-gray-700 mb-1">
@@ -8,11 +8,10 @@ const InputField = ({ label, name, type, value, onChange }) => {
       </label>
 
       {type === "select" ? (
-        // Select para opciones Sí/No
         <select
           id={name}
           name={name}
-          value={value}
+          value={value || ""} // Asegura un valor definido
           onChange={onChange}
           className="border rounded-md p-2 text-gray-700 focus:ring-2 focus:ring-blue-500"
         >
@@ -21,12 +20,11 @@ const InputField = ({ label, name, type, value, onChange }) => {
           <option value="NO">No</option>
         </select>
       ) : (
-        // Inputs normales (text, email, tel, date)
         <input
           id={name}
           name={name}
           type={type}
-          value={value}
+          value={value || ""} // Evita undefined
           onChange={onChange}
           className="border rounded-md p-2 text-gray-700 focus:ring-2 focus:ring-blue-500"
         />
