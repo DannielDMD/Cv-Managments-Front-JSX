@@ -63,6 +63,7 @@ const EducationInfo = () => {
           nameKey="descripcion_nivel"
           value={educationData.id_nivel_educacion || ""}
           onChange={(value) => handleSelectChange("id_nivel_educacion", value)}
+          isMulti={false} // Selección única
         />
 
         {/* Select de Título Obtenido */}
@@ -73,6 +74,7 @@ const EducationInfo = () => {
           nameKey="nombre_titulo"
           value={educationData.id_titulo || ""}
           onChange={(value) => handleSelectChange("id_titulo", value)}
+          isMulti={false} // Selección única
         />
 
         {/* Input Año de Graduación */}
@@ -92,6 +94,7 @@ const EducationInfo = () => {
           nameKey="nombre_institucion"
           value={educationData.id_institucion || ""}
           onChange={(value) => handleSelectChange("id_institucion", value)}
+          isMulti={false} // Selección única
         />
 
         {/* Select de Nivel de Inglés */}
@@ -102,6 +105,7 @@ const EducationInfo = () => {
           nameKey="nivel"
           value={educationData.id_nivel_ingles || ""}
           onChange={(value) => handleSelectChange("id_nivel_ingles", value)}
+          isMulti={false} // Selección única
         />
 
         <button type="submit" className="mt-4 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">

@@ -67,6 +67,8 @@ const ExperienceInfo = () => {
           nameKey="descripcion_rango"
           value={experienceData.id_rango_experiencia || ""}
           onChange={(value) => handleSelectChange("id_rango_experiencia", value)}
+          isMulti={false} // Selección única
+
         />
 
 

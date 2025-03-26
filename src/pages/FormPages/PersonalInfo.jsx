@@ -63,6 +63,7 @@ const PersonalInfo = () => {
           nameKey="nombre_ciudad"
           value={formData.id_ciudad}
           onChange={(value) => handleSelectChange("id_ciudad", value)}
+          isMulti={false} // Selección única
         />
 
         <SelectField
@@ -72,6 +73,7 @@ const PersonalInfo = () => {
           nameKey="nombre_cargo"
           value={formData.id_cargo}
           onChange={(value) => handleSelectChange("id_cargo", value)}
+          isMulti={false} // Selección única
         />
 
         <label className="block mb-2">Trabaja actualmente en Joyco?</label>

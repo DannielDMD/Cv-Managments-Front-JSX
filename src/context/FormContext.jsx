@@ -41,9 +41,12 @@ export const FormProvider = ({ children }) => {
             fecha_fin: "",
         },
         skillsInfo: {
-            habilidadesTecnicas: [],
-            habilidadesBlandas: [],
-            herramientas: [],
+            id_candidato: "",
+            id_habilidad_blanda: [], // Ahora es un array
+            id_categoria_habilidad: "",
+            id_habilidad_tecnica: [], // Ahora es un array
+            id_categoria_herramienta: "",
+            id_herramienta: [], // Ahora es un array
         },
         preferences: {
             disponibilidadViajar: "",
