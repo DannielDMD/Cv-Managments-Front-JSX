@@ -18,12 +18,12 @@ const EducationInfo = () => {
   const handleSelectChange = (field, value) => {
     updateFormData("educationInfo", { ...formData.educationInfo, [field]: value });
   };
-  
+  /*
   if (!formData.id_candidato) {
     alert("Error: No se ha registrado el candidato aún.");
     return;
   }
-  
+  */
   // Manejo del envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault(); // Evitar recarga de la página

@@ -42,19 +42,19 @@ export const FormProvider = ({ children }) => {
         },
         skillsInfo: {
             id_candidato: "",
-            id_habilidad_blanda: [], // Ahora es un array
-            id_categoria_habilidad: "",
+            tipo_conocimiento: "", // ✅ Debe ser un string, ya que cada habilidad tiene su tipo
+            id_habilidad_blanda: [],
             id_habilidad_tecnica: [], // Ahora es un array
-            id_categoria_herramienta: "",
             id_herramienta: [], // Ahora es un array
         },
         preferences: {
-            disponibilidadViajar: "",
-            disponibilidadTrabajar: "",
-            pretensionSalarial: "",
-            situacionLaboral: "",
-            motivoRetiro: "",
-            razonJoyco: "",
+            id_candidato: "",
+            disponibilidad_viajar: false,
+            id_disponibilidad_inicio: "",
+            id_rango_salarial: "",
+            trabaja_actualmente: false,
+            id_motivo_salida: null,
+            razon_trabajar_joyco: "",
         },
     });
 

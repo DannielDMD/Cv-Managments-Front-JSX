@@ -22,12 +22,12 @@ const ExperienceInfo = () => {
     updateFormData("experienceInfo", { ...formData.experienceInfo, [field]: value });
   };
 
-
+/*
   if (!formData.id_candidato) {
     alert("Error: No se ha registrado el candidato aún.");
     return;
   }
-
+*/
 
   // Manejo del envío del formulario
   const handleSubmit = async (e) => {
