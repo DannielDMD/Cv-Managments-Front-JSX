@@ -21,6 +21,17 @@ export const getNiveles = async () => {
     }
   }
 
+  export const getTitulosPorNivel = async (id_nivel_educacion) => {
+    try {
+        const response = await axiosInstance.get(`/titulos/nivel/${id_nivel_educacion}`);
+        return response.data;
+    } catch (error) {
+        console.error("Error al obtener los títulos filtrados:", error.message);
+        return [];
+    }
+};
+
+
   export const getInstituciones = async () => {
     try {
         const response = await axiosInstance.get("/instituciones");

@@ -10,6 +10,8 @@ import useFormContext from "../../context/UseFormContext"; // Importa el hook co
 const PreferencesInfo = () => {
   const { formData, updateFormData } = useFormContext(); // Obtiene el estado global del formulario
   // Asegurar que `formData.educationInfo` no sea undefined
+  console.log("ID Candidato:", formData.id_candidato);
+
   const preferencesData = formData.preferencesInfo || {};
 
   const handleChange = (e) => {
@@ -21,6 +23,12 @@ const PreferencesInfo = () => {
     updateFormData("preferencesInfo", { ...formData.preferencesInfo, [field]: value });
   };
 
+
+ /*
+  if (!formData.id_candidato) {
+    alert("Error: No se ha registrado el candidato aún.");
+    return;
+  }*/
   // Manejo del envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault(); // Evitar recarga de la página
@@ -30,8 +38,8 @@ const PreferencesInfo = () => {
       ...preferencesData,
       id_candidato: formData.id_candidato, // 🔹 Usar el ID almacenado
       disponibilidad_viajar: preferencesData.disponibilidad_viajar === "SI",
-      id_disponibilidad_inicio: parseInt(preferencesData.id_nivel_educacion) || null,
-      id_rango_salarial: parseInt(preferencesData.id_titulo) || null,
+      id_disponibilidad: parseInt(preferencesData.id_disponibilidad) || null,
+      id_rango_salarial: parseInt(preferencesData.id_rango_salarial) || null,
       trabaja_actualmente: preferencesData.trabaja_actualmente === "SI",
       id_motivo_salida: preferencesData.id_motivo_salida ? parseInt(preferencesData.id_motivo_salida) : null
 
@@ -65,14 +73,15 @@ const PreferencesInfo = () => {
         </select>
 
         <SelectField
-          label="Disponibilidad para trabajar?"
-          fetchFunction={getDisponibilidades}
-          idKey="id_disponibilidad_inicio"
-          nameKey="descripcion_disponibilidad"
-          value={preferencesData.id_disponibilidad_inicio || ""}
-          onChange={(value) => handleSelectChange("id_disponibilidad_inicio", value)}
-          isMulti={false}
-        />
+  label="Disponibilidad para trabajar?"
+  fetchFunction={getDisponibilidades}
+  idKey="id_disponibilidad"
+  nameKey="descripcion_disponibilidad"
+  value={preferencesData.id_disponibilidad ? Number(preferencesData.id_disponibilidad) : null} // 🔹 Asegurar que sea un número o null
+  onChange={(value) => handleSelectChange("id_disponibilidad", value)}
+  isMulti={false}
+/>
+
 
         <SelectField
           label="Pretensión Salarial?"

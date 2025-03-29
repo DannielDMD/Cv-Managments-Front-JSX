@@ -6,6 +6,8 @@ import useFormContext from "../../context/UseFormContext";
 
 const SkillsInfo = () => {
   const { formData, updateFormData } = useFormContext();
+  console.log("ID Candidato:", formData.id_candidato);
+
 
 
   const skillsData = formData.skillsInfo || {};
@@ -25,12 +27,13 @@ const SkillsInfo = () => {
   
   
   
-/*
+
+ /*
   if (!formData.id_candidato) {
     alert("Error: No se ha registrado el candidato aún.");
     return;
-  }
-*/
+  }*/
+
 const handleSubmit = async (e) => {
   e.preventDefault();
 
