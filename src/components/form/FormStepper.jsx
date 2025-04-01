@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PersonalInfo from "../../pages/FormPages/PersonalInfo";
-import EducationInfo from "../../pages/FormPages/EducationInfo"
-import ExperienceInfo from "../../pages/FormPages/ExperienceInfo"
-import SkillsInfo from "../../pages/FormPages/SkillsInfo"
-import PreferencesInfo from "../../pages/FormPages/PreferencesInfo"
-
+import EducationInfo from "../../pages/FormPages/EducationInfo";
+import ExperienceInfo from "../../pages/FormPages/ExperienceInfo";
+import SkillsInfo from "../../pages/FormPages/SkillsInfo";
+import PreferencesInfo from "../../pages/FormPages/PreferencesInfo";
+import useFormContext from "../../context/UseFormContext";
 
 const steps = [
   "Información Personal",
@@ -16,10 +16,23 @@ const steps = [
 
 const FormStepper = ({ setIsFinalStep }) => {
   const [currentStep, setCurrentStep] = useState(0);
+  const [canAdvance, setCanAdvance] = useState(false);
+  const { formData } = useFormContext();
+
+  useEffect(() => {
+    if (formData.id_candidato) {
+      setCanAdvance(true); // ✅ Solo cuando se haya creado el candidato
+    }
+  }, [formData.id_candidato]);
 
   const nextStep = () => {
+    if (currentStep === 0 && !canAdvance) {
+      alert("Debes registrar primero al candidato.");
+      return;
+    }
+
     if (currentStep < steps.length - 1) {
-      setCurrentStep(prev => prev + 1);
+      setCurrentStep((prev) => prev + 1);
     }
 
     if (currentStep + 1 === steps.length - 1) {
@@ -29,7 +42,7 @@ const FormStepper = ({ setIsFinalStep }) => {
 
   const prevStep = () => {
     if (currentStep > 0) {
-      setCurrentStep(prev => prev - 1);
+      setCurrentStep((prev) => prev - 1);
     }
 
     if (currentStep === steps.length - 1) {

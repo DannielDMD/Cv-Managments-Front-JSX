@@ -2,10 +2,12 @@ import React from "react";
 import InputField from "../../components/form/InputField";
 import SelectField from "../../components/form/SelectField";
 import { getCiudades, getCargos, getMotivos, postCandidate } from "../../services/FormServices/candidateService";
-import FormContext from "../../context/FormContext";
+//import FormContext from "../../context/FormContext";
 import useFormContext from "../../context/UseFormContext";
+
 const PersonalInfo = () => {
-  const { formData, updateFormData } = useFormContext(FormContext);
+  const { formData, updateFormData, setIdCandidatoEnTodo } = useFormContext();
+
 
   // Manejo de inputs normales
   const handleChange = (e) => {
@@ -36,16 +38,17 @@ const handleSubmit = async (e) => {
 
   try {
     const response = await postCandidate(dataToSend);
-
-    if (response && response.id_candidato) {
-      updateFormData("personalInfo", "id_candidato", response.id_candidato);
+  
+    if (response?.id_candidato) {
+      setIdCandidatoEnTodo(response.id_candidato); // ✅ Esto es lo correcto
     }
-
+    
     alert("Formulario enviado con éxito");
   } catch (error) {
     console.error("Error al enviar los datos:", error);
     alert("Hubo un error al enviar el formulario");
   }
+  
 };
 
 

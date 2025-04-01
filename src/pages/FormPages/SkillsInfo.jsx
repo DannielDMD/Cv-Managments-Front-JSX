@@ -1,6 +1,6 @@
 import React from "react";
 import SelectField from "../../components/form/SelectField";
-import { getHabilidadesBlandas, getHabilidadesTecnicas, getHerramientas, postConocimientos } from "../../services/FormServices/skillService"; "../../services/FormServices/skillService"
+import { getHabilidadesBlandas, getHabilidadesTecnicas, getHerramientas } from "../../services/FormServices/skillService"; "../../services/FormServices/skillService"
 
 import useFormContext from "../../context/UseFormContext";
 
@@ -19,10 +19,8 @@ const SkillsInfo = () => {
       return;
     }
   
-    updateFormData("skillsInfo", { 
-      ...formData.skillsInfo, 
-      [field]: value 
-    });
+    updateFormData("skillsInfo", field, value);
+
   };
   
   
@@ -33,7 +31,7 @@ const SkillsInfo = () => {
     alert("Error: No se ha registrado el candidato aún.");
     return;
   }*/
-
+/*
 const handleSubmit = async (e) => {
   e.preventDefault();
 
@@ -44,6 +42,7 @@ const handleSubmit = async (e) => {
     return;
   }
 */
+/*
   const skillsPayload = [
     ...(formData.skillsInfo.id_habilidad_blanda || []).map(id => ({
       id_candidato: idCandidato,
@@ -72,11 +71,11 @@ const handleSubmit = async (e) => {
       }
 }; //Corchete de cierre de HandleSummit
   
-
+*/
   return (
     <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg">
       <h2 className="text-xl font-semibold mb-4">Habilidades y Conocimientos</h2>
-      <form onSubmit={handleSubmit}>
+      <div>
 
          {/* Select de Habilidades Blandas */}
         <SelectField
@@ -110,10 +109,8 @@ const handleSubmit = async (e) => {
           isMulti={true} // Selección múltiple
         />
         
-        <button type="submit" className="mt-4 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">
-          Enviar
-        </button>
-      </form>
+       
+      </div>
     </div>
   );
 };

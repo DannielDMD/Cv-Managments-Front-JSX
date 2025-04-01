@@ -1,78 +1,95 @@
-    import { createContext, useState } from "react";
+// FormContext.js
+import { createContext, useState } from "react";
 
-    // Crear el contexto
-    const FormContext = createContext();
+const FormContext = createContext();
 
-    // Proveedor del contexto
-    export const FormProvider = ({ children }) => {
-        const [formData, setFormData] = useState({
-            personalInfo: {
-                nombre_completo: "",
-                correo_electronico: "",
-                cc: "",
-                fecha_nacimiento: "",
-                telefono: "",
-                descripcion_perfil: "",
-                trabaja_actualmente_joyco: false,
-                ha_trabajado_joyco: false,
-                id_motivo_salida: null,
-                tiene_referido: false,
-                nombre_referido: "",
-                id_ciudad: "",
-                id_cargo: "",
-                id_candidato: null, // 🔹 Inicia en null
-            },
-            educationInfo: {
-                id_candidato: null, // 🔹 Evitar valores en blanco
-                id_nivel_educacion: "",
-                id_titulo: "",
-                id_institucion: "",
-                anio_graduacion: "",
-                id_nivel_ingles: "",
-            },
-            experienceInfo: {
-                id_candidato: null,
-                id_rango_experiencia: "",
-                ultima_empresa: "",
-                ultimo_cargo: "",
-                funciones: [],
-                fecha_inicio: "",
-                fecha_fin: "",
-            },
-            skillsInfo: {
-                id_candidato: null,
-                tipo_conocimiento: "", 
-                id_habilidad_blanda: [],
-                id_habilidad_tecnica: [], 
-                id_herramienta: [],
-            },
-            preferencesInfo: {
-                id_candidato: null,
-                disponibilidad_viajar: false,
-                id_disponibilidad: "",
-                id_rango_salarial: "",
-                trabaja_actualmente: false,
-                id_motivo_salida: null,
-                razon_trabajar_joyco: "",
-            },
-        });
+const INITIAL_STATE = {
+  id_candidato: null,
+  personalInfo: {
+    nombre_completo: "",
+    correo_electronico: "",
+    cc: "",
+    fecha_nacimiento: "",
+    telefono: "",
+    descripcion_perfil: "",
+    trabaja_actualmente_joyco: false,
+    ha_trabajado_joyco: false,
+    id_motivo_salida: null,
+    tiene_referido: false,
+    nombre_referido: "",
+    id_ciudad: "",
+    id_cargo: "",
+    id_candidato: null,
+  },
+  educationInfo: {
+    id_candidato: null,
+    id_nivel_educacion: "",
+    id_titulo: "",
+    id_institucion: "",
+    anio_graduacion: "",
+    id_nivel_ingles: "",
+  },
+  experienceInfo: {
+    id_candidato: null,
+    id_rango_experiencia: "",
+    ultima_empresa: "",
+    ultimo_cargo: "",
+    funciones: [],
+    fecha_inicio: "",
+    fecha_fin: "",
+  },
+  skillsInfo: {
+    id_candidato: null,
+    tipo_conocimiento: "",
+    id_habilidad_blanda: [],
+    id_habilidad_tecnica: [],
+    id_herramienta: [],
+  },
+  preferencesInfo: {
+    id_candidato: null,
+    disponibilidad_viajar: false,
+    id_disponibilidad: "",
+    id_rango_salarial: "",
+    trabaja_actualmente: false,
+    id_motivo_salida: null,
+    razon_trabajar_joyco: "",
+  },
+};
 
-        const updateFormData = (name, value) => {
-            setFormData((prev) => ({
-              ...prev,
-              [name]: value, // Asegura que guardamos solo el valor, no el objeto completo
-            }));
-          };
-        
-        
+export const FormProvider = ({ children }) => {
+  const [formData, setFormData] = useState(INITIAL_STATE);
 
-        
+  const updateFormData = (section, field, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [section]: {
+        ...prev[section],
+        ...(typeof field === "string" ? { [field]: value } : field),
+      },
+    }));
+  };
+  
+  const setIdCandidatoEnTodo = (id) => {
+    setFormData((prev) => ({
+      ...prev,
+      id_candidato: id,
+      personalInfo: { ...prev.personalInfo, id_candidato: id },
+      educationInfo: { ...prev.educationInfo, id_candidato: id },
+      experienceInfo: { ...prev.experienceInfo, id_candidato: id },
+      skillsInfo: { ...prev.skillsInfo, id_candidato: id },
+      preferencesInfo: { ...prev.preferencesInfo, id_candidato: id },
+    }));
+  };
 
-        return (
-            <FormContext.Provider value={{ formData, updateFormData }}>
-                {children}
-            </FormContext.Provider>
-        );
-    };
+  const resetFormData = () => {
+    setFormData(INITIAL_STATE);
+  };
 
-    export default FormContext;
+  return (
+    <FormContext.Provider value={{ formData, updateFormData, setIdCandidatoEnTodo, resetFormData }}>
+      {children}
+    </FormContext.Provider>
+  );
+};
+
+export default FormContext;

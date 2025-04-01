@@ -1,87 +1,61 @@
-import React, { useEffect, useState } from "react";
-import { useMemo } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import InputField from "../../components/form/InputField";
 import SelectField from "../../components/form/SelectField";
-import { getNiveles, getTitulosPorNivel, getInstituciones, getIngles, postEducation } from "../../services/FormServices/educationService";
+import {
+  getNiveles,
+  getTitulosPorNivel,
+  getInstituciones,
+  getIngles,
+} from "../../services/FormServices/educationService";
 import useFormContext from "../../context/UseFormContext";
 
 const EducationInfo = () => {
   const { formData, updateFormData } = useFormContext();
-  const educationData = formData.educationInfo || {};
 
-  // Estado para los títulos filtrados
+  const educationData = formData.educationInfo || {};
+  const idCandidato = formData.id_candidato; // ✅ Este es el ID correcto y global
+
   const [titulos, setTitulos] = useState([]);
 
-  // Definir niveles que NO requieren título, año ni institución
-  const nivelesSinTitulo = useMemo(() => new Set([1, 2, 3]), []); // Ejemplo: 1 = Primaria, 2 = Bachillerato (ajusta según tu backend)
+  const nivelesSinTitulo = useMemo(() => new Set([1, 2, 3]), []);
 
-  // Manejar cambios en inputs normales
   const handleChange = (e) => {
     const { name, value } = e.target;
-    updateFormData("educationInfo", { ...formData.educationInfo, [name]: value });
+    updateFormData("educationInfo", name, value);
   };
 
-  // Manejar cambios en selects
   const handleSelectChange = (field, value) => {
-    updateFormData("educationInfo", { ...formData.educationInfo, [field]: value });
+    updateFormData("educationInfo", field, value);
 
-    // Si cambia el nivel de educación y es menor a técnico, limpiar valores de los campos ocultos
     if (field === "id_nivel_educacion" && nivelesSinTitulo.has(value)) {
-      updateFormData("educationInfo", {
-        ...educationData,
-        id_nivel_educacion: value,
-        id_titulo: null,
-        anio_graduacion: "",
-        id_institucion: null,
-      });
-      setTitulos([]); // Limpiar títulos disponibles
+      updateFormData("educationInfo", "id_nivel_educacion", value);
+      updateFormData("educationInfo", "id_titulo", null);
+      updateFormData("educationInfo", "anio_graduacion", "");
+      updateFormData("educationInfo", "id_institucion", null);
+      setTitulos([]);
     }
   };
 
-  // Obtener títulos cuando cambie el nivel de educación
   useEffect(() => {
-    if (educationData.id_nivel_educacion && !nivelesSinTitulo.has(educationData.id_nivel_educacion)) {
+    if (
+      educationData.id_nivel_educacion &&
+      !nivelesSinTitulo.has(educationData.id_nivel_educacion)
+    ) {
       getTitulosPorNivel(educationData.id_nivel_educacion).then(setTitulos);
     } else {
       setTitulos([]);
     }
-  }, [educationData.id_nivel_educacion, nivelesSinTitulo]); // 🔹 Agregar nivelesSinTitulo aquí
+  }, [educationData.id_nivel_educacion, nivelesSinTitulo]);
 
-  
-   /*
-  if (!formData.id_candidato) {
-    alert("Error: No se ha registrado el candidato aún.");
-    return;
-  }*/
-    
+  // Solo para debug
+  useEffect(() => {
+    console.log("ID Candidato visible en EducationInfo:", idCandidato);
+  }, [idCandidato]);
 
-
-  // Manejo del envío del formulario
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formattedData = {
-      ...educationData,
-      id_candidato: formData.id_candidato,
-      id_nivel_educacion: parseInt(educationData.id_nivel_educacion) || null,
-      id_titulo: nivelesSinTitulo.has(educationData.id_nivel_educacion) ? null : parseInt(educationData.id_titulo) || null,
-      anio_graduacion: nivelesSinTitulo.has(educationData.id_nivel_educacion) ? null : educationData.anio_graduacion || null,
-      id_institucion: nivelesSinTitulo.has(educationData.id_nivel_educacion) ? null : parseInt(educationData.id_institucion) || null,
-      id_nivel_ingles: parseInt(educationData.id_nivel_ingles) || null,
-    };
-    console.log("Datos a enviar:", formattedData);
-    try {
-      await postEducation(formattedData);
-      alert("Formulario enviado con éxito");
-    } catch (error) {
-      console.error("Error al enviar los datos:", error);
-      alert("Hubo un error al enviar el formulario");
-    }
-  };
   return (
     <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg">
       <h2 className="text-xl font-semibold mb-4">Información Educacional</h2>
-      <form onSubmit={handleSubmit}>
-        {/* Nivel de Educación */}
+      <div>
         <SelectField
           label="Nivel Educación"
           fetchFunction={getNiveles}
@@ -90,10 +64,9 @@ const EducationInfo = () => {
           value={educationData.id_nivel_educacion || ""}
           onChange={(value) => handleSelectChange("id_nivel_educacion", value)}
         />
-        {/* Mostrar solo si el nivel de educación NO está en nivelesSinTitulo */}
+
         {!nivelesSinTitulo.has(educationData.id_nivel_educacion) && (
           <>
-            {/* Título Obtenido (Filtrado por nivel de educación) */}
             <SelectField
               label="Título Obtenido"
               options={titulos}
@@ -102,7 +75,7 @@ const EducationInfo = () => {
               value={educationData.id_titulo || ""}
               onChange={(value) => handleSelectChange("id_titulo", value)}
             />
-            {/* Año de Graduación */}
+
             <InputField
               label="Año de Graduación"
               name="anio_graduacion"
@@ -111,7 +84,6 @@ const EducationInfo = () => {
               onChange={handleChange}
             />
 
-            {/* Institución Académica */}
             <SelectField
               label="Institución Académica"
               fetchFunction={getInstituciones}
@@ -123,7 +95,6 @@ const EducationInfo = () => {
           </>
         )}
 
-        {/* Nivel de Inglés */}
         <SelectField
           label="Nivel Inglés"
           fetchFunction={getIngles}
@@ -132,11 +103,7 @@ const EducationInfo = () => {
           value={educationData.id_nivel_ingles || ""}
           onChange={(value) => handleSelectChange("id_nivel_ingles", value)}
         />
-
-        <button type="submit" className="mt-4 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">
-          Enviar
-        </button>
-      </form>
+      </div>
     </div>
   );
 };

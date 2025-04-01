@@ -1,9 +1,8 @@
 import { useContext } from "react";
-import FormContext from "./FormContext";
+import FormContext from "./FormContext"; // Este debe apuntar al archivo correcto
 
-// Hook personalizado para acceder al contexto
 const useFormContext = () => {
-    return useContext(FormContext);
+  return useContext(FormContext);
 };
 
 export default useFormContext;

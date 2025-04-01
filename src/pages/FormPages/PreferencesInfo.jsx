@@ -1,7 +1,7 @@
 import React from "react";
 import InputField from "../../components/form/InputField";
 import SelectField from "../../components/form/SelectField";
-import { getDisponibilidades, getRangos, getMotivosSalida, postPreferencias } from "../../services/FormServices/preferencesService";
+import { getDisponibilidades, getRangos, getMotivosSalida} from "../../services/FormServices/preferencesService";
 import useFormContext from "../../context/UseFormContext"; // Importa el hook correctamente
 
 
@@ -16,11 +16,11 @@ const PreferencesInfo = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    updateFormData("preferencesInfo", { ...formData.preferencesInfo, [name]: value });
+    updateFormData("preferencesInfo", name, value);
   };
 
   const handleSelectChange = (field, value) => {
-    updateFormData("preferencesInfo", { ...formData.preferencesInfo, [field]: value });
+    updateFormData("preferencesInfo", field, value);
   };
 
 
@@ -29,41 +29,94 @@ const PreferencesInfo = () => {
     alert("Error: No se ha registrado el candidato aún.");
     return;
   }*/
+ /*
   // Manejo del envío del formulario
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Evitar recarga de la página
-    console.log("Datos originales:", preferencesData);
-
-    const formattedData = {
-      ...preferencesData,
-      id_candidato: formData.id_candidato, // 🔹 Usar el ID almacenado
-      disponibilidad_viajar: preferencesData.disponibilidad_viajar === "SI",
-      id_disponibilidad: parseInt(preferencesData.id_disponibilidad) || null,
-      id_rango_salarial: parseInt(preferencesData.id_rango_salarial) || null,
-      trabaja_actualmente: preferencesData.trabaja_actualmente === "SI",
-      id_motivo_salida: preferencesData.id_motivo_salida ? parseInt(preferencesData.id_motivo_salida) : null
-
-    };
-
-    console.log("Datos a enviar:", formattedData);
-
-
-    console.log("Datos enviados:", formattedData); // <-- Agregar este console.log()
-
+    e.preventDefault();
+    const idCandidato = formData.personalInfo.id_candidato;
+  
+    if (!idCandidato) {
+      alert("Error: No se ha registrado el candidato aún.");
+      return;
+    }
+  
     try {
-      await postPreferencias(formattedData); // Enviar datos al backend
-      alert("Formulario enviado con éxito");
+      // EDUCACIÓN
+      const nivelesSinTitulo = new Set([1, 2, 3]); // ajusta si es necesario
+      const education = {
+        ...formData.educationInfo,
+        id_candidato: idCandidato,
+        id_nivel_educacion: parseInt(formData.educationInfo.id_nivel_educacion) || null,
+        id_titulo: nivelesSinTitulo.has(formData.educationInfo.id_nivel_educacion)
+          ? null
+          : parseInt(formData.educationInfo.id_titulo) || null,
+        anio_graduacion: nivelesSinTitulo.has(formData.educationInfo.id_nivel_educacion)
+          ? null
+          : formData.educationInfo.anio_graduacion || null,
+        id_institucion: nivelesSinTitulo.has(formData.educationInfo.id_nivel_educacion)
+          ? null
+          : parseInt(formData.educationInfo.id_institucion) || null,
+        id_nivel_ingles: parseInt(formData.educationInfo.id_nivel_ingles) || null,
+      };
+  
+      // EXPERIENCIA
+      const experience = {
+        ...formData.experienceInfo,
+        id_candidato: idCandidato,
+        id_rango_experiencia: parseInt(formData.experienceInfo.id_rango_experiencia) || null,
+      };
+  
+      // CONOCIMIENTOS
+      const skillsPayload = [
+        ...(formData.skillsInfo.id_habilidad_blanda || []).map((id) => ({
+          id_candidato: idCandidato,
+          tipo_conocimiento: "blanda",
+          id_habilidad_blanda: id,
+        })),
+        ...(formData.skillsInfo.id_habilidad_tecnica || []).map((id) => ({
+          id_candidato: idCandidato,
+          tipo_conocimiento: "tecnica",
+          id_habilidad_tecnica: id,
+        })),
+        ...(formData.skillsInfo.id_herramienta || []).map((id) => ({
+          id_candidato: idCandidato,
+          tipo_conocimiento: "herramienta",
+          id_herramienta: id,
+        })),
+      ];
+  
+      // PREFERENCIAS
+      const preferences = {
+        ...formData.preferencesInfo,
+        id_candidato: idCandidato,
+        disponibilidad_viajar: formData.preferencesInfo.disponibilidad_viajar === "SI",
+        id_disponibilidad: parseInt(formData.preferencesInfo.id_disponibilidad) || null,
+        id_rango_salarial: parseInt(formData.preferencesInfo.id_rango_salarial) || null,
+        trabaja_actualmente: formData.preferencesInfo.trabaja_actualmente === "SI",
+        id_motivo_salida: formData.preferencesInfo.id_motivo_salida
+          ? parseInt(formData.preferencesInfo.id_motivo_salida)
+          : null,
+      };
+  
+      // 🚀 Envío de datos al backend
+      await postEducation(education);
+      await postExperiencia(experience);
+      await postConocimientos(skillsPayload);
+      await postPreferencias(preferences);
+  
+      alert("🎉 Todos los datos se enviaron correctamente");
+  
     } catch (error) {
-      console.error("Error al enviar los datos:", error);
-      alert("Hubo un error al enviar el formulario");
+      console.error("❌ Error en el envío final:", error);
+      alert("Hubo un error al guardar la información completa");
     }
   };
-
-
+  
+*/
   return (
     <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg">
       <h2 className="text-xl font-semibold mb-4">Preferencias del Candidato</h2>
-      <form onSubmit={handleSubmit}>
+      <div>
 
         <label className="block mb-2">Disponibilidad para viajar?</label>
         <select name="disponibilidad_viajar" value={preferencesData.disponibilidad_viajar} onChange={handleChange} className="w-full p-2 border rounded-md">
@@ -114,27 +167,9 @@ const PreferencesInfo = () => {
         )}
 
         <InputField label="Razón para trabajar en Joyco" name="razon_trabajar_joyco" type="text" value={preferencesData.razon_trabajar_joyco} onChange={handleChange} />
-
-
-        <button type="submit" className="mt-4 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">
-          Enviar
-        </button>
-      </form>
+      </div>
     </div>
   );
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }; // Corchete de cierre
 
