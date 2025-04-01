@@ -55,8 +55,6 @@ const handleSubmit = async (e) => {
   }
   
 };
-
-
   return (
     <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg">
       <h2 className="text-xl font-semibold mb-4">Información Personal</h2>

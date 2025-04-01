@@ -19,8 +19,6 @@ const EducationInfo = () => {
 
   const nivelesSinTitulo = useMemo(() => new Set([1, 2, 3]), []);
 
-
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     updateFormData("educationInfo", name, value);

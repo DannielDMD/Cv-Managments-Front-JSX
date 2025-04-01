@@ -1,22 +1,16 @@
 import { useNavigate } from "react-router-dom";
+import HeaderLanding from "../components/HeaderLanding";
 
 const LandingPage = () => {
   const navigate = useNavigate();
-
 
   const handleClick = () => {
     navigate("/formulario", { state: { reset: true } });
   };
 
-
   return (
     <div className="min-h-screen bg-white text-gray-900">
-      {/* Botón de inicio de sesión en la esquina */}
-      <div className="absolute top-4 right-4">
-        <button className="px-4 py-2 bg-blue-700 text-white rounded-lg shadow-md hover:bg-blue-800">
-          Ingresar
-        </button>
-      </div>
+      <HeaderLanding /> {/* Header con íconos */}
 
       {/* Sección principal */}
       <header className="h-screen flex flex-col justify-center items-center text-center p-6">
@@ -24,6 +18,7 @@ const LandingPage = () => {
         <p className="text-lg text-gray-600 mt-4 max-w-2xl">
           Somos una empresa comprometida con el desarrollo de infraestructura y el talento humano.
         </p>
+
         {/* Botón para ir al formulario */}
         <button
           onClick={handleClick}
@@ -31,7 +26,6 @@ const LandingPage = () => {
         >
           Trabaja con Nosotros
         </button>
-
       </header>
 
       {/* Sección de información adicional */}
