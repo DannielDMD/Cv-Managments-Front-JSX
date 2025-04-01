@@ -26,6 +26,7 @@ const InputField = ({ label, name, type, value = "", onChange }) => {
           type={type}
           value={value || ""} // Evita undefined
           onChange={onChange}
+          autoComplete="off" // 👈 Desactiva sugerencias del navegador
           className="border rounded-md p-2 text-gray-700 focus:ring-2 focus:ring-blue-500"
         />
       )}

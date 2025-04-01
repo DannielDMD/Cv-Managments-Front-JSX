@@ -13,11 +13,13 @@ const EducationInfo = () => {
   const { formData, updateFormData } = useFormContext();
 
   const educationData = formData.educationInfo || {};
-  const idCandidato = formData.id_candidato; // ✅ Este es el ID correcto y global
+  const idCandidato = formData.id_candidato; 
 
-  const [titulos, setTitulos] = useState([]);
+  const [titulos, setTitulos] = useState([]); 
 
   const nivelesSinTitulo = useMemo(() => new Set([1, 2, 3]), []);
+
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -64,7 +66,6 @@ const EducationInfo = () => {
           value={educationData.id_nivel_educacion || ""}
           onChange={(value) => handleSelectChange("id_nivel_educacion", value)}
         />
-
         {!nivelesSinTitulo.has(educationData.id_nivel_educacion) && (
           <>
             <SelectField
@@ -94,7 +95,6 @@ const EducationInfo = () => {
             />
           </>
         )}
-
         <SelectField
           label="Nivel Inglés"
           fetchFunction={getIngles}
@@ -103,6 +103,8 @@ const EducationInfo = () => {
           value={educationData.id_nivel_ingles || ""}
           onChange={(value) => handleSelectChange("id_nivel_ingles", value)}
         />
+
+
       </div>
     </div>
   );
