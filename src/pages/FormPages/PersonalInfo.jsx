@@ -3,6 +3,7 @@ import InputField from "../../components/form/InputField";
 import SelectField from "../../components/form/SelectField";
 import { getCiudades, getCargos, getMotivos, postCandidate } from "../../services/FormServices/candidateService";
 //import FormContext from "../../context/FormContext";
+import { toast } from "react-toastify";
 import useFormContext from "../../context/UseFormContext";
 
 const PersonalInfo = () => {
@@ -37,16 +38,20 @@ const handleSubmit = async (e) => {
   console.log("Datos a enviar:", dataToSend);
 
   try {
+    if (formData.id_candidato) {
+      toast.info("Ya has registrado la información personal. No puedes volver a enviarla.");
+      return;
+    }
     const response = await postCandidate(dataToSend);
   
     if (response?.id_candidato) {
       setIdCandidatoEnTodo(response.id_candidato); // ✅ Esto es lo correcto
     }
     
-    alert("Formulario enviado con éxito");
+    toast.success("✅ Formulario enviado con éxito.");
   } catch (error) {
     console.error("Error al enviar los datos:", error);
-    alert("Hubo un error al enviar el formulario");
+    toast.error("❌ Hubo un error al enviar el formulario.");
   }
   
 };

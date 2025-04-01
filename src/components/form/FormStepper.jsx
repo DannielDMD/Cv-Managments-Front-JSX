@@ -5,7 +5,7 @@ import ExperienceInfo from "../../pages/FormPages/ExperienceInfo";
 import SkillsInfo from "../../pages/FormPages/SkillsInfo";
 import PreferencesInfo from "../../pages/FormPages/PreferencesInfo";
 import useFormContext from "../../context/UseFormContext";
-
+import { toast } from "react-toastify";
 const steps = [
   "Información Personal",
   "Educación",
@@ -27,7 +27,8 @@ const FormStepper = ({ setIsFinalStep }) => {
 
   const nextStep = () => {
     if (currentStep === 0 && !canAdvance) {
-      alert("Debes registrar primero al candidato.");
+      toast.error("Debes registrar primero un candidato llenando La Información Personal")
+
       return;
     }
 
@@ -41,7 +42,7 @@ const FormStepper = ({ setIsFinalStep }) => {
   };
 
   const prevStep = () => {
-    if (currentStep > 0) {
+    if (currentStep > 1 || (currentStep === 1 && !formData.id_candidato)) {
       setCurrentStep((prev) => prev - 1);
     }
 
@@ -72,7 +73,7 @@ const FormStepper = ({ setIsFinalStep }) => {
       <div className="flex justify-between mt-6">
         <button
           onClick={prevStep}
-          disabled={currentStep === 0}
+          disabled={currentStep === 0 || (currentStep === 1 && formData.id_candidato)}
           className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 disabled:opacity-50"
         >
           Anterior
