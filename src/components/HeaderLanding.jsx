@@ -1,6 +1,6 @@
 
 import { FaUserCircle, FaMoon, FaGlobe } from "react-icons/fa";
-
+import { toast } from "react-toastify";
 const HeaderLanding = () => {
 
 
@@ -22,7 +22,7 @@ const HeaderLanding = () => {
         <button
           onClick={() => {
             // Aquí luego puedes implementar modo oscuro real
-            alert("Modo oscuro aún no implementado 👀");
+            toast.info("Modo oscuro aún no implementado 👀")
           }}
           className="text-white hover:text-gray-300 transition"
         >
