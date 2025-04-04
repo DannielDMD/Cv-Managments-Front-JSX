@@ -4,14 +4,13 @@ import LandingPage from "./pages/LandingPage";
 import Form from "./pages/Form";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Dashboard from "./pages/DashboardPages/Dashboard"; // 👈 importalo arriba
-
+import Dashboard from "./pages/DashboardPages/Dashboard";
+import ProtectedRoute from "./components/Auth/ProtectedRoute";
 
 const App = () => {
   return (
     <FormProvider>
       <Router>
-        {/* Contenedor de los toasts */}
         <ToastContainer 
           position="top-right"
           autoClose={3000}
@@ -27,7 +26,14 @@ const App = () => {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/formulario" element={<Form />} />
-          <Route path="/dashboard" element={<Dashboard />} /> {/* 👈 nueva ruta */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </Router>
     </FormProvider>

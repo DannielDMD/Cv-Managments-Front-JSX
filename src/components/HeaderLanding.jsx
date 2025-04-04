@@ -1,10 +1,8 @@
-import { FaUserCircle, FaMoon, FaGlobe } from "react-icons/fa";
+import { FaMoon, FaGlobe } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom"; // 👈 añadí esto
+import AuthButton from "../components/Auth/AuthButton";
 
 const HeaderLanding = () => {
-  const navigate = useNavigate(); // 👈 hook para navegar
-
   return (
     <header className="fixed top-0 left-0 w-full bg-[#24396D] text-white py-4 px-6 shadow-md z-50 flex justify-between items-center">
       {/* Enlace a la página principal de Joyco */}
@@ -29,12 +27,8 @@ const HeaderLanding = () => {
           <FaMoon size={20} />
         </button>
 
-        <button
-          onClick={() => navigate("/dashboard")} // 👈 redirección aquí
-          className="text-white hover:text-gray-300 transition"
-        >
-          <FaUserCircle size={24} />
-        </button>
+        <AuthButton mode="landing" />
+
       </div>
     </header>
   );
