@@ -53,7 +53,25 @@ npm run dev
 ## 🔐 Seguridad
 
 - Solo usuarios autenticados con cuenta corporativa pueden acceder al dashboard y gestionar información de candidatos.
-- La autenticación se maneja con MSAL (Microsoft Authentication Library).
+
+- La autenticación se maneja con MSAL (Microsoft Authentication Library) usando los paquetes:
+
+- **@azure/msal-browser**
+
+- **@azure/msal-react**
+
+**⚠️ IMPORTANTE PARA USUARIOS DE REACT 19**
+Si estás trabajando con React 19, debes instalar los paquetes de MSAL usando la siguiente opción obligatoriamente:
+
+- bash
+- Copiar
+- Editar
+
+```bash
+npm install @azure/msal-browser @azure/msal-react@2 --legacy-peer-deps
+```
+  
+De lo contrario, se generarán errores debido a la incompatibilidad actual entre @azure/msal-react y React 19.
 
 ---
 
