@@ -1,9 +1,6 @@
-```md
 # Plataforma de Gestión de Candidatos – Frontend (React)
 
 Este proyecto es una plataforma interna para la empresa **Joyco**, desarrollada con el objetivo de centralizar el proceso de postulación y gestión de hojas de vida de candidatos. A través de un formulario multipaso y un panel administrativo, permite recopilar, visualizar y analizar perfiles de forma eficiente.
-
----
 
 ## 🚀 Tecnologías utilizadas
 
@@ -17,16 +14,14 @@ Este proyecto es una plataforma interna para la empresa **Joyco**, desarrollada 
 - **Recharts** – visualización de estadísticas en el dashboard
 - **@azure/msal-browser** y **@azure/msal-react** – integración con Microsoft Azure AD
 
----
-
 ## ⚙️ Instalación
 
 1. Clona el repositorio:
 
-```bash
-git clone https://github.com/DannielDMD/Cv-Managments-Front-JSX.git
-cd Cv-Managments-Front-JSX
-```
+   ```bash
+   git clone https://github.com/DannielDMD/Cv-Managments-Front-JSX.git
+   cd Cv-Managments-Front-JSX
+
 
 2. Instala las dependencias necesarias:
 
