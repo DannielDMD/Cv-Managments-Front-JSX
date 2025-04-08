@@ -1,4 +1,3 @@
-import { FaSignOutAlt } from "react-icons/fa";
 import AuthButton from "../Auth/AuthButton";
 // ajusta la ruta si es necesario
 
