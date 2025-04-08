@@ -43,7 +43,6 @@ const ProtectedRoute = ({ children }) => {
   if (!autorizado) {
     return <AccesoDenegado />;
   }
-  
 
   return children;
 };

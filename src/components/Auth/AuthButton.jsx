@@ -1,5 +1,7 @@
 import { useMsal } from "@azure/msal-react";
 import { loginRequest } from "../../utils/authConfig";
+import { FiLogIn, FiLogOut } from "react-icons/fi"; // 👈 Usamos íconos consistentes de Feather
+
 
 const ALLOWED_USERS = ["innovacion@joyco.com.co"];
 
@@ -9,7 +11,7 @@ const AuthButton = ({ mode = "landing" }) => {
   const handleLogin = () => {
     instance.loginRedirect(loginRequest);
   };
-  
+
 
   const handleLogout = () => {
     instance.logoutRedirect({
@@ -22,24 +24,27 @@ const AuthButton = ({ mode = "landing" }) => {
 
   if (accounts.length > 0 && mode === "dashboard" && isAuthorized) {
     return (
-      <div className="flex flex-col items-end text-sm">
-        <span className="mb-1">{email}</span>
+      <div className="flex items-center gap-3 text-sm">
+        <span className="hidden sm:inline">{email}</span>
         <button
           onClick={handleLogout}
-          className="underline text-white hover:text-gray-300 transition"
+          className="text-white hover:text-gray-300 transition p-2"
+          title="Cerrar sesión"
         >
-          Cerrar sesión
+          <FiLogOut size={20} />
         </button>
       </div>
+
     );
   }
 
   return (
     <button
       onClick={handleLogin}
-      className="text-white hover:text-gray-300 transition underline"
+      className="text-white hover:text-gray-300 transition p-2"
+      title="Iniciar sesión"
     >
-      Iniciar sesión con Microsoft
+      <FiLogIn size={22} />
     </button>
   );
 };

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useMsal } from "@azure/msal-react";
 import HeaderLanding from "../components/HeaderLanding";
 import { validarAcceso } from "../services/AuthService";
+import { FiSend } from "react-icons/fi";
 
 const LandingPage = () => {
   const { accounts } = useMsal();
@@ -49,24 +50,30 @@ const LandingPage = () => {
     <div className="min-h-screen bg-white text-gray-900">
       <HeaderLanding />
 
-      <header className="h-screen flex flex-col justify-center items-center text-center p-6">
-        <h1 className="text-4xl font-bold text-blue-900">Bienvenido a Joyco</h1>
-        <p className="text-lg text-gray-600 mt-4 max-w-2xl">
-          Somos una empresa comprometida con el desarrollo de infraestructura y el talento humano.
+      {/* 👉 Sección principal más enfocada */}
+      <main className="h-screen flex flex-col justify-center items-center text-center px-4">
+        <h1 className="text-5xl font-bold text-blue-900 mb-4">¿Te gustaría trabajar con nosotros?</h1>
+        <p className="text-lg text-gray-700 max-w-2xl">
+          En Joyco valoramos el talento, la innovación y las personas que hacen país.
         </p>
+
 
         <button
           onClick={handleClick}
-          className="mt-6 px-6 py-3 bg-orange-500 text-white font-semibold rounded-lg shadow-md hover:bg-orange-600"
+          className="mt-8 px-8 py-4 bg-gradient-to-r from-orange-500 to-yellow-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-transform duration-300 ease-in-out flex items-center gap-3"
         >
-          Trabaja con Nosotros
+          <FiSend size={20} />
+          Postúlate aquí
         </button>
-      </header>
 
+      </main>
+
+      {/* Sección informativa debajo */}
       <section className="py-20 bg-gray-100 text-center">
         <h2 className="text-3xl font-semibold text-blue-900">¿Por qué unirte a Joyco?</h2>
         <p className="mt-4 text-lg text-gray-700 max-w-3xl mx-auto">
-          En Joyco, valoramos el talento y la innovación. Únete a un equipo que impulsa el crecimiento profesional.
+          Somos una empresa comprometida con el desarrollo de infraestructura y el crecimiento profesional.
+          Aquí encontrarás un equipo humano que impulsa tu carrera.
         </p>
       </section>
     </div>
