@@ -37,8 +37,6 @@ const ExperienceInfo = () => {
           isMulti={false} // Selección única
 
         />
-
-
         <InputField label="Última Empresa Trabajada" name="ultima_empresa" type="text" value={experienceData.ultima_empresa} onChange={handleChange} />
 
         <InputField label="ultima cargo ejercido en la empresa" name="ultimo_cargo" type="text" value={experienceData.ultimo_cargo} onChange={handleChange} />
@@ -47,10 +45,7 @@ const ExperienceInfo = () => {
 
         <InputField label="Fecha de inicio" name="fecha_inicio" type="date" value={experienceData.fecha_inicio} onChange={handleChange} />
 
-        <InputField label="Fecha de finalización" name="fecha_fin" type="date" value={experienceData.fecha_fin} onChange={handleChange} />
-
-
-       
+        <InputField label="Fecha de finalización" name="fecha_fin" type="date" value={experienceData.fecha_fin} onChange={handleChange} />  
       </div>
     </div>
   );
