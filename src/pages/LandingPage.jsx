@@ -4,6 +4,7 @@ import { useMsal } from "@azure/msal-react";
 import HeaderLanding from "../components/HeaderLanding";
 import { validarAcceso } from "../services/AuthService";
 import { FiSend } from "react-icons/fi";
+import Footer from "../components/Footer";
 
 const LandingPage = () => {
   const { accounts } = useMsal();
@@ -76,6 +77,7 @@ const LandingPage = () => {
           Aquí encontrarás un equipo humano que impulsa tu carrera.
         </p>
       </section>
+      <Footer />
     </div>
   );
 };
