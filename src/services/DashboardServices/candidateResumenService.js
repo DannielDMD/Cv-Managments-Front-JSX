@@ -1,13 +1,15 @@
 import { axiosInstance } from "../../utils/api";
 
-export const obtenerResumenCandidatos = async () => {
-    try {
-        const response = await axiosInstance.get("/candidatos/resumen");
-        return response.data;
-      } catch (error) {
-        console.error("Error fetching al obtener el resumen del candidato:", error);
-        return null;
-      }
+export const obtenerResumenCandidatos = async (search = "") => {
+  try {
+    const response = await axiosInstance.get("/candidatos/resumen", {
+      params: search ? { search } : {},
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching al obtener el resumen del candidato:", error);
+    return null;
+  }
 };
 
 // Funcion para hacer wel fecth a la de candidatos para sacutualiza erl estado 

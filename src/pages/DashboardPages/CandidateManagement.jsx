@@ -6,20 +6,34 @@ import CandidateTable from "../../components/Dashboard/CandidateTable";
 const CandidateManagement = () => {
   const [candidatos, setCandidatos] = useState([]);
   const [paginaActual, setPaginaActual] = useState(1);
+  const [search, setSearch] = useState(""); // 🔍 nuevo estado para el input
   const porPagina = 10;
 
-  // 🔄 Nueva función para recargar los candidatos
-  const cargarCandidatos = () => {
-    obtenerResumenCandidatos()
-      .then(setCandidatos)
-      .catch((err) => {
-        console.error("Error al obtener candidatos:", err);
-      });
+  // 🔄 Carga candidatos con filtro opcional
+  const cargarCandidatos = async () => {
+    try {
+      const data = await obtenerResumenCandidatos(search);
+      setCandidatos(data || []);
+      setPaginaActual(1); // Reinicia la paginación si cambia la búsqueda
+    } catch (error) {
+      console.error("Error al obtener candidatos:", error);
+    }
   };
 
   useEffect(() => {
-    cargarCandidatos();
-  }, []);
+    const cargar = async () => {
+      try {
+        const data = await obtenerResumenCandidatos(search);
+        setCandidatos(data || []);
+        setPaginaActual(1);
+      } catch (error) {
+        console.error("Error al obtener candidatos:", error);
+      }
+    };
+  
+    cargar();
+  }, [search]);
+  
 
   const total = candidatos.length;
   const inicio = (paginaActual - 1) * porPagina;
@@ -29,13 +43,25 @@ const CandidateManagement = () => {
   return (
     <DashboardLayout>
       <h1 className="text-2xl font-bold mb-6 text-gray-800">Gestión de Candidatos</h1>
+
+      {/* 🔍 Input de búsqueda */}
+      <div className="mb-4">
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Buscar por nombre, correo o cargo..."
+          className="w-full md:w-1/2 p-2 border border-gray-300 rounded"
+        />
+      </div>
+
       <CandidateTable
         data={candidatosVisibles}
         total={total}
         paginaActual={paginaActual}
         porPagina={porPagina}
         setPaginaActual={setPaginaActual}
-        recargarCandidatos={cargarCandidatos} // ✅ pasamos la función al componente
+        recargarCandidatos={cargarCandidatos}
       />
     </DashboardLayout>
   );
