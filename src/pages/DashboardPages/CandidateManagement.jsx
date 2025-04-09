@@ -8,13 +8,17 @@ const CandidateManagement = () => {
   const [paginaActual, setPaginaActual] = useState(1);
   const porPagina = 10;
 
-
-  useEffect(() => {
+  // 🔄 Nueva función para recargar los candidatos
+  const cargarCandidatos = () => {
     obtenerResumenCandidatos()
       .then(setCandidatos)
       .catch((err) => {
         console.error("Error al obtener candidatos:", err);
       });
+  };
+
+  useEffect(() => {
+    cargarCandidatos();
   }, []);
 
   const total = candidatos.length;
@@ -31,6 +35,7 @@ const CandidateManagement = () => {
         paginaActual={paginaActual}
         porPagina={porPagina}
         setPaginaActual={setPaginaActual}
+        recargarCandidatos={cargarCandidatos} // ✅ pasamos la función al componente
       />
     </DashboardLayout>
   );

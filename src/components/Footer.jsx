@@ -85,13 +85,13 @@ const Footer = () => {
 
         {/* Redes sociales */}
         <div className="sm:col-span-2 lg:col-span-3 mt-6 flex justify-center gap-6">
-          <a href="https://www.linkedin.com/company/joyco-s-a-s/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300 transition">
+          <a href="https://www.linkedin.com/company/joyco" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300 transition">
             <FaLinkedin size={22} />
           </a>
-          <a href="https://www.instagram.com/joyco_sas" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300 transition">
+          <a href="https://www.instagram.com/somos_joyco/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300 transition">
             <FaInstagram size={22} />
           </a>
-          <a href="https://www.youtube.com/@joycosas2380" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300 transition">
+          <a href="https://youtube.com/@joyco?si=RwA34ODl34cntXLe" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300 transition">
             <FaYoutube size={22} />
           </a>
         </div>

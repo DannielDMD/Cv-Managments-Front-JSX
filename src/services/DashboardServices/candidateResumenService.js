@@ -9,3 +9,11 @@ export const obtenerResumenCandidatos = async () => {
         return null;
       }
 };
+
+// Funcion para hacer wel fecth a la de candidatos para sacutualiza erl estado 
+export const actualizarEstadoCandidato = async (id, nuevoEstado) => {
+  const response = await axiosInstance.put(`/candidatos/${id}`, {
+    estado: nuevoEstado,
+  });
+  return response.data;
+};
