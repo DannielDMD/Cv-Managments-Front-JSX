@@ -17,3 +17,8 @@ export const actualizarEstadoCandidato = async (id, nuevoEstado) => {
   });
   return response.data;
 };
+
+export const obtenerCandidatoDetalle = async (id) => {
+  const response = await axiosInstance.get(`/candidatos/${id}/detalle`);
+  return response.data;
+};

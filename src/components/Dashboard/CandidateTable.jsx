@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"; // ✅ Importamos
 import { Eye } from "lucide-react";
 import { actualizarEstadoCandidato } from "../../services/DashboardServices/candidateResumenService";
 import { toast } from "react-toastify";
@@ -11,19 +12,18 @@ const CandidateTable = ({
   paginaActual,
   porPagina,
   setPaginaActual,
-  recargarCandidatos, // ✅ nueva prop recibida
+  recargarCandidatos,
 }) => {
   const totalPaginas = Math.ceil(total / porPagina);
   const [actualizandoId, setActualizandoId] = useState(null);
+  const navigate = useNavigate(); // ✅ Inicializamos el hook
 
   const handleEstadoChange = async (id, nuevoEstado) => {
     try {
       setActualizandoId(id);
       await actualizarEstadoCandidato(id, nuevoEstado);
       toast.success("Estado actualizado correctamente");
-
-      // ✅ Recargamos la lista de candidatos después del cambio
-      recargarCandidatos();
+      recargarCandidatos(); // ✅ Refrescamos
     } catch (error) {
       toast.error("Error al actualizar el estado");
       console.error(error);
@@ -65,7 +65,9 @@ const CandidateTable = ({
                 <td className="p-3">
                   <select
                     value={candidato.estado}
-                    onChange={(e) => handleEstadoChange(candidato.id_candidato, e.target.value)}
+                    onChange={(e) =>
+                      handleEstadoChange(candidato.id_candidato, e.target.value)
+                    }
                     disabled={actualizandoId === candidato.id_candidato}
                     className="bg-transparent border border-gray-300 rounded px-2 py-1 text-xs"
                   >
@@ -80,7 +82,10 @@ const CandidateTable = ({
                   {new Date(candidato.fecha_postulacion).toLocaleDateString()}
                 </td>
                 <td className="p-3">
-                  <button className="text-blue-600 hover:text-blue-800">
+                  <button
+                    className="text-blue-600 hover:text-blue-800"
+                    onClick={() => navigate(`/dashboard/candidatos/${candidato.id_candidato}`)} // ✅ Redirección
+                  >
                     <Eye size={18} />
                   </button>
                 </td>

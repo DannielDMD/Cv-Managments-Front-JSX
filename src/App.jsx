@@ -3,7 +3,8 @@ import { FormProvider } from "./context/FormContext";
 import LandingPage from "./pages/LandingPage";
 import Form from "./pages/Form";
 import Dashboard from "./pages/DashboardPages/Dashboard";
-import CandidateManagement from "./pages/DashboardPages/CandidateManagement"; // ✅ Importamos la nueva página
+import CandidateManagement from "./pages/DashboardPages/CandidateManagement";
+import CandidateDetail from "./pages/DashboardPages/CandidateDetail"; // ✅ NUEVO
 import ProtectedRoute from "./components/Auth/ProtectedRoute";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -44,6 +45,14 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <CandidateManagement />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/candidatos/:id"
+            element={
+              <ProtectedRoute>
+                <CandidateDetail />
               </ProtectedRoute>
             }
           />
