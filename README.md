@@ -24,10 +24,10 @@ Este proyecto es una plataforma interna para la empresa **Joyco**, desarrollada 
    cd Cv-Managments-Front-JSX
 
 
-2. Instala las dependencias necesarias:
+2. Instala las dependencias necesarias: (Mejor forzar instalacción con --legacy-peer-deps)
 
 ```bash
-npm install
+npm install --legacy-peer-deps
 ```
 
 3. Inicia el entorno de desarrollo:
