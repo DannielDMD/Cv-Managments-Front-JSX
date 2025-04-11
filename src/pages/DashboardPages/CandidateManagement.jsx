@@ -1,17 +1,17 @@
 import { useEffect, useState, useCallback } from "react";
+import { useLocation } from "react-router-dom";
 import DashboardLayout from "../../components/Dashboard/DashboardLayout";
 import { obtenerResumenCandidatos } from "../../services/DashboardServices/candidateResumenService";
 import CandidateTable from "../../components/Dashboard/CandidateTable";
 import CandidateDetailTable from "../../components/Dashboard/CandidateDetailTable";
 import SelectField from "../../components/form/SelectField";
-import { getCiudades } from "../../services/FormServices/candidateService";
-import { getCargos } from "../../services/FormServices/candidateService";
+import { getCiudades, getCargos } from "../../services/FormServices/candidateService";
 import { getHerramientas } from "../../services/FormServices/skillService";
-import TablaStickyDemo from "./TablaStickyDemo"; // Ajusta la ruta si es necesario
-
 
 const CandidateManagement = () => {
-  const [candidatos, setCandidatos] = useState([]);
+  const location = useLocation();
+  const state = location.state;
+
   const [paginaActual, setPaginaActual] = useState(1);
   const [search, setSearch] = useState("");
   const [filtros, setFiltros] = useState({
@@ -19,29 +19,39 @@ const CandidateManagement = () => {
     id_cargo: null,
     estado: null,
     herramientas: [],
+    trabaja_joyco: null,
   });
+
+  const [candidatos, setCandidatos] = useState([]);
+  const [total, setTotal] = useState(0);
   const [mostrarFiltros, setMostrarFiltros] = useState(false);
   const [verTablaDetallada, setVerTablaDetallada] = useState(false);
   const porPagina = 10;
 
+  // ✅ Recuperar datos si venimos desde el detalle
+  useEffect(() => {
+    if (state) {
+      if (state.paginaAnterior) setPaginaActual(state.paginaAnterior);
+      if (state.search !== undefined) setSearch(state.search);
+      if (state.filtros) setFiltros(state.filtros);
+    }
+  }, [state]);
+
   const cargarCandidatos = useCallback(async () => {
     try {
-      const data = await obtenerResumenCandidatos(search, filtros);
-      setCandidatos(data || []);
-      setPaginaActual(1);
+      const resultado = await obtenerResumenCandidatos(search, filtros, paginaActual, porPagina);
+      if (resultado && resultado.data) {
+        setCandidatos(resultado.data);
+        setTotal(resultado.total || 0);
+      }
     } catch (error) {
       console.error("Error al obtener candidatos:", error);
     }
-  }, [search, filtros]);
+  }, [search, filtros, paginaActual]);
 
   useEffect(() => {
     cargarCandidatos();
   }, [cargarCandidatos]);
-
-  const total = candidatos.length;
-  const inicio = (paginaActual - 1) * porPagina;
-  const fin = inicio + porPagina;
-  const candidatosVisibles = candidatos.slice(inicio, fin);
 
   return (
     <DashboardLayout>
@@ -107,37 +117,73 @@ const CandidateManagement = () => {
             onChange={(value) => setFiltros((prev) => ({ ...prev, herramientas: value }))}
             isMulti={true}
           />
+          <SelectField
+            label="¿Trabaja en Joyco?"
+            options={[
+              { value: "true", nombre: "Sí" },
+              { value: "false", nombre: "No" },
+            ]}
+            idKey="value"
+            nameKey="nombre"
+            value={
+              filtros.trabaja_joyco === true
+                ? "true"
+                : filtros.trabaja_joyco === false
+                ? "false"
+                : null
+            }
+            onChange={(value) =>
+              setFiltros((prev) => ({
+                ...prev,
+                trabaja_joyco: value === "true" ? true : value === "false" ? false : null,
+              }))
+            }
+          />
         </div>
       )}
 
-      {mostrarFiltros && Object.entries(filtros).some(([, val]) => val !== null && val !== "" && val.length !== 0) && (
-        <div className="mb-4 flex flex-wrap items-center gap-2">
-          {Object.entries(filtros).map(([key, val]) =>
-            val && val.length !== 0 ? (
-              <span
-                key={key}
-                className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm flex items-center gap-1"
-              >
-                {key.replace("id_", "").replace("_", " ")}: {Array.isArray(val) ? val.length + " seleccionados" : val}
-                <button
-                  onClick={() => setFiltros((prev) => ({ ...prev, [key]: Array.isArray(val) ? [] : null }))}
-                  className="ml-1 text-xs font-bold hover:text-red-500"
+      {mostrarFiltros &&
+        Object.entries(filtros).some(([, val]) => val !== null && val !== "" && val.length !== 0) && (
+          <div className="mb-4 flex flex-wrap items-center gap-2">
+            {Object.entries(filtros).map(([key, val]) =>
+              val !== null && val !== "" && !(Array.isArray(val) && val.length === 0) ? (
+                <span
+                  key={key}
+                  className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm flex items-center gap-1"
                 >
-                  ✕
-                </button>
-              </span>
-            ) : null
-          )}
-          <button
-            onClick={() => setFiltros({ id_ciudad: null, id_cargo: null, estado: null, herramientas: [] })}
-            className="text-sm text-red-600 hover:underline ml-2"
-          >
-            Limpiar filtros
-          </button>
-        </div>
-      )}
+                  {key === "trabaja_joyco"
+                    ? `Trabaja en Joyco: ${val ? "Sí" : "No"}`
+                    : `${key.replace("id_", "").replace("_", " ")}: ${
+                        Array.isArray(val) ? val.length + " seleccionados" : val
+                      }`}
+                  <button
+                    onClick={() =>
+                      setFiltros((prev) => ({ ...prev, [key]: Array.isArray(val) ? [] : null }))
+                    }
+                    className="ml-1 text-xs font-bold hover:text-red-500"
+                  >
+                    ✕
+                  </button>
+                </span>
+              ) : null
+            )}
+            <button
+              onClick={() =>
+                setFiltros({
+                  id_ciudad: null,
+                  id_cargo: null,
+                  estado: null,
+                  herramientas: [],
+                  trabaja_joyco: null,
+                })
+              }
+              className="text-sm text-red-600 hover:underline ml-2"
+            >
+              Limpiar filtros
+            </button>
+          </div>
+        )}
 
-      {/* 📘 Botón para alternar entre resumen y detalle */}
       <div className="mb-4">
         <button
           onClick={() => setVerTablaDetallada((prev) => !prev)}
@@ -147,10 +193,9 @@ const CandidateManagement = () => {
         </button>
       </div>
 
-      {/* 🧾 Tabla seleccionada */}
       {verTablaDetallada ? (
         <CandidateDetailTable
-          data={candidatos} // 👉 mostramos todos
+          data={candidatos}
           total={total}
           paginaActual={paginaActual}
           porPagina={porPagina}
@@ -158,20 +203,14 @@ const CandidateManagement = () => {
         />
       ) : (
         <CandidateTable
-          data={candidatosVisibles}
+          data={candidatos}
           total={total}
           paginaActual={paginaActual}
           porPagina={porPagina}
           setPaginaActual={setPaginaActual}
           recargarCandidatos={cargarCandidatos}
         />
-
-
-        
       )}
-
-<TablaStickyDemo />
-
     </DashboardLayout>
   );
 };

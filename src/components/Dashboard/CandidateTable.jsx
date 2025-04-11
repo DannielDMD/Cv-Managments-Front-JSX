@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"; // ✅ Importamos
+import { useNavigate } from "react-router-dom";
 import { Eye } from "lucide-react";
 import { actualizarEstadoCandidato } from "../../services/DashboardServices/candidateResumenService";
 import { toast } from "react-toastify";
@@ -13,17 +13,19 @@ const CandidateTable = ({
   porPagina,
   setPaginaActual,
   recargarCandidatos,
+  filtros,
+  search,
 }) => {
   const totalPaginas = Math.ceil(total / porPagina);
   const [actualizandoId, setActualizandoId] = useState(null);
-  const navigate = useNavigate(); // ✅ Inicializamos el hook
+  const navigate = useNavigate();
 
   const handleEstadoChange = async (id, nuevoEstado) => {
     try {
       setActualizandoId(id);
       await actualizarEstadoCandidato(id, nuevoEstado);
       toast.success("Estado actualizado correctamente");
-      recargarCandidatos(); // ✅ Refrescamos
+      recargarCandidatos();
     } catch (error) {
       toast.error("Error al actualizar el estado");
       console.error(error);
@@ -84,11 +86,20 @@ const CandidateTable = ({
                 <td className="p-3">
                   <button
                     className="text-blue-600 hover:text-blue-800"
-                    onClick={() => navigate(`/dashboard/candidatos/${candidato.id_candidato}`)} // ✅ Redirección
+                    onClick={() =>
+                      navigate(`/dashboard/candidatos/${candidato.id_candidato}`, {
+                        state: {
+                          paginaAnterior: paginaActual,
+                          filtros,
+                          search,
+                        },
+                      })
+                    }
                   >
                     <Eye size={18} />
                   </button>
                 </td>
+
               </tr>
             ))}
           </tbody>
