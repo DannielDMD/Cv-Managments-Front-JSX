@@ -1,8 +1,8 @@
 export const msalConfig = {
     auth: {
-      clientId: "6d916e6b-a36a-48bd-a314-aea85abbf595",
-      authority: "https://login.microsoftonline.com/87543dca-0f58-48e4-af72-6410eb960e17",
-      redirectUri: "http://localhost:5173", // << Asegúrate que esto esté así
+      clientId: "932854ce-78e0-4973-8ad5-875b3addcaf0",
+      authority: "https://login.microsoftonline.com/dd505be5-ec69-47f5-92df-caa55febf5fa",
+      redirectUri: "http://localhost:5173", 
     },
     cache: {
       cacheLocation: "localStorage",
@@ -12,6 +12,6 @@ export const msalConfig = {
   
   export const loginRequest = {
     scopes: ["User.Read"],
-    prompt: "select_account", // fuerza que siempre pida escoger cuenta
+    prompt: "select_account", 
   };
   
