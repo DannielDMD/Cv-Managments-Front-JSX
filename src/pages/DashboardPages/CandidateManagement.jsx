@@ -20,6 +20,7 @@ const CandidateManagement = () => {
     estado: null,
     herramientas: [],
     trabaja_joyco: null,
+    ordenar_por_fecha: "recientes",
   });
 
   const [candidatos, setCandidatos] = useState([]);
@@ -28,14 +29,25 @@ const CandidateManagement = () => {
   const [verTablaDetallada, setVerTablaDetallada] = useState(false);
   const porPagina = 10;
 
-  // ✅ Recuperar datos si venimos desde el detalle
   useEffect(() => {
     if (state) {
       if (state.paginaAnterior) setPaginaActual(state.paginaAnterior);
       if (state.search !== undefined) setSearch(state.search);
       if (state.filtros) setFiltros(state.filtros);
+    } else {
+      // 🔁 Al recargar sin state, reiniciar filtros y paginación
+      setFiltros({
+        id_ciudad: null,
+        id_cargo: null,
+        estado: null,
+        herramientas: [],
+        trabaja_joyco: null,
+        ordenar_por_fecha: "recientes",
+      });
+      setPaginaActual(1);
     }
   }, [state]);
+  
 
   const cargarCandidatos = useCallback(async () => {
     try {
@@ -61,10 +73,28 @@ const CandidateManagement = () => {
         <input
           type="text"
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            setPaginaActual(1);
+          }}
           placeholder="Buscar por nombre, correo o cargo..."
           className="w-full md:w-1/2 p-2 border border-gray-300 rounded"
         />
+      </div>
+
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700 mb-1">Ordenar por fecha:</label>
+        <select
+          value={filtros.ordenar_por_fecha}
+          onChange={(e) => {
+            setFiltros((prev) => ({ ...prev, ordenar_por_fecha: e.target.value }));
+            setPaginaActual(1);
+          }}
+          className="p-2 border border-gray-300 rounded text-sm"
+        >
+          <option value="recientes">Más recientes primero</option>
+          <option value="antiguos">Más antiguos primero</option>
+        </select>
       </div>
 
       <div className="mb-4">
@@ -84,7 +114,10 @@ const CandidateManagement = () => {
             idKey="id_ciudad"
             nameKey="nombre_ciudad"
             value={filtros.id_ciudad}
-            onChange={(value) => setFiltros((prev) => ({ ...prev, id_ciudad: value }))}
+            onChange={(value) => {
+              setFiltros((prev) => ({ ...prev, id_ciudad: value }));
+              setPaginaActual(1);
+            }}
           />
           <SelectField
             label="Cargo"
@@ -92,7 +125,10 @@ const CandidateManagement = () => {
             idKey="id_cargo"
             nameKey="nombre_cargo"
             value={filtros.id_cargo}
-            onChange={(value) => setFiltros((prev) => ({ ...prev, id_cargo: value }))}
+            onChange={(value) => {
+              setFiltros((prev) => ({ ...prev, id_cargo: value }));
+              setPaginaActual(1);
+            }}
           />
           <SelectField
             label="Estado"
@@ -106,7 +142,10 @@ const CandidateManagement = () => {
             idKey="value"
             nameKey="nombre"
             value={filtros.estado}
-            onChange={(value) => setFiltros({ ...filtros, estado: value })}
+            onChange={(value) => {
+              setFiltros((prev) => ({ ...prev, estado: value }));
+              setPaginaActual(1);
+            }}
           />
           <SelectField
             label="Herramientas"
@@ -114,7 +153,10 @@ const CandidateManagement = () => {
             idKey="id_herramienta"
             nameKey="nombre_herramienta"
             value={filtros.herramientas}
-            onChange={(value) => setFiltros((prev) => ({ ...prev, herramientas: value }))}
+            onChange={(value) => {
+              setFiltros((prev) => ({ ...prev, herramientas: value }));
+              setPaginaActual(1);
+            }}
             isMulti={true}
           />
           <SelectField
@@ -129,15 +171,16 @@ const CandidateManagement = () => {
               filtros.trabaja_joyco === true
                 ? "true"
                 : filtros.trabaja_joyco === false
-                ? "false"
-                : null
+                  ? "false"
+                  : null
             }
-            onChange={(value) =>
+            onChange={(value) => {
               setFiltros((prev) => ({
                 ...prev,
                 trabaja_joyco: value === "true" ? true : value === "false" ? false : null,
-              }))
-            }
+              }));
+              setPaginaActual(1);
+            }}
           />
         </div>
       )}
@@ -153,13 +196,18 @@ const CandidateManagement = () => {
                 >
                   {key === "trabaja_joyco"
                     ? `Trabaja en Joyco: ${val ? "Sí" : "No"}`
-                    : `${key.replace("id_", "").replace("_", " ")}: ${
-                        Array.isArray(val) ? val.length + " seleccionados" : val
+                    : key === "ordenar_por_fecha"
+                      ? `Orden: ${val === "recientes" ? "Recientes" : "Antiguos"}`
+                      : `${key.replace("id_", "").replace("_", " ")}: ${Array.isArray(val) ? val.length + " seleccionados" : val
                       }`}
                   <button
-                    onClick={() =>
-                      setFiltros((prev) => ({ ...prev, [key]: Array.isArray(val) ? [] : null }))
-                    }
+                    onClick={() => {
+                      setFiltros((prev) => ({
+                        ...prev,
+                        [key]: Array.isArray(val) ? [] : key === "ordenar_por_fecha" ? "recientes" : null,
+                      }));
+                      setPaginaActual(1);
+                    }}
                     className="ml-1 text-xs font-bold hover:text-red-500"
                   >
                     ✕
@@ -168,15 +216,17 @@ const CandidateManagement = () => {
               ) : null
             )}
             <button
-              onClick={() =>
+              onClick={() => {
                 setFiltros({
                   id_ciudad: null,
                   id_cargo: null,
                   estado: null,
                   herramientas: [],
                   trabaja_joyco: null,
-                })
-              }
+                  ordenar_por_fecha: "recientes",
+                });
+                setPaginaActual(1);
+              }}
               className="text-sm text-red-600 hover:underline ml-2"
             >
               Limpiar filtros
@@ -209,7 +259,10 @@ const CandidateManagement = () => {
           porPagina={porPagina}
           setPaginaActual={setPaginaActual}
           recargarCandidatos={cargarCandidatos}
+          filtros={filtros} // 👈 ya está
+          search={search}   // 👈 ya está
         />
+
       )}
     </DashboardLayout>
   );

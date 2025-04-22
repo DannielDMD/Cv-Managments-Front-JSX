@@ -16,6 +16,8 @@ export const obtenerResumenCandidatos = async (search = "", filtros = {}, pagina
     if (filtros.trabaja_joyco !== null && filtros.trabaja_joyco !== undefined) {
       params.trabaja_joyco = filtros.trabaja_joyco;
     }
+    if (filtros.ordenar_por_fecha) params.ordenar_por_fecha = filtros.ordenar_por_fecha;
+
 
     // Paginación
     const skip = (pagina - 1) * porPagina;
