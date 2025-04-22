@@ -32,6 +32,16 @@ export const obtenerResumenCandidatos = async (search = "", filtros = {}, pagina
   }
 };
 
+export const obtenerEstadisticasCandidatos = async () => {
+  try {
+    const response = await axiosInstance.get("/candidatos/estadisticas");
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener estadísticas de candidatos:", error);
+    return null;
+  }
+};
+
 
 
 

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Eye } from "lucide-react";
 import { actualizarEstadoCandidato } from "../../services/DashboardServices/candidateResumenService";
 import { toast } from "react-toastify";
-
+import { useEffect } from "react";
 const estados = ["EN_PROCESO", "ENTREVISTA", "ADMITIDO", "DESCARTADO", "CONTRATADO"];
 
 const CandidateTable = ({
@@ -33,6 +33,11 @@ const CandidateTable = ({
       setActualizandoId(null);
     }
   };
+  const [inputPagina, setInputPagina] = useState(paginaActual);
+
+  useEffect(() => {
+    setInputPagina(paginaActual);
+  }, [paginaActual]);
 
   return (
     <>
@@ -106,9 +111,12 @@ const CandidateTable = ({
         </table>
       </div>
 
-      <div className="flex justify-between items-center text-sm text-gray-700">
-        <p>Mostrando {data.length} de {total} candidatos</p>
-        <div className="space-x-2">
+      <div className="flex justify-between items-center mt-2 text-sm text-gray-700">
+        <p>
+          Mostrando {data.length} de {total} candidatos
+        </p>
+
+        <div className="flex items-center gap-2">
           <button
             disabled={paginaActual === 1}
             onClick={() => setPaginaActual(paginaActual - 1)}
@@ -116,7 +124,43 @@ const CandidateTable = ({
           >
             ⬅ Anterior
           </button>
-          <span className="font-semibold">Página {paginaActual} de {totalPaginas}</span>
+
+          <span className="text-sm">Página</span>
+
+          <input
+            type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
+            value={inputPagina}
+            onChange={(e) => {
+              const valor = e.target.value;
+              if (/^\d*$/.test(valor)) {
+                setInputPagina(valor);
+              }
+            }}
+            onBlur={() => {
+              const num = parseInt(inputPagina, 10);
+              if (!isNaN(num) && num >= 1 && num <= totalPaginas) {
+                setPaginaActual(num);
+              } else {
+                setInputPagina(paginaActual);
+              }
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                const num = parseInt(inputPagina, 10);
+                if (!isNaN(num) && num >= 1 && num <= totalPaginas) {
+                  setPaginaActual(num);
+                } else {
+                  setInputPagina(paginaActual);
+                }
+              }
+            }}
+            className="w-16 px-2 py-1 border rounded text-center"
+          />
+
+          <span className="text-sm">de {totalPaginas}</span>
+
           <button
             disabled={paginaActual === totalPaginas}
             onClick={() => setPaginaActual(paginaActual + 1)}
@@ -126,6 +170,8 @@ const CandidateTable = ({
           </button>
         </div>
       </div>
+
+
     </>
   );
 };

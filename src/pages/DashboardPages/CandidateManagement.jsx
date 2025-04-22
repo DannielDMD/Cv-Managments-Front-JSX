@@ -7,11 +7,12 @@ import CandidateDetailTable from "../../components/Dashboard/CandidateDetailTabl
 import SelectField from "../../components/form/SelectField";
 import { getCiudades, getCargos } from "../../services/FormServices/candidateService";
 import { getHerramientas } from "../../services/FormServices/skillService";
+import { obtenerEstadisticasCandidatos } from "../../services/DashboardServices/candidateResumenService";
 
 const CandidateManagement = () => {
   const location = useLocation();
   const state = location.state;
-
+  const [estadisticas, setEstadisticas] = useState(null);
   const [paginaActual, setPaginaActual] = useState(1);
   const [search, setSearch] = useState("");
   const [filtros, setFiltros] = useState({
@@ -47,7 +48,14 @@ const CandidateManagement = () => {
       setPaginaActual(1);
     }
   }, [state]);
-  
+
+  useEffect(() => {
+    const cargarEstadisticas = async () => {
+      const data = await obtenerEstadisticasCandidatos();
+      if (data) setEstadisticas(data);
+    };
+    cargarEstadisticas();
+  }, []);
 
   const cargarCandidatos = useCallback(async () => {
     try {
@@ -68,6 +76,20 @@ const CandidateManagement = () => {
   return (
     <DashboardLayout>
       <h1 className="text-2xl font-bold mb-6 text-gray-800">Gestión de Candidatos</h1>
+      {estadisticas && (
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6 text-sm">
+          <div className="bg-white p-4 rounded shadow text-center">
+            <p className="font-semibold text-gray-700">Total</p>
+            <p className="text-xl font-bold text-indigo-600">{estadisticas.total}</p>
+          </div>
+          {["EN_PROCESO", "ENTREVISTA", "ADMITIDO", "DESCARTADO", "CONTRATADO"].map((estado) => (
+            <div key={estado} className="bg-white p-4 rounded shadow text-center">
+              <p className="font-semibold text-gray-700">{estado.replace("_", " ")}</p>
+              <p className="text-xl font-bold text-blue-600">{estadisticas[estado]}</p>
+            </div>
+          ))}
+        </div>
+      )}
 
       <div className="mb-4">
         <input
