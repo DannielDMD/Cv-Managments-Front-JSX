@@ -3,6 +3,7 @@ import { useParams, useNavigate, useLocation } from "react-router-dom"; // ⬅�
 import { obtenerCandidatoDetalle } from "../../services/DashboardServices/candidateResumenService";
 import DashboardLayout from "../../components/Dashboard/DashboardLayout";
 import html2pdf from "html2pdf.js";
+import { toast } from "react-toastify";
 
 const CandidateDetail = () => {
   const { id } = useParams();
@@ -11,10 +12,12 @@ const CandidateDetail = () => {
 
   const [candidato, setCandidato] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [mostrarModal, setMostrarModal] = useState(false);
+  const [eliminando, setEliminando] = useState(false);
 
   const paginaAnterior = location.state?.paginaAnterior || 1;
   const filtros = location.state?.filtros || {};
-  const search = location.state?.search || "";
+  const search = location.state?.search || "";  
 
   useEffect(() => {
     const fetchCandidato = async () => {
@@ -77,6 +80,8 @@ const CandidateDetail = () => {
   if (loading) return <p className="text-center mt-20">Cargando...</p>;
   if (!candidato) return <p className="text-center mt-20">Candidato no encontrado</p>;
 
+
+
   return (
     <DashboardLayout>
       <div className="max-w-4xl mx-auto">
@@ -91,7 +96,7 @@ const CandidateDetail = () => {
           </button>
 
           <div className="flex gap-2">
-            
+
             {candidato.correo_electronico && (
               <a
                 href={`mailto:${candidato.correo_electronico}?subject=Proceso de selección en Joyco&body=${generarMensajeCorreo()}`}
@@ -107,6 +112,13 @@ const CandidateDetail = () => {
               className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
             >
               📄 Exportar PDF
+            </button>
+
+            <button
+              onClick={() => setMostrarModal(true)}
+              className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+            >
+              🗑 Eliminar
             </button>
 
 
@@ -210,6 +222,60 @@ const CandidateDetail = () => {
         </div>
 
       </div>
+
+
+      {mostrarModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full space-y-4">
+            <h2 className="text-xl font-bold text-gray-800">¿Estás seguro?</h2>
+            <p className="text-gray-600">
+              Esta acción eliminará permanentemente el candidato{" "}
+              <strong>{candidato.nombre_completo}</strong> y toda su información
+              asociada. No se podrá deshacer.
+            </p>
+
+            <div className="flex justify-end gap-3 pt-2">
+              <button
+                onClick={() => setMostrarModal(false)}
+                className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={async () => {
+                  try {
+                    setEliminando(true);
+                    const res = await fetch(`http://localhost:8000/candidatos/${id}`, {
+                      method: "DELETE",
+                    });
+                    if (res.ok) {
+                      toast.success("Candidato eliminado correctamente");
+                      navigate("/dashboard/candidatos", {
+                        state: { paginaAnterior, filtros, search },
+                      });
+                    } else {
+                      const data = await res.json();
+                      toast.error(data.detail || "Error al eliminar el candidato");
+                    }
+                  } catch (err) {
+                    console.error(err);
+                    toast.error("Error inesperado al eliminar");
+                  } finally {
+                    setEliminando(false);
+                    setMostrarModal(false);
+                  }
+                }}
+                disabled={eliminando}
+                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50"
+              >
+                {eliminando ? "Eliminando..." : "Sí, eliminar"}
+              </button>
+
+            </div>
+          </div>
+        </div>
+      )}
+
     </DashboardLayout>
   );
 };
