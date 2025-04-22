@@ -1,15 +1,22 @@
 import { useMsal } from "@azure/msal-react";
 import { loginRequest } from "../../utils/authConfig";
 import { FiLogIn, FiLogOut } from "react-icons/fi";
+import { InteractionStatus } from "@azure/msal-browser";
 
 const AuthButton = ({ mode = "landing" }) => {
-  const { instance, accounts } = useMsal();
+  const { instance, accounts, inProgress } = useMsal();
 
   const handleLogin = () => {
+    if (inProgress !== InteractionStatus.None) {
+      console.warn("🛑 Login en progreso, evitando conflicto MSAL");
+      return;
+    }
+
     instance.loginRedirect(loginRequest);
   };
 
   const handleLogout = () => {
+    sessionStorage.setItem("logout_intencional", "true"); // 🧠 evitar validación post-logout
     instance.logoutRedirect({
       postLogoutRedirectUri: "/",
     });

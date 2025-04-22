@@ -14,19 +14,36 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const verificarUsuario = async () => {
-      if (accounts.length > 0) {
+      const logoutIntencional = sessionStorage.getItem("logout_intencional") === "true";
+  
+      if (logoutIntencional) {
+        console.log("⛔ Validación omitida tras logout.");
+        sessionStorage.removeItem("logout_intencional");
+        return; // 🚫 Salimos sin validar
+      }
+  
+      if (accounts.length > 0 && accounts[0]?.username) {
         const correo = accounts[0].username;
-        const acceso = await validarAcceso(correo);
-        if (acceso.autorizado) {
-          setUser({ correo, rol: acceso.rol });
-        } else {
+        try {
+          const acceso = await validarAcceso(correo);
+          if (acceso.autorizado) {
+            setUser({ correo, rol: acceso.rol });
+          } else {
+            setUser(null);
+          }
+        } catch (error) {
+          console.warn("Error al validar acceso:", error);
           setUser(null);
         }
+      } else {
+        setUser(null);
       }
     };
-
+  
     verificarUsuario();
   }, [accounts]);
+  
+  
 
   useEffect(() => {
     let timeoutLogout;
@@ -34,6 +51,7 @@ export const AuthProvider = ({ children }) => {
 
     const cerrarSesionPorInactividad = () => {
       setUser(null);
+      sessionStorage.setItem("logout_intencional", "true");
       instance.logoutRedirect();
     };
 
