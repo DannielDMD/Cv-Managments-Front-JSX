@@ -14,6 +14,9 @@ const steps = [
   "Disponibilidad y Preferencias"
 ];
 import { validarCamposEducacion } from "../../utils/validacionesFormulario";
+import { validarCamposExperiencia } from "../../utils/validacionesFormulario";
+import { validarCamposSkills } from "../../utils/validacionesFormulario";
+import { validarCamposPreferencias } from "../../utils/validacionesFormulario";
 
 
 
@@ -38,18 +41,78 @@ const FormStepper = ({ setIsFinalStep }) => {
     // ✅ Validar campos de Educación si estás en el paso 1
     if (currentStep === 1) {
       const { esValido, errores } = validarCamposEducacion(formData.educationInfo);
-    
+
       if (!esValido) {
         // Mostrar cada error en toast
         Object.entries(errores).forEach(([campo, mensaje]) => {
           toast.error(`❌ ${campo.replaceAll("_", " ")}: ${mensaje}`);
         });
-    
+
         return;
       }
     }
-    
 
+    if (currentStep === 2) {
+      const { esValido, errores } = validarCamposExperiencia(formData.experienceInfo);
+
+      if (!esValido) {
+        const etiquetas = {
+          ultima_empresa: "Empresa",
+          ultimo_cargo: "Último Cargo",
+          funciones: "Funciones",
+          fecha_inicio: "Fecha de Inicio",
+          fecha_fin: "Fecha de Finalización",
+        };
+
+        const camposConError = Object.entries(errores);
+
+        if (camposConError.length === 0) {
+          toast.error("Debes completar los campos obligatorios antes de continuar.");
+        } else {
+          camposConError.forEach(([campo, mensaje]) => {
+            const nombreCampo = etiquetas[campo] || campo;
+            toast.error(`❌ ${nombreCampo}: ${mensaje}`);
+          });
+        }
+
+        return;
+      }
+    }
+    if (currentStep === 3) {
+      const { esValido, errores } = validarCamposSkills(formData.skillsInfo);
+
+      if (!esValido) {
+        const etiquetas = {
+          id_habilidad_blanda: "Habilidades Blandas",
+          id_habilidad_tecnica: "Habilidades Técnicas",
+          id_herramienta: "Herramientas",
+        };
+
+        Object.entries(errores).forEach(([campo, mensaje]) => {
+          const nombreCampo = etiquetas[campo] || campo;
+          toast.error(`❌ ${nombreCampo}: ${mensaje}`);
+        });
+
+        return;
+      }
+    }
+
+    if (currentStep === 4) {
+      const { esValido, errores } = validarCamposPreferencias(formData.preferencesInfo);
+
+      if (!esValido) {
+        const etiquetas = {
+          razon_trabajar_joyco: "Razón para trabajar en Joyco",
+        };
+
+        Object.entries(errores).forEach(([campo, mensaje]) => {
+          const nombreCampo = etiquetas[campo] || campo;
+          toast.error(`❌ ${nombreCampo}: ${mensaje}`);
+        });
+
+        return;
+      }
+    }
 
 
 

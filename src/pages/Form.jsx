@@ -10,6 +10,10 @@ import { postEducation } from "../services/FormServices/educationService";
 import { postExperiencia } from "../services/FormServices/experienceService";
 import { postConocimientos } from "../services/FormServices/skillService";
 import { postPreferencias } from "../services/FormServices/preferencesService";
+import { mostrarErroresBackend } from "../utils/mostrarErroresBackend"; // asegúrate de tener este import al inicio
+
+
+
 
 const Form = () => {
   const navigate = useNavigate();
@@ -50,7 +54,9 @@ const Form = () => {
         id_nivel_ingles: parseInt(formData.educationInfo.id_nivel_ingles) || null,
       };
 
-      await postEducation(education); // Si falla, se detiene aquí
+
+      //Post de educación 
+      await postEducation(education); // Primer breackpoint de paro
 
       // EXPERIENCIA
       const experience = {
@@ -59,7 +65,7 @@ const Form = () => {
         id_rango_experiencia: parseInt(formData.experienceInfo.id_rango_experiencia) || null,
       };
 
-      await postExperiencia(experience); // Si falla, se detiene aquí
+      await postExperiencia(experience); // Segundo BreackPoint
 
       // CONOCIMIENTOS
       const skillsPayload = [];
@@ -119,15 +125,7 @@ const Form = () => {
 
 
     } catch (error) {
-      //console.error("❌ Error en el envío:", error);
-      toast.error("❌ Error en el envío.");
-
-      if (error?.response?.data?.detail) {
-        toast.error(`📌 ${error.response.data.detail}`);
-      }
-
-
-      alert("Hubo un error y el formulario no se completó. Revisa los datos e intenta de nuevo.");
+      mostrarErroresBackend(error);
     }
   };
 
