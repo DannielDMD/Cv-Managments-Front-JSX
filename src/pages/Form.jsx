@@ -19,6 +19,8 @@ const Form = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isFinalStep, setIsFinalStep] = useState(false);
+  const [mostrarModalConfirmacion, setMostrarModalConfirmacion] = useState(false);
+
 
   const { formData, resetFormData } = useFormContext();
 
@@ -137,16 +139,47 @@ const Form = () => {
         <div className="flex justify-end mt-6">
           <button
             className={`px-4 py-2 rounded-lg shadow-md transition ${isFinalStep
-                ? "bg-blue-700 text-white hover:bg-blue-800"
-                : "bg-gray-400 text-gray-700 cursor-not-allowed"
+              ? "bg-blue-700 text-white hover:bg-blue-800"
+              : "bg-gray-400 text-gray-700 cursor-not-allowed"
               }`}
             disabled={!isFinalStep}
-            onClick={handleSubmit}
+            onClick={() => setMostrarModalConfirmacion(true)}
+
           >
             Guardar y Continuar
           </button>
         </div>
       </div>
+
+      {mostrarModalConfirmacion && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 shadow-lg max-w-md w-full">
+            <h3 className="text-xl font-semibold mb-4 text-gray-800">
+              ¿Está seguro de enviar esta información?
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Una vez enviada, no podrá modificar los datos. Por favor revise que todo esté correcto.
+            </p>
+            <div className="flex justify-end space-x-4">
+              <button
+                onClick={() => setMostrarModalConfirmacion(false)}
+                className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 text-gray-700"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={() => {
+                  setMostrarModalConfirmacion(false);
+                  handleSubmit();
+                }}
+                className="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white"
+              >
+                Enviar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
