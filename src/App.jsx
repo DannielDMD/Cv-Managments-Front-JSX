@@ -8,6 +8,8 @@ import CandidateDetail from "./pages/DashboardPages/CandidateDetail"; // ✅ NUE
 import ProtectedRoute from "./components/Auth/ProtectedRoute";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ProtectedRouteIncomplete from "./components/form/ProtectedRouteIncomplete";
+import { AuthProvider } from "./context/AuthContext"; // 👈 ahora lo usás aquí
 
 const App = () => {
   return (
@@ -28,34 +30,49 @@ const App = () => {
 
         <Routes>
           {/* Rutas públicas */}
-          <Route path="/" element={<LandingPage />} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRouteIncomplete>
+                <LandingPage />
+              </ProtectedRouteIncomplete>
+            }
+          />
+
           <Route path="/formulario" element={<Form />} />
 
           {/* Rutas protegidas */}
           <Route
             path="/dashboard"
             element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
+              <AuthProvider> {/* Solo envuelve rutas internas protegidas */}
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              </AuthProvider>
             }
           />
           <Route
             path="/dashboard/candidatos"
             element={
-              <ProtectedRoute>
-                <CandidateManagement />
-              </ProtectedRoute>
+              <AuthProvider>
+                <ProtectedRoute>
+                  <CandidateManagement />
+                </ProtectedRoute>
+              </AuthProvider>
             }
           />
           <Route
             path="/dashboard/candidatos/:id"
             element={
-              <ProtectedRoute>
-                <CandidateDetail />
-              </ProtectedRoute>
+              <AuthProvider>
+                <ProtectedRoute>
+                  <CandidateDetail />
+                </ProtectedRoute>
+              </AuthProvider>
             }
           />
+
         </Routes>
       </Router>
     </FormProvider>

@@ -4,8 +4,9 @@ import { validarAcceso } from "../services/AuthService";
 
 const AuthContext = createContext();
 
-const TIEMPO_MAX_INACTIVIDAD_MS = 15 * 60 * 1000; // 15 minutos
-const TIEMPO_ADVERTENCIA_MS = TIEMPO_MAX_INACTIVIDAD_MS - 60 * 1000; // mostrar modal al minuto 14
+const TIEMPO_MAX_INACTIVIDAD_MS = 15 * 60 * 1000;
+const TIEMPO_ADVERTENCIA_MS = TIEMPO_MAX_INACTIVIDAD_MS - 60 * 1000;
+
 
 export const AuthProvider = ({ children }) => {
   const { instance, accounts } = useMsal();

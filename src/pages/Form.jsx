@@ -22,7 +22,8 @@ const Form = () => {
   const [mostrarModalConfirmacion, setMostrarModalConfirmacion] = useState(false);
 
 
-  const { formData, resetFormData } = useFormContext();
+  const { formData, resetFormData, updateFormData } = useFormContext();
+
 
   // 👇 Solo se ejecuta una vez, y hace reset si el state lo pide
   useEffect(() => {
@@ -121,9 +122,19 @@ const Form = () => {
 
       console.log(preferences)
       await postPreferencias(preferences); // Si falla, se detiene aquí
-
       toast.success("✅ Todos los datos fueron enviados correctamente.");
+
+      // ✅ Marca que se completó
+      updateFormData("formulario_completo", true);
+
+      // ✅ Limpia localStorage y contexto
+      localStorage.removeItem("formData");
+      resetFormData();
+
+      // ✅ Redirige al inicio
       navigate("/", { state: { success: true } });
+
+
 
 
     } catch (error) {

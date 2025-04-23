@@ -1,5 +1,6 @@
 // FormContext.js
 import { createContext, useState } from "react";
+import { useEffect } from "react"; // al inicio del archivo si no está
 
 const FormContext = createContext();
 
@@ -57,7 +58,11 @@ const INITIAL_STATE = {
 };
 
 export const FormProvider = ({ children }) => {
-  const [formData, setFormData] = useState(INITIAL_STATE);
+  const [formData, setFormData] = useState(() => {
+    const savedData = localStorage.getItem("formData");
+    return savedData ? JSON.parse(savedData) : INITIAL_STATE;
+  });
+  
 
   const updateFormData = (section, field, value) => {
     setFormData((prev) => ({
@@ -85,6 +90,13 @@ export const FormProvider = ({ children }) => {
     setFormData(INITIAL_STATE);
   };
 
+
+  useEffect(() => {
+    localStorage.setItem("formData", JSON.stringify(formData));
+  }, [formData]);
+
+
+  
   return (
     <FormContext.Provider value={{ formData, updateFormData, setIdCandidatoEnTodo, resetFormData }}>
       {children}
