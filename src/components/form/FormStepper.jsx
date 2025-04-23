@@ -13,6 +13,9 @@ const steps = [
   "Habilidades y Conocimientos",
   "Disponibilidad y Preferencias"
 ];
+import { validarCamposEducacion } from "../../utils/validacionesFormulario";
+
+
 
 const FormStepper = ({ setIsFinalStep }) => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -31,6 +34,25 @@ const FormStepper = ({ setIsFinalStep }) => {
 
       return;
     }
+
+    // ✅ Validar campos de Educación si estás en el paso 1
+    if (currentStep === 1) {
+      const { esValido, errores } = validarCamposEducacion(formData.educationInfo);
+    
+      if (!esValido) {
+        // Mostrar cada error en toast
+        Object.entries(errores).forEach(([campo, mensaje]) => {
+          toast.error(`❌ ${campo.replaceAll("_", " ")}: ${mensaje}`);
+        });
+    
+        return;
+      }
+    }
+    
+
+
+
+
 
     if (currentStep < steps.length - 1) {
       setCurrentStep((prev) => prev + 1);

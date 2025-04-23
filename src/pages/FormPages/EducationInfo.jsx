@@ -9,15 +9,21 @@ import {
 } from "../../services/FormServices/educationService";
 import useFormContext from "../../context/UseFormContext";
 
+
 const EducationInfo = () => {
   const { formData, updateFormData } = useFormContext();
 
   const educationData = formData.educationInfo || {};
-  const idCandidato = formData.id_candidato; 
+  const idCandidato = formData.id_candidato;
 
-  const [titulos, setTitulos] = useState([]); 
+  const [errores, setErrores] = useState({});
+
+
+  const [titulos, setTitulos] = useState([]);
 
   const nivelesSinTitulo = useMemo(() => new Set([1, 2, 3]), []);
+
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -46,6 +52,10 @@ const EducationInfo = () => {
       setTitulos([]);
     }
   }, [educationData.id_nivel_educacion, nivelesSinTitulo]);
+
+
+
+
 
   // Solo para debug
   useEffect(() => {
@@ -80,8 +90,15 @@ const EducationInfo = () => {
               name="anio_graduacion"
               type="number"
               value={educationData.anio_graduacion || ""}
-              onChange={handleChange}
+              onChange={(e) => {
+                handleChange(e);
+                setErrores((prev) => ({ ...prev, anio_graduacion: undefined }));
+              }}
+              error={errores.anio_graduacion}
             />
+
+
+
 
             <SelectField
               label="Institución Académica"

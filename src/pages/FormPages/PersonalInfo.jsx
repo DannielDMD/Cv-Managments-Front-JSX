@@ -6,6 +6,7 @@ import { getCiudades, getCargos, getMotivos, postCandidate } from "../../service
 import { toast } from "react-toastify";
 import useFormContext from "../../context/UseFormContext";
 import { useState } from "react";
+import { mostrarErroresBackend } from "../../utils/mostrarErroresBackend";
 
 
 const PersonalInfo = () => {
@@ -48,9 +49,6 @@ const PersonalInfo = () => {
     if (!formData.personalInfo.correo_electronico || !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(formData.personalInfo.correo_electronico)) {
       nuevosErrores.correo_electronico = "Ingresa un correo electrónico válido.";
     }
-
-
-
 
     if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(datos.nombre_completo || "")) {
       nuevosErrores.nombre_completo = "Solo se permiten letras y espacios.";
@@ -118,27 +116,8 @@ const PersonalInfo = () => {
 
       toast.success("✅ Formulario enviado con éxito.");
     } catch (error) {
-      console.error("Error detallado:", error);
-
-      if (error.response && error.response.status === 422) {
-        const erroresBackend = error.response.data.detail;
-
-        if (Array.isArray(erroresBackend)) {
-          // Muestra todos los errores recibidos por FastAPI en un solo toast
-          erroresBackend.forEach((err) => {
-            toast.error(`Campo: ${err.loc?.[1] || "desconocido"} → ${err.msg}`);
-          });
-        } else if (typeof erroresBackend === "string") {
-          toast.error(erroresBackend);
-        } else {
-          toast.error("❌ Datos inválidos enviados. Revisa los campos.");
-        }
-      } else {
-        toast.error("❌ Hubo un error inesperado al enviar el formulario.");
-      }
+      mostrarErroresBackend(error);
     }
-
-
   };
 
 
@@ -146,8 +125,22 @@ const PersonalInfo = () => {
     <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg">
       <h2 className="text-xl font-semibold mb-4">Información Personal</h2>
       <form onSubmit={handleSubmit}>
-        <InputField label="Nombre Completo" name="nombre_completo" type="text" value={formData.personalInfo.nombre_completo} onChange={handleChange} error={errores.nombre_completo} />
-        <InputField label="Correo Electrónico" name="correo_electronico" type="email" value={formData.personalInfo.correo_electronico} onChange={handleChange} error={errores.correo_electronico} />
+        <InputField
+          label="Nombre Completo"
+          name="nombre_completo"
+          type="text"
+          value={formData.personalInfo.nombre_completo}
+          onChange={handleChange}
+          error={errores.nombre_completo} />
+
+
+        <InputField
+          label="Correo Electrónico"
+          name="correo_electronico"
+          type="email"
+          value={formData.personalInfo.correo_electronico}
+          onChange={handleChange}
+          error={errores.correo_electronico} />
 
         <InputField
           label="C.C."
@@ -165,7 +158,13 @@ const PersonalInfo = () => {
         />
 
 
-        <InputField label="Fecha de Nacimiento" name="fecha_nacimiento" type="date" value={formData.personalInfo.fecha_nacimiento} onChange={handleChange} error={errores.fecha_nacimiento} />
+        <InputField
+          label="Fecha de Nacimiento"
+          name="fecha_nacimiento"
+          type="date"
+          value={formData.personalInfo.fecha_nacimiento}
+          onChange={handleChange}
+          error={errores.fecha_nacimiento} />
 
 
         <InputField
