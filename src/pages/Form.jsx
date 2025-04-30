@@ -12,6 +12,8 @@ import { postConocimientos } from "../services/FormServices/skillService";
 import { postPreferencias } from "../services/FormServices/preferencesService";
 import { mostrarErroresBackend } from "../utils/mostrarErroresBackend"; // asegúrate de tener este import al inicio
 
+import { marcarFormularioCompleto } from "../services/FormServices/candidateService";
+
 
 
 
@@ -55,6 +57,7 @@ const Form = () => {
         anio_graduacion: formData.educationInfo.anio_graduacion || null,
         id_institucion: parseInt(formData.educationInfo.id_institucion) || null,
         id_nivel_ingles: parseInt(formData.educationInfo.id_nivel_ingles) || null,
+
       };
 
 
@@ -122,6 +125,12 @@ const Form = () => {
 
       console.log(preferences)
       await postPreferencias(preferences); // Si falla, se detiene aquí
+
+
+      // ✅ Marca que se completó en backend
+      await marcarFormularioCompleto(id); // << aquí
+
+
       toast.success("✅ Todos los datos fueron enviados correctamente.");
 
       // ✅ Marca que se completó

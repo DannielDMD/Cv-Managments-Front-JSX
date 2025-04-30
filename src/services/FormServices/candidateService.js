@@ -44,3 +44,14 @@ export const postCandidate = async (candidateData) => {
     throw error;
   }
 };
+
+
+export const marcarFormularioCompleto = async (id_candidato) => {
+  try {
+    const response = await axiosInstance.put(`/candidatos/${id_candidato}/completar`);
+    return response.data;
+  } catch (error) {
+    console.error("Error al marcar formulario como completo:", error);
+    throw error;
+  }
+};  
