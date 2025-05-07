@@ -7,6 +7,7 @@ import {
   LineChart, Line, Legend, Cell
 } from "recharts";
 import { obtenerEstadisticasConocimientos } from "../../services/DashboardServices/allStatsService";
+import { Brain } from "lucide-react";
 
 const KnowledgeStats = ({ anioSeleccionado }) => {
   const [stats, setStats] = useState(null);
@@ -36,7 +37,10 @@ const KnowledgeStats = ({ anioSeleccionado }) => {
 
   return (
     <div className="bg-white shadow rounded-lg p-6">
-      <h2 className="text-xl font-semibold mb-4">🧠 Conocimientos</h2>
+      <h2 className="text-xl font-bold mb-4 flex items-center justify-center gap-2">
+        <Brain className="w-5 h-5 text-blue-600" />
+        Conocimientos
+      </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Habilidades blandas */}
@@ -45,7 +49,7 @@ const KnowledgeStats = ({ anioSeleccionado }) => {
           <ResponsiveContainer width="100%" height={250}>
             <BarChart data={top_habilidades_blandas_anual}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="label" />
+              <XAxis dataKey="label" tick={false} />
               <YAxis allowDecimals={false} />
               <Tooltip />
               <Bar dataKey="count">
@@ -63,7 +67,7 @@ const KnowledgeStats = ({ anioSeleccionado }) => {
           <ResponsiveContainer width="100%" height={250}>
             <BarChart data={top_habilidades_tecnicas_anual}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="label" />
+              <XAxis dataKey="label" tick={false} />
               <YAxis allowDecimals={false} />
               <Tooltip />
               <Bar dataKey="count">

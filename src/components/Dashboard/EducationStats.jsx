@@ -7,6 +7,7 @@ import {
     LineChart, Line, Legend, Cell
 } from "recharts";
 import { obtenerEstadisticasEducacion } from "../../services/DashboardServices/allStatsService";
+import { GraduationCap } from "lucide-react"; // Ejemplo para Educación
 
 const COLORS = ["#10b981", "#3b82f6", "#f59e0b", "#ef4444", "#8b5cf6", "#ec4899", "#22d3ee"];
 
@@ -49,16 +50,20 @@ const EducationStats = ({ anioSeleccionado }) => {
 
     return (
         <div className="bg-white shadow rounded-lg p-6">
-            <h2 className="text-xl font-semibold mb-4">🎓 Educación</h2>
+            <h2 className="text-xl font-bold mb-4 flex items-center justify-center gap-2">
+                <GraduationCap className="w-5 h-5 text-blue-600" />
+                Educación
+            </h2>
+
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* Niveles educativos más comunes */}
                 <div>
-                    <h3 className="font-medium mb-2">Niveles educativos más comunes</h3>
+                    <h3 className="font-medium mb-2">Distribución por nivel educativo</h3>
                     <ResponsiveContainer width="100%" height={250}>
                         <BarChart data={nivelesAgrupados}>
                             <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="label" />
+                            <XAxis dataKey="label" tick={false} /> {/* Oculta los nombres del eje X */}
                             <YAxis allowDecimals={false} />
                             <Tooltip />
                             <Bar dataKey="count" fill="#3b82f6">
@@ -69,6 +74,7 @@ const EducationStats = ({ anioSeleccionado }) => {
                         </BarChart>
                     </ResponsiveContainer>
                 </div>
+
 
                 {/* Distribución nivel de inglés */}
                 <div>
@@ -92,7 +98,6 @@ const EducationStats = ({ anioSeleccionado }) => {
                                 ))}
                             </Pie>
                             <Tooltip />
-                            <Legend verticalAlign="bottom" height={36} />
                         </PieChart>
                     </ResponsiveContainer>
                 </div>
@@ -123,6 +128,7 @@ const EducationStats = ({ anioSeleccionado }) => {
                 <strong>{topInstitucion.label}</strong> ({topInstitucion.count} registro
                 {topInstitucion.count !== 1 && "s"})
             </p>
+
         </div>
     );
 };

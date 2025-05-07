@@ -5,6 +5,8 @@ import HeaderLanding from "../components/HeaderLanding";
 import { validarAcceso } from "../services/AuthService";
 import { FiSend } from "react-icons/fi";
 import Footer from "../components/Footer";
+import ValoresCorporativos from "../components/ValoresCorporativos";
+
 
 const LandingPage = () => {
   const { accounts } = useMsal();
@@ -70,13 +72,16 @@ const LandingPage = () => {
       </main>
 
       {/* Sección informativa debajo */}
-      <section className="py-20 bg-gray-100 text-center">
+      <section className="py-1 bg-gray-100 text-center">
         <h2 className="text-3xl font-semibold text-blue-900">¿Por qué unirte a Joyco?</h2>
+       
+
         <p className="mt-4 text-lg text-gray-700 max-w-3xl mx-auto">
           Somos una empresa comprometida con el desarrollo de infraestructura y el crecimiento profesional.
           Aquí encontrarás un equipo humano que impulsa tu carrera.
         </p>
       </section>
+      <ValoresCorporativos />
       <Footer />
     </div>
   );

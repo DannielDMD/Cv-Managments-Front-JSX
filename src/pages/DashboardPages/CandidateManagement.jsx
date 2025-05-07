@@ -8,6 +8,13 @@ import SelectField from "../../components/form/SelectField";
 import { getCiudades, getCargos } from "../../services/FormServices/candidateService";
 import { getHerramientas } from "../../services/FormServices/skillService";
 import { obtenerEstadisticasCandidatos } from "../../services/DashboardServices/candidateResumenService";
+import { Users } from "lucide-react"; // al inicio
+import { SlidersHorizontal } from "lucide-react"; // al inicio
+import { BookOpen, Undo2 } from "lucide-react"; // al inicio
+
+
+
+
 
 const CandidateManagement = () => {
   const location = useLocation();
@@ -75,7 +82,10 @@ const CandidateManagement = () => {
 
   return (
     <DashboardLayout>
-      <h1 className="text-2xl font-bold mb-6 text-gray-800">Gestión de Candidatos</h1>
+      <h1 className="text-3xl font-bold mb-6 text-gray-800 flex items-center gap-2">
+        <Users className="w-6 h-6 text-blue-600" />
+        Gestión de Candidatos
+      </h1>
       {estadisticas && (
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6 text-sm">
           <div className="bg-white p-4 rounded shadow text-center">
@@ -124,7 +134,12 @@ const CandidateManagement = () => {
           onClick={() => setMostrarFiltros((prev) => !prev)}
           className="text-sm text-blue-600 hover:underline"
         >
-          {mostrarFiltros ? "Ocultar filtros avanzados" : "🧰 Mostrar filtros avanzados"}
+          {mostrarFiltros ? "Ocultar filtros avanzados" : (
+            <span className="inline-flex items-center gap-1">
+              <SlidersHorizontal className="w-4 h-4" />
+              Mostrar filtros avanzados
+            </span>
+          )}
         </button>
       </div>
 
@@ -261,7 +276,17 @@ const CandidateManagement = () => {
           onClick={() => setVerTablaDetallada((prev) => !prev)}
           className="text-sm text-indigo-600 hover:underline"
         >
-          {verTablaDetallada ? "🔙 Ver tabla resumen" : "📘 Ver tabla completa"}
+          {verTablaDetallada ? (
+            <span className="inline-flex items-center gap-1">
+              <Undo2 className="w-4 h-4" />
+              Ver tabla resumen
+            </span>
+          ) : (
+            <span className="inline-flex items-center gap-1">
+              <BookOpen className="w-4 h-4" />
+              Ver tabla completa
+            </span>
+          )}
         </button>
       </div>
 

@@ -41,8 +41,9 @@ const CandidateTable = ({
 
   return (
     <>
-      <div className="overflow-x-auto shadow rounded-lg mb-4">
-        <table className="min-w-full bg-white text-sm text-gray-800 border border-gray-200">
+      <div className="w-full overflow-x-auto shadow rounded-lg mb-4">
+  <table className="min-w-[1000px] w-full bg-white text-sm text-gray-800 border border-gray-200">
+
           <thead className="bg-gray-100 text-left">
             <tr>
               <th className="p-3">Nombre</th>

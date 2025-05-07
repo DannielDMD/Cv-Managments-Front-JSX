@@ -7,6 +7,7 @@ import {
     LineChart, Line, Legend, RadialBarChart, RadialBar, Cell
 } from "recharts";
 import { obtenerEstadisticasPersonales } from "../../services/DashboardServices/allStatsService";
+import { UserCircle2 } from "lucide-react";
 
 const COLORS = ["#10b981", "#3b82f6", "#f59e0b", "#ef4444", "#6366f1", "#8b5cf6"];
 
@@ -38,7 +39,10 @@ const PersonalStats = ({ anioSeleccionado }) => {
 
     return (
         <div className="bg-white shadow rounded-lg p-6">
-            <h2 className="text-xl font-semibold mb-4">🧑‍💼 Información Personal</h2>
+            <h2 className="text-xl font-bold mb-4 flex items-center justify-center gap-2">
+                <UserCircle2 className="w-5 h-5 text-blue-600" />
+                Información Personal
+            </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Top ciudades */}

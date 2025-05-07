@@ -5,6 +5,7 @@ import {
     LineChart, Line, RadialBarChart, RadialBar, Legend, Cell
 } from "recharts";
 import { obtenerEstadisticasPreferencias } from "../../services/DashboardServices/allStatsService";
+import { SlidersHorizontal } from "lucide-react";
 
 const COLORS = ["#10b981", "#3b82f6", "#f59e0b", "#ef4444", "#6366f1", "#a855f7"];
 
@@ -36,7 +37,10 @@ const PreferencesStats = ({ anioSeleccionado }) => {
 
     return (
         <div className="bg-white shadow rounded-lg p-6">
-            <h2 className="text-xl font-semibold mb-4">⚙️ Preferencias y Disponibilidad</h2>
+            <h2 className="text-xl font-bold mb-4 flex items-center justify-center gap-2">
+                <SlidersHorizontal className="w-5 h-5 text-orange-500" />
+                Preferencias
+            </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
