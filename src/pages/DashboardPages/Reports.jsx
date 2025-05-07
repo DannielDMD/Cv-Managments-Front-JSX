@@ -5,6 +5,7 @@ import EducationStats from "../../components/Dashboard/EducationStats";
 import ExperienceStats from "../../components/Dashboard/ExperienceStats";
 import KnowledgeStats from "../../components/Dashboard/KnowledgeStats";
 import PreferencesStats from "../../components/Dashboard/PreferencesStats";
+import PersonalStats from "../../components/Dashboard/PersonalStats";
 
 const Reports = () => {
     const [anioSeleccionado, setAnioSeleccionado] = useState(new Date().getFullYear());
@@ -13,9 +14,10 @@ const Reports = () => {
     useEffect(() => {
         const anioActual = new Date().getFullYear();
         const anios = [];
-        for (let i = anioActual; i >= anioActual - 5; i--) {
+        for (let i = anioActual + 2; i >= anioActual - 5; i--) {
             anios.push(i);
         }
+
         setAniosDisponibles(anios);
     }, []);
 
@@ -107,12 +109,11 @@ const Reports = () => {
                     <div className="bg-white rounded-lg shadow p-6 text-center text-gray-500">
                         <PreferencesStats anioSeleccionado={anioSeleccionado} />
                     </div>
-                    <div className="bg-white rounded-lg shadow p-6 text-center text-gray-500">
-                        Aquí irá el gráfico de Datos Personales
-                    </div>
-                    <div className="bg-white rounded-lg shadow p-6 text-center text-gray-500">
-                        Aquí irá el gráfico del Proceso
-                    </div>
+                </div>
+
+                {/* PersonalStats fuera del grid para ocupar todo el ancho */}
+                <div className="bg-white rounded-lg shadow p-6 text-center text-gray-500 mt-6">
+                    <PersonalStats anioSeleccionado={anioSeleccionado} />
                 </div>
             </div>
         </DashboardLayout>

@@ -117,6 +117,11 @@ const KnowledgeStats = ({ anioSeleccionado }) => {
               <Line type="monotone" dataKey="count" stroke="#f59e0b" />
             </LineChart>
           </ResponsiveContainer>
+          <div className="mt-6 text-sm text-gray-600 text-center">
+            Estos datos reflejan el número total de registros de conocimientos capturados en el sistema durante cada mes del año seleccionado.
+            Pueden incluir habilidades blandas, técnicas y herramientas, por lo que el total puede superar la cantidad de candidatos registrados.
+          </div>
+
         </div>
       </div>
     </div>

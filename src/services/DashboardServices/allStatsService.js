@@ -56,6 +56,8 @@ export const obtenerEstadisticasPreferencias = async (anio) => {
     }
 };
 
+
+
 // Estadísticas del proceso (por ejemplo: filtros, entrevistas, finalistas)
 export const obtenerStatsProceso = async () => {
     try {
@@ -67,16 +69,19 @@ export const obtenerStatsProceso = async () => {
     }
 };
 
-// Estadísticas de datos personales (por ejemplo: género, edad, ciudad)
-export const obtenerStatsPersonal = async () => {
+// Servicio para obtener estadísticas de información personal
+export const obtenerEstadisticasPersonales = async (anio) => {
     try {
-        const response = await axiosInstance.get("/dashboard/stats_personal");
-        return response.data;
+      const response = await axiosInstance.get("/reportes/personal", {
+        params: anio ? { año: anio } : {},
+      });
+      return response.data;
     } catch (error) {
-        console.error("Error al obtener estadísticas personales:", error);
-        return null;
+      console.error("Error al obtener estadísticas de información personal:", error);
+      return null;
     }
-};
+  };
+  
 
 // Descargar PDF con estadísticas
 export const descargarReportePDF = async (anio) => {
