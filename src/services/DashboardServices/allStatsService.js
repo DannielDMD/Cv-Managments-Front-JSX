@@ -19,16 +19,18 @@ export const obtenerEstadisticasEducacion = async (anio) => {
   
   
 
-// Estadísticas de experiencia
-export const obtenerStatsExperiencia = async () => {
-  try {
-    const response = await axiosInstance.get("/dashboard/stats_experiencia");
-    return response.data;
-  } catch (error) {
-    console.error("Error al obtener estadísticas de experiencia:", error);
-    return null;
-  }
-};
+// Servicio para obtener estadísticas de experiencia laboral
+export const obtenerEstadisticasExperiencia = async (anio) => {
+    try {
+      const response = await axiosInstance.get("/reportes/experiencia", {
+        params: anio ? { año: anio } : {},
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error al obtener estadísticas de experiencia:", error);
+      return null;
+    }
+  };
 
 // Estadísticas de conocimientos (habilidades blandas, técnicas, herramientas)
 export const obtenerStatsConocimientos = async () => {

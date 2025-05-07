@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { descargarReportePDF, descargarReporteExcel } from "../../services/DashboardServices/allStatsService";
 import DashboardLayout from "../../components/Dashboard/DashboardLayout"; // ✅ Aquí importamos el layout
 import EducationStats from "../../components/Dashboard/EducationStats";
+import ExperienceStats from "../../components/Dashboard/ExperienceStats";
 
 const Reports = () => {
   const [anioSeleccionado, setAnioSeleccionado] = useState(new Date().getFullYear());
@@ -96,7 +97,7 @@ const Reports = () => {
           <EducationStats anioSeleccionado={anioSeleccionado} />
           </div>
           <div className="bg-white rounded-lg shadow p-6 text-center text-gray-500">
-            Aquí irá el gráfico de Experiencia
+          <ExperienceStats anioSeleccionado={anioSeleccionado} />
           </div>
           <div className="bg-white rounded-lg shadow p-6 text-center text-gray-500">
             Aquí irá el gráfico de Conocimientos
