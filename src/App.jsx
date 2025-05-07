@@ -1,15 +1,18 @@
+// src/App.jsx
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { FormProvider } from "./context/FormContext";
 import LandingPage from "./pages/LandingPage";
 import Form from "./pages/Form";
 import Dashboard from "./pages/DashboardPages/Dashboard";
 import CandidateManagement from "./pages/DashboardPages/CandidateManagement";
-import CandidateDetail from "./pages/DashboardPages/CandidateDetail"; // ✅ NUEVO
+import CandidateDetail from "./pages/DashboardPages/CandidateDetail";
+import Reports from "./pages/DashboardPages/Reports"; // ← Importamos Reports
 import ProtectedRoute from "./components/Auth/ProtectedRoute";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProtectedRouteIncomplete from "./components/form/ProtectedRouteIncomplete";
-import { AuthProvider } from "./context/AuthContext"; // 👈 ahora lo usás aquí
+import { AuthProvider } from "./context/AuthContext";
 
 const App = () => {
   return (
@@ -38,14 +41,13 @@ const App = () => {
               </ProtectedRouteIncomplete>
             }
           />
-
           <Route path="/formulario" element={<Form />} />
 
           {/* Rutas protegidas */}
           <Route
             path="/dashboard"
             element={
-              <AuthProvider> {/* Solo envuelve rutas internas protegidas */}
+              <AuthProvider>
                 <ProtectedRoute>
                   <Dashboard />
                 </ProtectedRoute>
@@ -72,7 +74,17 @@ const App = () => {
               </AuthProvider>
             }
           />
-
+          {/* Nueva ruta para Reportes */}
+          <Route
+            path="/dashboard/reportes"
+            element={
+              <AuthProvider>
+                <ProtectedRoute>
+                  <Reports />
+                </ProtectedRoute>
+              </AuthProvider>
+            }
+          />
         </Routes>
       </Router>
     </FormProvider>
