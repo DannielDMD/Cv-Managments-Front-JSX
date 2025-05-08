@@ -14,8 +14,12 @@ export const mostrarErroresBackend = (error) => {
     } else {
       toast.error("❌ Error de validación: revisa los datos.");
     }
-  } else {
-    toast.error("❌ Error inesperado al enviar.");
-    console.error("Error no controlado:", error);
+  } if (error.response?.status === 400) {
+    toast.error(`❌ Error 400: ${error.response.data?.detail || "Revisa los campos enviados."}`);
   }
+  else {
+    toast.error("❌ Error inesperado al enviar.");
+  }
+  console.error("Error no controlado:", error);
+  
 };

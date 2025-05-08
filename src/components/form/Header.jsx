@@ -7,7 +7,7 @@ const Header = () => {
   const { formData } = useFormContext();
 
   return (
-    <header className="fixed top-0 left-0 w-full bg-[#24396D] text-white py-4 shadow-md z-50 flex justify-between items-center px-6">
+    <header className="fixed top-0 left-0 w-full bg-[#0033A0] text-white py-4 shadow-md z-50 flex justify-between items-center px-6">
       {/* Título centrado */}
       <h1 className="text-2xl font-bold flex-1 text-center">Formulario de Postulación</h1>
 
