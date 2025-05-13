@@ -100,6 +100,8 @@ const PersonalInfo = () => {
       id_motivo_salida: formData.personalInfo.id_motivo_salida
         ? parseInt(formData.personalInfo.id_motivo_salida)
         : null,
+      // ✅ este es el nuevo campo
+      acepta_politica_datos: formData.acepta_politica_datos === true,
     };
 
     try {
