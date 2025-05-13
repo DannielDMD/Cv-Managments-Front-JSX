@@ -35,6 +35,8 @@ const PersonalStats = ({ anioSeleccionado }) => {
         estado_candidatos,
         estadisticas_booleanas,
         top_cargos_anual,
+        top_nombres_referidos, // ✅ agrega esto
+
     } = stats;
 
     return (
@@ -131,25 +133,47 @@ const PersonalStats = ({ anioSeleccionado }) => {
 
                 </div>
 
-                {/* Candidatos por mes */}
-                <div className="md:col-span-2 mt-6">
-                    <h3 className="font-medium mb-2">Registros de candidatos por mes</h3>
-                    <ResponsiveContainer width="100%" height={250}>
-                        <LineChart data={candidatos_por_mes}>
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis
-                                dataKey="month"
-                                tickFormatter={(m) =>
-                                    ["", "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"][m]
-                                }
-                            />
-                            <YAxis allowDecimals={false} />
-                            <Tooltip />
-                            <Legend />
-                            <Line type="monotone" dataKey="count" stroke="#10b981" />
-                        </LineChart>
-                    </ResponsiveContainer>
+                {/* Gráfico de candidatos por mes y top referidos */}
+                <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                    {/* Registros por mes */}
+                    <div>
+                        <h3 className="font-medium mb-2">Registros de candidatos por mes</h3>
+                        <ResponsiveContainer width="100%" height={250}>
+                            <LineChart data={candidatos_por_mes}>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis
+                                    dataKey="month"
+                                    tickFormatter={(m) =>
+                                        ["", "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"][m]
+                                    }
+                                />
+                                <YAxis allowDecimals={false} />
+                                <Tooltip />
+                                <Legend />
+                                <Line type="monotone" dataKey="count" stroke="#10b981" />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    </div>
+
+                    {/* Top personas más referidas */}
+                    <div>
+                        <h3 className="font-medium mb-2">Personas más referidas</h3>
+                        <ResponsiveContainer width="100%" height={250}>
+                            <BarChart layout="horizontal" data={top_nombres_referidos}>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="label" />
+                                <YAxis allowDecimals={false} />
+                                <Tooltip />
+                                <Bar dataKey="count">
+                                    {top_nombres_referidos.map((entry, index) => (
+                                        <Cell key={`referido-${index}`} fill={COLORS[index % COLORS.length]} />
+                                    ))}
+                                </Bar>
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </div>
                 </div>
+
 
                 {/* Estadísticas booleanas separadas */}
                 <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
