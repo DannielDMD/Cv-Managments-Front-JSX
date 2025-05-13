@@ -1,10 +1,10 @@
 // FormContext.js
-import { createContext, useState } from "react";
-import { useEffect } from "react"; // al inicio del archivo si no está
+import { createContext, useState, useEffect } from "react";
 
 const FormContext = createContext();
 
 const INITIAL_STATE = {
+  acepta_politica_datos: false,
   id_candidato: null,
   personalInfo: {
     nombre_completo: "",
@@ -62,7 +62,6 @@ export const FormProvider = ({ children }) => {
     const savedData = localStorage.getItem("formData");
     return savedData ? JSON.parse(savedData) : INITIAL_STATE;
   });
-  
 
   const updateFormData = (section, field, value) => {
     setFormData((prev) => ({
@@ -73,7 +72,14 @@ export const FormProvider = ({ children }) => {
       },
     }));
   };
-  
+
+  const updateRootFormData = (field, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
   const setIdCandidatoEnTodo = (id) => {
     setFormData((prev) => ({
       ...prev,
@@ -87,18 +93,24 @@ export const FormProvider = ({ children }) => {
   };
 
   const resetFormData = () => {
-    setFormData(INITIAL_STATE);
+    localStorage.removeItem("formData");
+    setFormData({ ...INITIAL_STATE });
   };
-
 
   useEffect(() => {
     localStorage.setItem("formData", JSON.stringify(formData));
   }, [formData]);
 
-
-  
   return (
-    <FormContext.Provider value={{ formData, updateFormData, setIdCandidatoEnTodo, resetFormData }}>
+    <FormContext.Provider
+      value={{
+        formData,
+        updateFormData,
+        updateRootFormData,
+        setIdCandidatoEnTodo,
+        resetFormData,
+      }}
+    >
       {children}
     </FormContext.Provider>
   );

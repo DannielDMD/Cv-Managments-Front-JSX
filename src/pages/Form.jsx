@@ -27,14 +27,19 @@ const Form = () => {
   const { formData, resetFormData, updateFormData } = useFormContext();
 
 
-  // 👇 Solo se ejecuta una vez, y hace reset si el state lo pide
   useEffect(() => {
-    if (location.state?.reset) {
+    if (!formData.acepta_politica_datos) {
+      navigate("/", { replace: true });
+      return;
+    }
+  
+    if (location?.state?.reset) {
       resetFormData();
-      // Limpia el state para que no siga presente en futuras navegaciones
       navigate(location.pathname, { replace: true });
     }
-  }, [location.state, location.pathname, resetFormData, navigate]);
+  }, [formData.acepta_politica_datos, location, resetFormData, navigate]);
+  
+
 
 
   const handleSubmit = async () => {

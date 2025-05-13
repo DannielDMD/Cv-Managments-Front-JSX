@@ -6,12 +6,15 @@ import { validarAcceso } from "../services/AuthService";
 import { FiSend } from "react-icons/fi";
 import Footer from "../components/Footer";
 import ValoresCorporativos from "../components/ValoresCorporativos";
-
+import useFormContext from "../context/UseFormContext";
+import ModalPolitica from "../components/ModalPolitica"; // ✅ nuevo import
 
 const LandingPage = () => {
   const { accounts } = useMsal();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const [mostrarModal, setMostrarModal] = useState(false);
+  const { updateRootFormData } = useFormContext();
 
   useEffect(() => {
     const verificarAutorizacion = async () => {
@@ -38,7 +41,22 @@ const LandingPage = () => {
   }, [accounts, navigate]);
 
   const handleClick = () => {
-    navigate("/formulario", { state: { reset: true } });
+    setMostrarModal(true);
+  };
+
+  const aceptarPolitica = async () => {
+    updateRootFormData("acepta_politica_datos", true);
+  
+    // Espera un breve tiempo para que se actualice el estado y localStorage
+    setTimeout(() => {
+      navigate("/formulario");
+    }, 50);
+  };
+  
+  
+
+  const rechazarPolitica = () => {
+    setMostrarModal(false);
   };
 
   if (loading) {
@@ -53,13 +71,11 @@ const LandingPage = () => {
     <div className="min-h-screen bg-white text-gray-900">
       <HeaderLanding />
 
-      {/* 👉 Sección principal más enfocada */}
       <main className="h-screen flex flex-col justify-center items-center text-center px-4">
         <h1 className="text-5xl font-bold text-blue-900 mb-4">¿Te gustaría trabajar con nosotros?</h1>
         <p className="text-lg text-gray-700 max-w-2xl">
           En Joyco valoramos el talento, la innovación y las personas que hacen país.
         </p>
-
 
         <button
           onClick={handleClick}
@@ -68,19 +84,20 @@ const LandingPage = () => {
           <FiSend size={20} />
           Postúlate aquí
         </button>
-
       </main>
 
-      {/* Sección informativa debajo */}
+      {mostrarModal && (
+        <ModalPolitica onAceptar={aceptarPolitica} onCancelar={rechazarPolitica} />
+      )}
+
       <section className="py-1 bg-gray-100 text-center">
         <h2 className="text-3xl font-semibold text-blue-900">¿Por qué unirte a Joyco?</h2>
-       
-
         <p className="mt-4 text-lg text-gray-700 max-w-3xl mx-auto">
           Somos una empresa comprometida con el desarrollo de infraestructura y el crecimiento profesional.
           Aquí encontrarás un equipo humano que impulsa tu carrera.
         </p>
       </section>
+
       <ValoresCorporativos />
       <Footer />
     </div>
