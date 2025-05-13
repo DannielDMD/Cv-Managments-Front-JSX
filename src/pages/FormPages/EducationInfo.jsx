@@ -8,6 +8,7 @@ import {
   getIngles,
 } from "../../services/FormServices/educationService";
 import useFormContext from "../../context/UseFormContext";
+import AyudaFormulario from "../../components/form/AyudaFormulario";
 
 
 const EducationInfo = () => {
@@ -63,7 +64,18 @@ const EducationInfo = () => {
   }, [idCandidato]);
 
   return (
-    <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg">
+    <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg relative">
+      <AyudaFormulario
+        titulo="Ayuda para la sección de Educación"
+        contenido={`🎓 Instrucciones para completar la sección de Educación:
+
+• Selecciona el nivel educativo más alto que hayas alcanzado.
+• El título debe coincidir con el nivel educativo (por ejemplo, no pongas un doctorado si elegiste secundaria).
+• La institución debe existir en el listado. Si no la encuentras, contacta con soporte.
+• El año de graduación no puede ser futuro ni inválido.
+• El nivel de inglés debe ser seleccionado si aplica.
+• Esta sección es obligatoria para continuar con el formulario.`}
+      />
       <h2 className="text-xl font-semibold mb-4">Información Educacional</h2>
       <div>
         <SelectField

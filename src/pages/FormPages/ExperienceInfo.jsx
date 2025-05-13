@@ -3,6 +3,7 @@ import InputField from "../../components/form/InputField";
 import SelectField from "../../components/form/SelectField";
 import { getExperiencia } from "../../services/FormServices/experienceService";
 import useFormContext from "../../context/UseFormContext"; // Importa el hook correctamente
+import AyudaFormulario from "../../components/form/AyudaFormulario";
 
 
 
@@ -22,7 +23,19 @@ const ExperienceInfo = () => {
     updateFormData("experienceInfo", field, value);
   };
   return (
-    <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg">
+    <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg relative">
+      <AyudaFormulario
+        titulo="Ayuda para la sección de Experiencia Laboral"
+        contenido={`💼 Instrucciones para completar esta sección:
+
+• Debes diligenciar la empresa más reciente en la que trabajaste.
+• El cargo debe reflejar tu rol principal en esa empresa.
+• Las funciones deben estar redactadas de forma clara y sin caracteres especiales.
+• La fecha de inicio no puede ser futura ni demasiado antigua (antes del año 2000).
+• La fecha de finalización debe ser posterior a la de inicio, y no puede ser futura si ya no trabajas allí.
+• Esta sección es requerida para continuar con el formulario.`}
+      />
+
       <h2 className="text-xl font-semibold mb-4">Información de Experiencia</h2>
       <div>
 
@@ -45,7 +58,7 @@ const ExperienceInfo = () => {
 
         <InputField label="Fecha de inicio" name="fecha_inicio" type="date" value={experienceData.fecha_inicio} onChange={handleChange} />
 
-        <InputField label="Fecha de finalización" name="fecha_fin" type="date" value={experienceData.fecha_fin} onChange={handleChange} />  
+        <InputField label="Fecha de finalización" name="fecha_fin" type="date" value={experienceData.fecha_fin} onChange={handleChange} />
       </div>
     </div>
   );

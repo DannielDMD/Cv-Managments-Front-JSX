@@ -3,6 +3,7 @@ import InputField from "../../components/form/InputField";
 import SelectField from "../../components/form/SelectField";
 import { getDisponibilidades, getRangos, getMotivosSalida } from "../../services/FormServices/preferencesService";
 import useFormContext from "../../context/UseFormContext"; // Importa el hook correctamente
+import AyudaFormulario from "../../components/form/AyudaFormulario";
 
 const PreferencesInfo = () => {
   const { formData, updateFormData } = useFormContext(); // Obtiene el estado global del formulario
@@ -20,7 +21,20 @@ const PreferencesInfo = () => {
     updateFormData("preferencesInfo", field, value);
   };
   return (
-    <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg">
+    <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg relative">
+      <AyudaFormulario
+        titulo="Ayuda para la sección de Preferencias y Disponibilidad"
+        contenido={`⚙️ Instrucciones para completar esta sección:
+
+• Indica si estás disponible para viajar en caso de que el trabajo lo requiera.
+• Selecciona en qué momento estarías disponible para iniciar labores (inmediato, en 15 días, etc.).
+• Especifica tu rango salarial esperado.
+• Si estás trabajando actualmente, indícalo con sinceridad.
+• Si seleccionaste que trabajaste anteriormente, deberás indicar un motivo de salida.
+• Escribe brevemente por qué te interesa trabajar en Joyco.
+• Esta información será utilizada para verificar compatibilidad con vacantes.`}
+      />
+
       <h2 className="text-xl font-semibold mb-4">Preferencias del Candidato</h2>
       <div>
 

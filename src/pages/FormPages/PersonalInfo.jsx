@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import useFormContext from "../../context/UseFormContext";
 import { useState } from "react";
 import { mostrarErroresBackend } from "../../utils/mostrarErroresBackend";
+import AyudaFormulario from "../../components/form/AyudaFormulario";
 
 
 const PersonalInfo = () => {
@@ -23,6 +24,7 @@ const PersonalInfo = () => {
     updateFormData("personalInfo", field, value);
   };
 
+  const [mostrarModalConfirmacion, setMostrarModalConfirmacion] = useState(false);
 
 
   const validarCampos = () => {
@@ -124,8 +126,23 @@ const PersonalInfo = () => {
 
 
   return (
-    <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg">
+    <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg relative">
+      <AyudaFormulario
+        titulo="Ayuda para Información Personal"
+        contenido={`📌 Instrucciones para completar esta sección:
+
+• Este es el primer paso obligatorio del formulario. 
+• Asegúrate de ingresar tu nombre completo sin caracteres especiales.
+• El correo electrónico debe ser válido.
+• La cédula debe tener entre 6 y 10 dígitos numéricos.
+• El número de teléfono debe tener exactamente 10 dígitos.
+• La fecha de nacimiento no puede ser futura ni anterior al año 1930.
+• Una vez completes y envíes esta sección, se generará tu registro como candidato y no podrás volver a la página de inicio.`}
+      />
+
       <h2 className="text-xl font-semibold mb-4">Información Personal</h2>
+
+
       <form onSubmit={handleSubmit}>
         <InputField
           label="Nombre Completo"
@@ -250,10 +267,52 @@ const PersonalInfo = () => {
           <InputField label="Nombre del Referido" name="nombre_referido" type="text" value={formData.personalInfo.nombre_referido} onChange={handleChange} />
         )}
 
-        <button type="submit" className="mt-4 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">
-          Enviar
+        <button
+          type="button"
+          onClick={() => setMostrarModalConfirmacion(true)}
+          disabled={!!formData.id_candidato} // se desactiva si ya hay ID
+          className={`mt-4 w-full py-2 rounded-md transition-colors ${formData.id_candidato
+              ? "bg-gray-400 text-gray-700 cursor-not-allowed"
+              : "bg-blue-600 text-white hover:bg-blue-700"
+            }`}
+        >
+          {formData.id_candidato ? "Candidato registrado" : "Enviar"}
         </button>
+
+
       </form>
+      {mostrarModalConfirmacion && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 z-50 flex justify-center items-center">
+          <div className="bg-white rounded-lg shadow-lg max-w-md w-full p-6 relative">
+            <h3 className="text-xl font-semibold text-gray-800 mb-4">¿Estás seguro de continuar?</h3>
+            <p className="text-gray-700 text-sm whitespace-pre-line mb-6">
+              Al enviar esta información:
+              • Los datos personales serán almacenados en la base de datos.
+              • No podrás modificarlos más adelante.
+              • No se permitirá volver al dashboard luego del registro.
+              • Asegúrate de que todo esté correcto antes de continuar.
+            </p>
+            <div className="flex justify-end gap-4">
+              <button
+                onClick={() => setMostrarModalConfirmacion(false)}
+                className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 text-gray-700"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={(e) => {
+                  setMostrarModalConfirmacion(false);
+                  handleSubmit(e);
+                }}
+                className="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white"
+              >
+                Confirmar y Enviar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };

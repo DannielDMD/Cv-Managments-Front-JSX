@@ -3,6 +3,7 @@ import SelectField from "../../components/form/SelectField";
 import { getHabilidadesBlandas, getHabilidadesTecnicas, getHerramientas } from "../../services/FormServices/skillService"; "../../services/FormServices/skillService"
 import { toast } from "react-toastify";
 import useFormContext from "../../context/UseFormContext";
+import AyudaFormulario from "../../components/form/AyudaFormulario";
 
 const SkillsInfo = () => {
   const { formData, updateFormData } = useFormContext();
@@ -21,7 +22,18 @@ const SkillsInfo = () => {
   };
 
   return (
-    <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg">
+    <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg relative">
+      <AyudaFormulario
+        titulo="Ayuda para la sección de Habilidades y Conocimientos"
+        contenido={`🧠 Instrucciones para completar esta sección:
+
+• Selecciona al menos una habilidad blanda, una habilidad técnica o una herramienta que domines.
+• Puedes seleccionar múltiples opciones en cada categoría.
+• Si no tienes experiencia en herramientas específicas, selecciona solo habilidades blandas o técnicas.
+• Esta sección busca conocer tus fortalezas, no es obligatorio llenarla completa, pero sí al menos una categoría.
+• Recuerda que esta información será clave para evaluar tu perfil profesional.`}
+      />
+
       <h2 className="text-xl font-semibold mb-4">Habilidades y Conocimientos</h2>
       <div>
 
