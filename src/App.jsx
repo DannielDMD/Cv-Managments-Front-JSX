@@ -13,6 +13,11 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProtectedRouteIncomplete from "./components/form/ProtectedRouteIncomplete";
 import { AuthProvider } from "./context/AuthContext";
+import SolicitudEliminacion from "./pages/SolicitudEliminacion";
+
+
+
+
 
 const App = () => {
   return (
@@ -42,6 +47,7 @@ const App = () => {
             }
           />
           <Route path="/formulario" element={<Form />} />
+          <Route path="/solicitud-eliminacion" element={<SolicitudEliminacion />} />
 
           {/* Rutas protegidas */}
           <Route
