@@ -55,15 +55,22 @@ const Form = () => {
     try {
       // EDUCACIÓN
       const education = {
-        ...formData.educationInfo,
         id_candidato: id,
-        id_nivel_educacion: parseInt(formData.educationInfo.id_nivel_educacion) || null,
-        id_titulo: parseInt(formData.educationInfo.id_titulo) || null,
-        anio_graduacion: formData.educationInfo.anio_graduacion || null,
-        id_institucion: parseInt(formData.educationInfo.id_institucion) || null,
-        id_nivel_ingles: parseInt(formData.educationInfo.id_nivel_ingles) || null,
-
+        id_nivel_educacion: formData.educationInfo.id_nivel_educacion
+          ? parseInt(formData.educationInfo.id_nivel_educacion)
+          : undefined,
+        id_titulo: formData.educationInfo.id_titulo
+          ? parseInt(formData.educationInfo.id_titulo)
+          : undefined,
+        anio_graduacion: formData.educationInfo.anio_graduacion || undefined,
+        id_institucion: formData.educationInfo.id_institucion
+          ? parseInt(formData.educationInfo.id_institucion)
+          : undefined,
+        id_nivel_ingles: formData.educationInfo.id_nivel_ingles
+          ? parseInt(formData.educationInfo.id_nivel_ingles)
+          : undefined,
       };
+      
 
 
       //Post de educación 
