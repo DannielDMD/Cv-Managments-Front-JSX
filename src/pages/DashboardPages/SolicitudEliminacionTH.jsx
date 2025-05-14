@@ -18,6 +18,10 @@ const SolicitudEliminacionTH = () => {
   const [search, setSearch] = useState("");
   const [estadoFiltro, setEstadoFiltro] = useState("");
   const [ordenar, setOrdenar] = useState("recientes");
+  const [anioFiltro, setAnioFiltro] = useState(null);
+  const [mesFiltro, setMesFiltro] = useState(null);
+
+
 
   const fetchSolicitudes = useCallback(async () => {
     setLoading(true);
@@ -26,36 +30,39 @@ const SolicitudEliminacionTH = () => {
         page: pagina,
         search,
         ordenar,
+        anio: anioFiltro,
+        mes: mesFiltro,
+        estado: estadoFiltro, // 👈 no lo olvides
       });
 
-      const filtradas = estadoFiltro
-        ? data.data.filter((s) => s.estado === estadoFiltro)
-        : data.data;
-
-      setSolicitudes(filtradas);
+      setSolicitudes(data.data); // 👈 sin filtrado redundante
       setTotal(data.total);
     } catch (error) {
       toast.error("Error al cargar las solicitudes", error);
     } finally {
       setLoading(false);
     }
-  }, [pagina, search, ordenar, estadoFiltro]);
+  }, [pagina, search, ordenar, estadoFiltro, anioFiltro, mesFiltro]);
+
 
   useEffect(() => {
     fetchSolicitudes();
-  }, [fetchSolicitudes]);
+  }, [fetchSolicitudes, anioFiltro, mesFiltro]);
+
 
   useEffect(() => {
     const cargarEstadisticas = async () => {
       try {
-        const data = await getEstadisticasSolicitudes();
+        const data = await getEstadisticasSolicitudes(anioFiltro);
+
         setEstadisticas(data);
       } catch (error) {
         toast.error("Error al cargar estadísticas", error);
       }
     };
     cargarEstadisticas();
-  }, []);
+  }, [anioFiltro]);
+
 
   const handleEstadoChange = async (id, nuevoEstado, observacion) => {
     try {
@@ -106,6 +113,40 @@ const SolicitudEliminacionTH = () => {
 
         {/* Filtros */}
         <div className="flex gap-4 mb-4 items-center flex-wrap">
+          <select
+            value={anioFiltro || ""}
+            onChange={(e) => {
+              const value = e.target.value ? parseInt(e.target.value) : null;
+              setPagina(1);
+              setAnioFiltro(value);
+            }}
+
+            className="select select-bordered"
+          >
+            <option value="">Todos los años</option>
+            {[2023, 2024, 2025].map((a) => (
+              <option key={a} value={a}>{a}</option>
+            ))}
+          </select>
+
+          <select
+            value={mesFiltro || ""}
+            onChange={(e) => {
+              const value = e.target.value ? parseInt(e.target.value) : null;
+              setPagina(1);
+              setMesFiltro(value);
+            }}
+            className="select select-bordered"
+          >
+            <option value="">Todos los meses</option>
+            {[
+              "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+              "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+            ].map((mes, index) => (
+              <option key={index + 1} value={index + 1}>{mes}</option>
+            ))}
+          </select>
+
           <input
             type="text"
             placeholder="Buscar por nombre, correo o cédula"

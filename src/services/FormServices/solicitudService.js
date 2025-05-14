@@ -18,6 +18,8 @@ export const getSolicitudesEliminacion = async ({
   search = "",
   ordenar = "recientes",
   anio = null,
+  mes = null, // 👈 nuevo parámetro
+
 }) => {
   try {
     const params = {
@@ -27,6 +29,7 @@ export const getSolicitudesEliminacion = async ({
       ordenar,
     };
     if (anio) params.anio = anio;
+    if (mes) params.mes = mes; // 👈 añadimos el mes si existe
 
     const response = await axiosInstance.get("/solicitudes-eliminacion", { params });
     return response.data;
