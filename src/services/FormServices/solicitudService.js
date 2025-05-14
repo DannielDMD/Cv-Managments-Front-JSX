@@ -46,3 +46,15 @@ export const actualizarSolicitudEliminacion = async (id, datosActualizados) => {
     throw error;
   }
 };
+
+// DELETE: Eliminar una solicitud por ID
+export const deleteSolicitudEliminacion = async (id) => {
+    try {
+      const response = await axiosInstance.delete(`/solicitudes-eliminacion/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error("❌ Error al eliminar solicitud:", error.message);
+      throw error;
+    }
+  };
+  

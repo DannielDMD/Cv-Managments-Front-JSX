@@ -14,6 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import ProtectedRouteIncomplete from "./components/form/ProtectedRouteIncomplete";
 import { AuthProvider } from "./context/AuthContext";
 import SolicitudEliminacion from "./pages/SolicitudEliminacion";
+import SolicitudEliminacionTH from "./pages/DashboardPages/SolicitudEliminacionTH";
 
 
 
@@ -91,6 +92,17 @@ const App = () => {
               </AuthProvider>
             }
           />
+          <Route
+            path="/dashboard/solicitudes-eliminacion"
+            element={
+              <AuthProvider>
+                <ProtectedRoute>
+                  <SolicitudEliminacionTH />
+                </ProtectedRoute>
+              </AuthProvider>
+            }
+          />
+
         </Routes>
       </Router>
     </FormProvider>

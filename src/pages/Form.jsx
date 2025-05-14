@@ -23,6 +23,7 @@ const Form = () => {
   const [isFinalStep, setIsFinalStep] = useState(false);
   const [mostrarModalConfirmacion, setMostrarModalConfirmacion] = useState(false);
 
+  const [mostrarAdvertenciaInicial, setMostrarAdvertenciaInicial] = useState(false);
 
   const { formData, resetFormData, updateFormData } = useFormContext();
 
@@ -32,7 +33,9 @@ const Form = () => {
       navigate("/", { replace: true });
       return;
     }
-  
+
+    setMostrarAdvertenciaInicial(true); // ← Agregado aquí
+
     if (location?.state?.reset) {
       resetFormData();
       navigate(location.pathname, { replace: true });
@@ -212,6 +215,27 @@ const Form = () => {
           </div>
         </div>
       )}
+      {mostrarAdvertenciaInicial && (
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="bg-white rounded-lg p-6 shadow-lg max-w-md w-full">
+      <h3 className="text-xl font-semibold mb-4 text-gray-800">
+        Información importante antes de continuar
+      </h3>
+      <p className="text-gray-600 mb-6">
+        Si ya te registraste anteriormente y deseas modificar tu información, debes solicitar la eliminación de tus datos para volver a registrarte. Puedes hacerlo desde la Landing Page, el formulario o el botón de ayuda.
+      </p>
+      <div className="flex justify-end">
+        <button
+          onClick={() => setMostrarAdvertenciaInicial(false)}
+          className="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white"
+        >
+          Entendido
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };

@@ -1,23 +1,20 @@
 import { useEffect, useState, useCallback } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import DashboardLayout from "../../components/Dashboard/DashboardLayout";
+import { obtenerEstadisticasCandidatos } from "../../services/DashboardServices/candidateResumenService";
 import { obtenerResumenCandidatos } from "../../services/DashboardServices/candidateResumenService";
 import CandidateTable from "../../components/Dashboard/CandidateTable";
 import CandidateDetailTable from "../../components/Dashboard/CandidateDetailTable";
 import SelectField from "../../components/form/SelectField";
 import { getCiudades, getCargos } from "../../services/FormServices/candidateService";
 import { getHerramientas } from "../../services/FormServices/skillService";
-import { obtenerEstadisticasCandidatos } from "../../services/DashboardServices/candidateResumenService";
-import { Users } from "lucide-react"; // al inicio
-import { SlidersHorizontal } from "lucide-react"; // al inicio
-import { BookOpen, Undo2 } from "lucide-react"; // al inicio
-
-
-
-
+import { Users } from "lucide-react";
+import { SlidersHorizontal, BookOpen, Undo2 } from "lucide-react";
+import { FiTrash2 } from "react-icons/fi";
 
 const CandidateManagement = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const state = location.state;
   const [estadisticas, setEstadisticas] = useState(null);
   const [paginaActual, setPaginaActual] = useState(1);
@@ -43,7 +40,6 @@ const CandidateManagement = () => {
       if (state.search !== undefined) setSearch(state.search);
       if (state.filtros) setFiltros(state.filtros);
     } else {
-      // 🔁 Al recargar sin state, reiniciar filtros y paginación
       setFiltros({
         id_ciudad: null,
         id_cargo: null,
@@ -82,12 +78,16 @@ const CandidateManagement = () => {
 
   return (
     <DashboardLayout>
-      <h1 className="text-3xl font-bold mb-6 text-gray-800 flex items-center gap-2">
-        <Users className="w-6 h-6 text-blue-600" />
-        Gestión de Candidatos
-      </h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-2">
+          <Users className="w-6 h-6 text-blue-600" />
+          Gestión de Candidatos
+        </h1>
+
+      </div>
+
       {estadisticas && (
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6 text-sm">
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-6 text-sm">
           <div className="bg-white p-4 rounded shadow text-center">
             <p className="font-semibold text-gray-700">Total</p>
             <p className="text-xl font-bold text-indigo-600">{estadisticas.total}</p>
@@ -98,10 +98,23 @@ const CandidateManagement = () => {
               <p className="text-xl font-bold text-blue-600">{estadisticas[estado]}</p>
             </div>
           ))}
+
+          {/* Tarjeta de acción hacia solicitudes de eliminación */}
+          {/* Tarjeta de acción hacia solicitudes de eliminación */}
+          <div
+            onClick={() => navigate("/dashboard/solicitudes-eliminacion")}
+            className="bg-red-50 p-4 rounded shadow text-center cursor-pointer hover:bg-red-100 transition"
+          >
+            <p className="font-semibold text-red-700 mb-2">Solicitudes pendientes</p>
+            <FiTrash2 className="w-8 h-8 mx-auto text-red-600" />
+          </div>
+
         </div>
       )}
 
+
       <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700 mb-1">Buscador:</label>
         <input
           type="text"
           value={search}
@@ -112,6 +125,7 @@ const CandidateManagement = () => {
           placeholder="Buscar por nombre, correo o cargo..."
           className="w-full md:w-1/2 p-2 border border-gray-300 rounded"
         />
+
       </div>
 
       <div className="mb-4">
@@ -272,6 +286,7 @@ const CandidateManagement = () => {
         )}
 
       <div className="mb-4">
+
         <button
           onClick={() => setVerTablaDetallada((prev) => !prev)}
           className="text-sm text-indigo-600 hover:underline"
@@ -306,11 +321,12 @@ const CandidateManagement = () => {
           porPagina={porPagina}
           setPaginaActual={setPaginaActual}
           recargarCandidatos={cargarCandidatos}
-          filtros={filtros} // 👈 ya está
-          search={search}   // 👈 ya está
+          filtros={filtros}
+          search={search}
         />
 
       )}
+
     </DashboardLayout>
   );
 };

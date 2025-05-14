@@ -270,28 +270,36 @@ const PersonalInfo = () => {
         <button
           type="button"
           onClick={() => setMostrarModalConfirmacion(true)}
-          disabled={!!formData.id_candidato} // se desactiva si ya hay ID
-          className={`mt-4 w-full py-2 rounded-md transition-colors ${formData.id_candidato
-              ? "bg-gray-400 text-gray-700 cursor-not-allowed"
-              : "bg-blue-600 text-white hover:bg-blue-700"
-            }`}
+          className="mt-4 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
         >
-          {formData.id_candidato ? "Candidato registrado" : "Enviar"}
+          Enviar
         </button>
-
 
       </form>
       {mostrarModalConfirmacion && (
         <div className="fixed inset-0 bg-black bg-opacity-40 z-50 flex justify-center items-center">
           <div className="bg-white rounded-lg shadow-lg max-w-md w-full p-6 relative">
             <h3 className="text-xl font-semibold text-gray-800 mb-4">¿Estás seguro de continuar?</h3>
-            <p className="text-gray-700 text-sm whitespace-pre-line mb-6">
+            <p className="text-gray-700 text-sm whitespace-pre-line mb-4">
               Al enviar esta información:
-              • Los datos personales serán almacenados en la base de datos.
-              • No podrás modificarlos más adelante.
-              • No se permitirá volver al dashboard luego del registro.
+              • Los datos personales serán almacenados en la base de datos.{"\n"}
+              • No podrás modificarlos más adelante.{"\n"}
+              • No se permitirá volver al dashboard luego del registro.{"\n"}
               • Asegúrate de que todo esté correcto antes de continuar.
             </p>
+
+            <p className="text-blue-600 text-sm mb-6">
+              ¿Ya completaste este formulario antes o necesitas modificar tus datos?{" "}
+              <button
+                onClick={() => {
+                  window.location.href = "/solicitud-eliminacion";
+                }}
+                className="underline text-blue-800 hover:text-blue-600 font-medium"
+              >
+                Solicita eliminar tu candidatura aquí.
+              </button>
+            </p>
+
             <div className="flex justify-end gap-4">
               <button
                 onClick={() => setMostrarModalConfirmacion(false)}

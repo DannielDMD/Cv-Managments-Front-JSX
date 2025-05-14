@@ -17,7 +17,7 @@ const CandidateDetailTable = ({ data, total, paginaActual, porPagina, setPaginaA
       <div className="overflow-x-auto shadow rounded-lg mb-4 border border-gray-200">
         <div className="max-h-[500px] overflow-y-auto">
           <table className="min-w-full text-sm text-gray-800">
-            <thead className="bg-gray-100 text-left sticky top-0 z-10 border-b border-gray-300">
+          <thead className="bg-[#0033A0] text-white text-left border-b-2 border-blue-800">
               <tr>
                 <th className="p-3">Nombre</th>
                 <th className="p-3">Correo</th>
