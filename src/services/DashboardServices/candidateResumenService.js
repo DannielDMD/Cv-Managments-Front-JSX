@@ -18,6 +18,8 @@ export const obtenerResumenCandidatos = async (search = "", filtros = {}, pagina
     }
     if (filtros.ordenar_por_fecha) params.ordenar_por_fecha = filtros.ordenar_por_fecha;
 
+    if (filtros.anio) params.anio = filtros.anio;
+    if (filtros.mes) params.mes = filtros.mes;
 
     // Paginación
     const skip = (pagina - 1) * porPagina;

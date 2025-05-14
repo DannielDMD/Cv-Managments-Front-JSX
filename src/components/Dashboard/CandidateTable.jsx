@@ -42,7 +42,7 @@ const CandidateTable = ({
   return (
     <>
       <div className="w-full overflow-x-auto shadow rounded-lg mb-4">
-<table className="min-w-[1000px] w-full bg-white text-sm text-gray-800 border border-gray-300 border-collapse">
+        <table className="min-w-[1000px] w-full bg-white text-sm text-gray-800 border border-gray-300 border-collapse">
 
           <thead className="bg-[#0033A0] text-white text-left border-b-2 border-blue-800">
 
