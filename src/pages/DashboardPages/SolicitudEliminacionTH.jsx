@@ -6,10 +6,12 @@ import {
 import { toast } from "react-toastify";
 import SolicitudEliminacionRow from "../../components/Dashboard/SolicitudEliminacionRow";
 import DashboardLayout from "../../components/Dashboard/DashboardLayout";
+import { getEstadisticasSolicitudes } from "../../services/FormServices/solicitudService";
 
 const SolicitudEliminacionTH = () => {
   const [solicitudes, setSolicitudes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [estadisticas, setEstadisticas] = useState(null);
 
   const [pagina, setPagina] = useState(1);
   const [total, setTotal] = useState(0);
@@ -43,6 +45,18 @@ const SolicitudEliminacionTH = () => {
     fetchSolicitudes();
   }, [fetchSolicitudes]);
 
+  useEffect(() => {
+    const cargarEstadisticas = async () => {
+      try {
+        const data = await getEstadisticasSolicitudes();
+        setEstadisticas(data);
+      } catch (error) {
+        toast.error("Error al cargar estadísticas", error);
+      }
+    };
+    cargarEstadisticas();
+  }, []);
+
   const handleEstadoChange = async (id, nuevoEstado, observacion) => {
     try {
       await actualizarSolicitudEliminacion(id, {
@@ -61,6 +75,34 @@ const SolicitudEliminacionTH = () => {
       <div className="p-6">
         <h2 className="text-xl font-semibold mb-2">Solicitudes de Eliminación</h2>
         <p className="mb-4 text-sm text-gray-500">Total: {total} solicitudes</p>
+        {estadisticas && (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6 text-sm">
+            <div className="bg-white p-4 rounded shadow text-center">
+              <p className="font-semibold text-gray-700">Total</p>
+              <p className="text-xl font-bold text-indigo-600">{estadisticas.total}</p>
+            </div>
+            <div className="bg-white p-4 rounded shadow text-center">
+              <p className="font-semibold text-gray-700">Pendientes</p>
+              <p className="text-xl font-bold text-blue-600">{estadisticas.pendientes}</p>
+            </div>
+            <div className="bg-white p-4 rounded shadow text-center">
+              <p className="font-semibold text-gray-700">Rechazadas</p>
+              <p className="text-xl font-bold text-red-500">{estadisticas.rechazadas}</p>
+            </div>
+            <div className="bg-white p-4 rounded shadow text-center">
+              <p className="font-semibold text-gray-700">Aceptadas</p>
+              <p className="text-xl font-bold text-green-600">{estadisticas.aceptadas}</p>
+            </div>
+            <div className="bg-white p-4 rounded shadow text-center">
+              <p className="font-semibold text-gray-700">Motivo: Actualizar</p>
+              <p className="text-xl font-bold text-amber-600">{estadisticas.motivo_actualizar_datos}</p>
+            </div>
+            <div className="bg-white p-4 rounded shadow text-center">
+              <p className="font-semibold text-gray-700">Motivo: Eliminar</p>
+              <p className="text-xl font-bold text-fuchsia-600">{estadisticas.motivo_eliminar_candidatura}</p>
+            </div>
+          </div>
+        )}
 
         {/* Filtros */}
         <div className="flex gap-4 mb-4 items-center flex-wrap">
@@ -86,7 +128,9 @@ const SolicitudEliminacionTH = () => {
             <option value="">Todos los estados</option>
             <option value="Pendiente">Pendiente</option>
             <option value="Rechazada">Rechazada</option>
+            <option value="Aceptada">Aceptada</option>
           </select>
+
 
           <select
             value={ordenar}
@@ -104,7 +148,8 @@ const SolicitudEliminacionTH = () => {
         {/* Tabla */}
         <div className="overflow-x-auto">
           <table className="table table-zebra w-full">
-            <thead>
+            <thead className="bg-[#0033A0] text-white text-left border-b-2 border-blue-800">
+
               <tr>
                 <th>Nombre</th>
                 <th>Correo</th>

@@ -1,21 +1,19 @@
-// src/components/Dashboard/SolicitudEliminacionRow.jsx
 import { useState } from "react";
-import { FiMail, FiTrash2 } from "react-icons/fi";
+import { FiMail, FiTrash2, FiSave } from "react-icons/fi";
 import { toast } from "react-toastify";
 import { deleteSolicitudEliminacion } from "../../services/FormServices/solicitudService";
 
 const SolicitudEliminacionRow = ({ solicitud, onEstadoChange }) => {
   const [estado, setEstado] = useState(solicitud.estado);
   const [observacion, setObservacion] = useState(solicitud.observacion_admin || "");
-  const [mostrarModal, setMostrarModal] = useState(false);
+  const [mostrarModalEliminar, setMostrarModalEliminar] = useState(false);
+  const [mostrarModalGuardar, setMostrarModalGuardar] = useState(false);
+  const [mostrarModalCorreo, setMostrarModalCorreo] = useState(false);
   const [eliminando, setEliminando] = useState(false);
 
-  const handleActualizar = () => {
-    onEstadoChange(solicitud.id, estado, observacion);
-  };
-
-  const handleEnviarCorreo = () => {
-    window.location.href = `mailto:${solicitud.correo}?subject=Respuesta solicitud eliminación`;
+  const formatearFecha = (fechaISO) => {
+    const fecha = new Date(fechaISO);
+    return fecha.toLocaleDateString("es-CO");
   };
 
   const handleEliminar = async () => {
@@ -23,81 +21,152 @@ const SolicitudEliminacionRow = ({ solicitud, onEstadoChange }) => {
       setEliminando(true);
       await deleteSolicitudEliminacion(solicitud.id);
       toast.success("Solicitud eliminada correctamente");
-      setMostrarModal(false);
-      onEstadoChange(); // reutilizamos para recargar desde padre
+      setMostrarModalEliminar(false);
+      onEstadoChange(); // recarga desde el padre
     } catch {
       toast.error("Error al eliminar la solicitud");
     } finally {
       setEliminando(false);
     }
   };
-  const formatearFecha = (fechaISO) => {
-    const fecha = new Date(fechaISO);
-    const dia = String(fecha.getDate()).padStart(2, "0");
-    const mes = String(fecha.getMonth() + 1).padStart(2, "0");
-    const anio = fecha.getFullYear();
-    return `${dia}/${mes}/${anio}`;
+
+  const handleGuardar = () => {
+    onEstadoChange(solicitud.id, estado, observacion);
+    setMostrarModalGuardar(false);
   };
-  
+
+  const generarMensajeCorreo = () => {
+    const base = `De acuerdo con su solicitud de "${solicitud.motivo}", `;
+    const ley = `Esto se realiza conforme a lo establecido en la Ley 1581 de 2012 sobre Protección de Datos Personales.`;
+
+    if (estado === "Pendiente") {
+      return `${base}esta se encuentra *pendiente*. Porfavor si de aqui a 15 días no recibe respuesta oportuna, comunicarse nuevamente`;
+    }
+
+    if (estado === "Rechazada") {
+      return `${base}esta ha sido *rechazada*. Esta decisión ha sido registrada por el área de Talento Humano.`;
+    }
+
+    if (estado === "Aceptada") {
+      return `${base}esta ha sido *aceptada*. Sus datos han sido eliminados del sistema, por lo que podrá volver a registrar su información cuando lo desee. ${ley}`;
+    }
+
+    // En caso de que se agreguen más estados en el futuro
+    return `${base}esta ha sido procesada por el área de Talento Humano.`;
+  };
+
+
+  const handleEnviarCorreo = () => {
+    const asunto = `Respuesta a su solicitud de eliminación`;
+    const mensaje = generarMensajeCorreo();
+    if (!mensaje) return toast.warning("Debe establecer un estado distinto de 'Pendiente' para generar el mensaje.");
+    const body = encodeURIComponent(mensaje);
+    window.location.href = `mailto:${solicitud.correo}?subject=${encodeURIComponent(asunto)}&body=${body}`;
+    setMostrarModalCorreo(false);
+  };
+
   return (
     <>
-      <tr>
-        <td>{solicitud.nombre_completo}</td>
-        <td>{solicitud.correo}</td>
-        <td>{solicitud.cc}</td>
-        <td>{solicitud.motivo}</td>
-        <td>
+      <tr className="hover:bg-gray-50">
+        <td className="p-3 border border-gray-300">{solicitud.nombre_completo}</td>
+        <td className="p-3 border border-gray-300">{solicitud.correo}</td>
+        <td className="p-3 border border-gray-300">{solicitud.cc}</td>
+        <td className="p-3 border border-gray-300">{solicitud.motivo}</td>
+        <td className="p-3 border border-gray-300">
           <select
             value={estado}
             onChange={(e) => setEstado(e.target.value)}
-            className="select select-sm select-bordered"
+            className="bg-transparent border border-gray-300 rounded px-2 py-1 text-xs w-full"
           >
             <option value="Pendiente">Pendiente</option>
             <option value="Rechazada">Rechazada</option>
+            <option value="Aceptada">Aceptada</option>
           </select>
+
         </td>
-        <td>
+        <td className="p-3 border border-gray-300">
           <input
             type="text"
             value={observacion}
             onChange={(e) => setObservacion(e.target.value)}
-            className="input input-sm input-bordered"
+            className="border border-gray-300 rounded px-2 py-1 text-xs w-full"
+            placeholder="Observación"
           />
         </td>
-        <td>{formatearFecha(solicitud.fecha_solicitud)}</td>
-        <td className="flex gap-2">
-          <button className="btn btn-sm btn-outline btn-success" onClick={handleActualizar}>
-            Guardar
-          </button>
-          <button className="btn btn-sm btn-outline" onClick={handleEnviarCorreo}>
-            <FiMail />
-          </button>
-          <button
-            className="btn btn-sm btn-outline btn-error"
-            onClick={() => setMostrarModal(true)}
-          >
-            <FiTrash2 />
-          </button>
+        <td className="p-3 border border-gray-300">{formatearFecha(solicitud.fecha_solicitud)}</td>
+        <td className="p-3 border border-gray-300">
+          <div className="flex gap-2 flex-wrap">
+            <button
+              className="btn btn-xs btn-outline btn-success"
+              onClick={() => setMostrarModalGuardar(true)}
+              title="Guardar cambios"
+            >
+              <FiSave className="w-4 h-4" />
+            </button>
+            <button
+              className="btn btn-xs btn-outline"
+              onClick={() => setMostrarModalCorreo(true)}
+              title="Enviar correo"
+            >
+              <FiMail className="w-4 h-4" />
+            </button>
+            <button
+              className="btn btn-xs btn-outline btn-error"
+              onClick={() => setMostrarModalEliminar(true)}
+              title="Eliminar solicitud"
+            >
+              <FiTrash2 className="w-4 h-4" />
+            </button>
+          </div>
         </td>
       </tr>
 
-      {mostrarModal && (
+      {/* Modal Confirmar Guardar */}
+      {mostrarModalGuardar && (
         <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-sm">
-            <h3 className="text-lg font-bold mb-2">Confirmar eliminación</h3>
+            <h3 className="text-lg font-bold mb-2 text-green-700">Confirmar guardado</h3>
+            <p className="mb-4 text-sm">¿Deseas guardar los cambios?</p>
+            <div className="flex justify-end gap-2">
+              <button className="btn btn-sm bg-red-600 text-white hover:bg-red-700" onClick={() => setMostrarModalGuardar(false)}>Cancelar </button>
+              <button className="btn btn-sm bg-blue-600 text-white hover:bg-blue-700" onClick={handleGuardar}>Confirmar</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Confirmar Envío Correo */}
+      {mostrarModalCorreo && (
+        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-sm">
+            <h3 className="text-lg font-bold mb-2 text-blue-700">Confirmar envío</h3>
+            <p className="mb-4 text-sm">¿Deseas enviar correo a <strong>{solicitud.correo}</strong>?</p>
+            <div className="flex justify-end gap-2">
+              <button className="btn btn-sm bg-red-600 text-white hover:bg-red-700" onClick={() => setMostrarModalCorreo(false)}>Cancelar</button>
+              <button className="btn btn-sm bg-blue-600 text-white hover:bg-blue-700" onClick={handleEnviarCorreo}>Enviar</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Confirmar Eliminación */}
+      {mostrarModalEliminar && (
+        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-sm">
+            <h3 className="text-lg font-bold mb-2 text-red-700">Confirmar eliminación</h3>
             <p className="mb-4 text-sm">
-              ¿Estás seguro de que deseas eliminar esta solicitud de <strong>{solicitud.nombre_completo}</strong>?
+              ¿Eliminar solicitud de <strong>{solicitud.nombre_completo}</strong>?
             </p>
             <div className="flex justify-end gap-2">
               <button
-                className="btn btn-sm"
-                onClick={() => setMostrarModal(false)}
+                className="btn btn-sm bg-red-600 text-white hover:bg-red-700"
+                onClick={() => setMostrarModalEliminar(false)}
                 disabled={eliminando}
               >
                 Cancelar
               </button>
               <button
-                className="btn btn-sm btn-error"
+                className="btn btn-sm bg-blue-600 text-white hover:bg-blue-700"
                 onClick={handleEliminar}
                 disabled={eliminando}
               >
@@ -107,8 +176,10 @@ const SolicitudEliminacionRow = ({ solicitud, onEstadoChange }) => {
           </div>
         </div>
       )}
+
     </>
   );
+
 };
 
 export default SolicitudEliminacionRow;

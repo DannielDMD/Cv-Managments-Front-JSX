@@ -50,7 +50,7 @@ export const actualizarSolicitudEliminacion = async (id, datosActualizados) => {
 // DELETE: Eliminar una solicitud por ID
 export const deleteSolicitudEliminacion = async (id) => {
     try {
-      const response = await axiosInstance.delete(`/solicitudes-eliminacion/${id}`);
+      const response = await axiosInstance.delete(`/solicitudes-eliminacion/estadisticas${id}`);
       return response.data;
     } catch (error) {
       console.error("❌ Error al eliminar solicitud:", error.message);
@@ -58,3 +58,16 @@ export const deleteSolicitudEliminacion = async (id) => {
     }
   };
   
+// GET: Obtener estadísticas de solicitudes
+export const getEstadisticasSolicitudes = async (anio = null) => {
+  try {
+    const params = {};
+    if (anio) params.año = anio;
+
+    const response = await axiosInstance.get("/solicitudes-eliminacion/estadisticas", { params });
+    return response.data; 
+  } catch (error) {
+    console.error("❌ Error al obtener estadísticas:", error.message);
+    throw error;
+  }
+};
