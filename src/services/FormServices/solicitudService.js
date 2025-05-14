@@ -18,18 +18,20 @@ export const getSolicitudesEliminacion = async ({
   search = "",
   ordenar = "recientes",
   anio = null,
-  mes = null, // 👈 nuevo parámetro
-
+  mes = null,
+  estado = null, // 👈 asegúrate que esté declarado
 }) => {
   try {
     const params = {
       skip: (page - 1) * limit,
       limit,
       search,
-      ordenar,
+      ordenar_por_fecha: ordenar, 
     };
     if (anio) params.anio = anio;
-    if (mes) params.mes = mes; // 👈 añadimos el mes si existe
+    if (mes) params.mes = mes;
+    if (estado) params.estado = estado; // 👈 importante
+    if (ordenar) params.ordenar_por_fecha = ordenar;
 
     const response = await axiosInstance.get("/solicitudes-eliminacion", { params });
     return response.data;
@@ -38,6 +40,7 @@ export const getSolicitudesEliminacion = async ({
     throw error;
   }
 };
+
 
 // PUT: Actualizar estado u observación de una solicitud (por TH)
 export const actualizarSolicitudEliminacion = async (id, datosActualizados) => {
