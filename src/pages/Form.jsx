@@ -13,6 +13,7 @@ import { postPreferencias } from "../services/FormServices/preferencesService";
 import { mostrarErroresBackend } from "../utils/mostrarErroresBackend"; // asegúrate de tener este import al inicio
 
 import { marcarFormularioCompleto } from "../services/FormServices/candidateService";
+import DecoracionFormulario from "../components/form/DecoracionFormulario";
 
 
 
@@ -45,9 +46,6 @@ const Form = () => {
       navigate(location.pathname, { replace: true });
     }
   }, [formData.acepta_politica_datos, location, resetFormData, navigate]);
-
-
-
 
 
   const handleSubmit = async () => {
@@ -173,9 +171,17 @@ const Form = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center min-h-screen bg-gray-100 pt-20">
+      {/* Fondo decorativo */}
+
+      <div className="relative min-h-screen bg-gray-100 pt-20 flex flex-col items-center overflow-hidden">
+ <DecoracionFormulario tipo="principal" />
+
+
         <Header />
-        <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-4xl">
+      <div className="relative z-10 bg-white shadow-lg rounded-xl p-8 w-full max-w-4xl">
+
+
+
           <FormStepper setIsFinalStep={setIsFinalStep} />
           <div className="flex justify-end mt-6">
             <button

@@ -4,7 +4,8 @@ import { PublicClientApplication } from "@azure/msal-browser";
 import { MsalProvider } from "@azure/msal-react";
 import App from "./App.jsx";
 import { msalConfig } from "./utils/authConfig";
-import "./index.css"; // ya no necesitas importar AuthProvider aquí
+import './index.css';
+
 
 const msalInstance = new PublicClientApplication(msalConfig);
 

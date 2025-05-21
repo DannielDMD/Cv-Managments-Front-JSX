@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Fondo decorativo para formularios */
+.bg-formulario {
+@apply bg-gray-50 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50;
+
+background-image: radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.08) 1px, transparent 0);
+background-size: 20px 20px;
+
+}

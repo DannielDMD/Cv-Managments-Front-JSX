@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import joycoLogo from "../assets/joyco-logo.png";
 import Footer from "../components/Footer";
+import DecoracionFormulario from "../components/form/DecoracionFormulario";
 
 const SolicitudEliminacion = () => {
     const [form, setForm] = useState({
@@ -74,7 +75,8 @@ const SolicitudEliminacion = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-100 flex flex-col">
+        <div className="min-h-screen bg-formulario flex flex-col">
+
             <header className="fixed top-0 left-0 w-full bg-[#0033A0] text-white p-4 flex justify-between items-center shadow-md z-50">
                 <div className="flex items-center gap-4">
                     <a
@@ -95,7 +97,7 @@ const SolicitudEliminacion = () => {
             </header>
 
             <div className="flex flex-col justify-center items-center flex-grow px-4 py-10 lg:py-20 mt-24">
-            <div className="max-w-lg w-full bg-white shadow-md rounded-lg p-6 mb-10">
+                <div className="max-w-lg w-full bg-white shadow-md rounded-lg p-6 mb-10">
                     <h2 className="text-2xl font-bold text-center text-blue-800 mb-4">
                         Solicitud de Eliminación / Actualización de Datos
                     </h2>

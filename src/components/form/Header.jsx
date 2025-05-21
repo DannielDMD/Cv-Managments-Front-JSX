@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import useFormContext from "../../context/UseFormContext";
-
+import joycoLogo from "../../assets/joyco-logo.png"; // Asegúrate que la imagen esté ahí
 
 const Header = () => {
   const navigate = useNavigate();
@@ -8,6 +8,21 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 left-0 w-full bg-[#0033A0] text-white py-4 shadow-md z-50 flex justify-between items-center px-6">
+      <div className="flex items-center gap-4">
+              <a
+                href="https://www.joyco.co/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-90 transition"
+              >
+                <img
+                  src={joycoLogo}
+                  alt="Logo Joyco"
+                  className="h-20 w-auto object-contain"
+                />
+              </a>
+            </div>
+      
       {/* Título centrado */}
       <h1 className="text-2xl font-bold flex-1 text-center">Formulario de Postulación</h1>
 
