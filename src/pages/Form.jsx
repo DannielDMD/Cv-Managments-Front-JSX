@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"; // 👈 importa useEffect
+import { useEffect, useState, useRef } from "react"; // agrega useRef
 import { useNavigate, useLocation } from "react-router-dom";
 import FormStepper from "../components/form/FormStepper";
 import Header from "../components/form/Header";
@@ -24,23 +24,28 @@ const Form = () => {
   const [mostrarModalConfirmacion, setMostrarModalConfirmacion] = useState(false);
 
   const [mostrarAdvertenciaInicial, setMostrarAdvertenciaInicial] = useState(false);
+  const yaMostroAdvertencia = useRef(false);
 
   const { formData, resetFormData, updateFormData } = useFormContext();
 
 
   useEffect(() => {
-    if (!formData.acepta_politica_datos) {
-      navigate("/", { replace: true });
-      return;
-    }
+  if (!formData.acepta_politica_datos) {
+    navigate("/", { replace: true });
+    return;
+  }
 
-    setMostrarAdvertenciaInicial(true); // ← Agregado aquí
+  if (!yaMostroAdvertencia.current) {
+    setMostrarAdvertenciaInicial(true);
+    yaMostroAdvertencia.current = true;
+  }
 
-    if (location?.state?.reset) {
-      resetFormData();
-      navigate(location.pathname, { replace: true });
-    }
-  }, [formData.acepta_politica_datos, location, resetFormData, navigate]);
+  if (location?.state?.reset) {
+    resetFormData();
+    navigate(location.pathname, { replace: true });
+  }
+}, [formData.acepta_politica_datos, location, resetFormData, navigate]);
+
   
 
 
