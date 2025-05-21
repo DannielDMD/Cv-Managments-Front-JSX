@@ -4,7 +4,7 @@ import FormStepper from "../components/form/FormStepper";
 import Header from "../components/form/Header";
 import { toast } from "react-toastify";
 import useFormContext from "../context/UseFormContext";
-
+import Footer from "../components/Footer";
 // Servicios individuales
 import { postEducation } from "../services/FormServices/educationService";
 import { postExperiencia } from "../services/FormServices/experienceService";
@@ -30,23 +30,23 @@ const Form = () => {
 
 
   useEffect(() => {
-  if (!formData.acepta_politica_datos) {
-    navigate("/", { replace: true });
-    return;
-  }
+    if (!formData.acepta_politica_datos) {
+      navigate("/", { replace: true });
+      return;
+    }
 
-  if (!yaMostroAdvertencia.current) {
-    setMostrarAdvertenciaInicial(true);
-    yaMostroAdvertencia.current = true;
-  }
+    if (!yaMostroAdvertencia.current) {
+      setMostrarAdvertenciaInicial(true);
+      yaMostroAdvertencia.current = true;
+    }
 
-  if (location?.state?.reset) {
-    resetFormData();
-    navigate(location.pathname, { replace: true });
-  }
-}, [formData.acepta_politica_datos, location, resetFormData, navigate]);
+    if (location?.state?.reset) {
+      resetFormData();
+      navigate(location.pathname, { replace: true });
+    }
+  }, [formData.acepta_politica_datos, location, resetFormData, navigate]);
 
-  
+
 
 
 
@@ -78,7 +78,7 @@ const Form = () => {
           ? parseInt(formData.educationInfo.id_nivel_ingles)
           : undefined,
       };
-      
+
 
 
       //Post de educación 
@@ -172,77 +172,82 @@ const Form = () => {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen bg-gray-100 pt-20">
-      <Header />
-      <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-4xl">
-        <FormStepper setIsFinalStep={setIsFinalStep} />
-        <div className="flex justify-end mt-6">
-          <button
-            className={`px-4 py-2 rounded-lg shadow-md transition ${isFinalStep
-              ? "bg-blue-700 text-white hover:bg-blue-800"
-              : "bg-gray-400 text-gray-700 cursor-not-allowed"
-              }`}
-            disabled={!isFinalStep}
-            onClick={() => setMostrarModalConfirmacion(true)}
-
-          >
-            Guardar y Continuar
-          </button>
-        </div>
-      </div>
-
-      {mostrarModalConfirmacion && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 shadow-lg max-w-md w-full">
-            <h3 className="text-xl font-semibold mb-4 text-gray-800">
-              ¿Está seguro de enviar esta información?
-            </h3>
-            <p className="text-gray-600 mb-6">
-              Una vez enviada, no podrá modificar los datos. Por favor revise que todo esté correcto.
-            </p>
-            <div className="flex justify-end space-x-4">
-              <button
-                onClick={() => setMostrarModalConfirmacion(false)}
-                className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 text-gray-700"
-              >
-                Cancelar
-              </button>
-              <button
-                onClick={() => {
-                  setMostrarModalConfirmacion(false);
-                  handleSubmit();
-                }}
-                className="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white"
-              >
-                Enviar
-              </button>
-            </div>
+    <>
+      <div className="flex flex-col items-center min-h-screen bg-gray-100 pt-20">
+        <Header />
+        <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-4xl">
+          <FormStepper setIsFinalStep={setIsFinalStep} />
+          <div className="flex justify-end mt-6">
+            <button
+              className={`px-4 py-2 rounded-lg shadow-md transition ${isFinalStep
+                ? "bg-blue-700 text-white hover:bg-blue-800"
+                : "bg-gray-400 text-gray-700 cursor-not-allowed"
+                }`}
+              disabled={!isFinalStep}
+              onClick={() => setMostrarModalConfirmacion(true)}
+            >
+              Guardar y Continuar
+            </button>
           </div>
         </div>
-      )}
-      {mostrarAdvertenciaInicial && (
-  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div className="bg-white rounded-lg p-6 shadow-lg max-w-md w-full">
-      <h3 className="text-xl font-semibold mb-4 text-gray-800">
-        Información importante antes de continuar
-      </h3>
-      <p className="text-gray-600 mb-6">
-        Si ya te registraste anteriormente y deseas modificar tu información, debes solicitar la eliminación de tus datos para volver a registrarte. Puedes hacerlo desde la Landing Page, el formulario o el botón de ayuda.
-      </p>
-      <div className="flex justify-end">
-        <button
-          onClick={() => setMostrarAdvertenciaInicial(false)}
-          className="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white"
-        >
-          Entendido
-        </button>
-      </div>
-    </div>
-  </div>
-)}
 
-    </div>
+        {mostrarModalConfirmacion && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white rounded-lg p-6 shadow-lg max-w-md w-full">
+              <h3 className="text-xl font-semibold mb-4 text-gray-800">
+                ¿Está seguro de enviar esta información?
+              </h3>
+              <p className="text-gray-600 mb-6">
+                Una vez enviada, no podrá modificar los datos. Por favor revise que todo esté correcto.
+              </p>
+              <div className="flex justify-end space-x-4">
+                <button
+                  onClick={() => setMostrarModalConfirmacion(false)}
+                  className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 text-gray-700"
+                >
+                  Cancelar
+                </button>
+                <button
+                  onClick={() => {
+                    setMostrarModalConfirmacion(false);
+                    handleSubmit();
+                  }}
+                  className="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white"
+                >
+                  Enviar
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {mostrarAdvertenciaInicial && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white rounded-lg p-6 shadow-lg max-w-md w-full">
+              <h3 className="text-xl font-semibold mb-4 text-gray-800">
+                Información importante antes de continuar
+              </h3>
+              <p className="text-gray-600 mb-6">
+                Si ya te registraste anteriormente y deseas modificar tu información, debes solicitar la eliminación de tus datos para volver a registrarte. Puedes hacerlo desde la Landing Page, el formulario o el botón de ayuda.
+              </p>
+              <div className="flex justify-end">
+                <button
+                  onClick={() => setMostrarAdvertenciaInicial(false)}
+                  className="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white"
+                >
+                  Entendido
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* ✅ Footer FUERA del div centrado */}
+      <Footer />
+    </>
   );
+
 };
 
 export default Form;

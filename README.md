@@ -14,6 +14,7 @@ Este proyecto es una plataforma interna para la empresa **Joyco**, desarrollada 
 - **Lucide-React** -- Iconos (npm install lucide-react --legacy-peer-deps)
 - **Recharts** – visualización de estadísticas en el dashboard
 - **@azure/msal-browser** y **@azure/msal-react** – integración con Microsoft Azure AD
+-- **react-responsive-carousel** - Para generar carrusel de imagenes
 
 ## ⚙️ Instalación
 

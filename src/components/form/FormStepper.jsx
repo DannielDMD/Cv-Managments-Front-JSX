@@ -6,6 +6,7 @@ import SkillsInfo from "../../pages/FormPages/SkillsInfo";
 import PreferencesInfo from "../../pages/FormPages/PreferencesInfo";
 import useFormContext from "../../context/UseFormContext";
 import { toast } from "react-toastify";
+
 const steps = [
   "Información Personal",
   "Educación",
