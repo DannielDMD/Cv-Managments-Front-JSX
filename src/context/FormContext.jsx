@@ -20,6 +20,11 @@ const INITIAL_STATE = {
     nombre_referido: "",
     id_ciudad: "",
     id_cargo: "",
+    id_departamento: "",         // ✅ nuevo
+    id_centro_costos: "",
+    nombre_cargo_otro: "",              // ✅ para CARGO
+    otro_motivo_salida: "",             // ✅ para MOTIVO SALIDA
+    nombre_centro_costos_otro: "",      // ✅ para CENTRO DE COSTOS
     id_candidato: null,
   },
   educationInfo: {

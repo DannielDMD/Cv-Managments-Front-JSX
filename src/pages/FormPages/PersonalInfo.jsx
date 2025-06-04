@@ -8,11 +8,17 @@ import useFormContext from "../../context/UseFormContext";
 import { useState } from "react";
 import { mostrarErroresBackend } from "../../utils/mostrarErroresBackend";
 import AyudaFormulario from "../../components/form/AyudaFormulario";
+import { getDepartamentos, getCentrosCostos } from "../../services/FormServices/candidateService";
 
+const ID_OTRO_CARGO = 95;
+const ID_OTRO_CENTRO_COSTOS = 37;
+const ID_OTRO_MOTIVO_SALIDA = 8;
 
 const PersonalInfo = () => {
   const { formData, updateFormData, setIdCandidatoEnTodo } = useFormContext();
   const [errores, setErrores] = useState({});
+  const [ciudadesFiltradas, setCiudadesFiltradas] = useState([]);
+
 
   // Manejo de inputs normales
   const handleChange = (e) => {
@@ -23,6 +29,19 @@ const PersonalInfo = () => {
   const handleSelectChange = (field, value) => {
     updateFormData("personalInfo", field, value);
   };
+
+  const handleDepartamentoChange = async (value) => {
+    handleSelectChange("id_departamento", value);
+    handleSelectChange("id_ciudad", ""); // Reinicia ciudad
+
+    if (value) {
+      const ciudades = await getCiudades(value);
+      setCiudadesFiltradas(ciudades);
+    } else {
+      setCiudadesFiltradas([]);
+    }
+  };
+
 
   const [mostrarModalConfirmacion, setMostrarModalConfirmacion] = useState(false);
 
@@ -94,11 +113,18 @@ const PersonalInfo = () => {
 
     const dataToSend = {
       ...formData.personalInfo,
+      id_departamento: parseInt(formData.personalInfo.id_departamento) || null,
+      id_centro_costos: formData.personalInfo.trabaja_actualmente_joyco === "SI"
+        ? parseInt(formData.personalInfo.id_centro_costos)
+        : null,
       id_ciudad: parseInt(formData.personalInfo.id_ciudad) || null,
       id_cargo: parseInt(formData.personalInfo.id_cargo) || null,
       trabaja_actualmente_joyco: formData.personalInfo.trabaja_actualmente_joyco === "SI",
       ha_trabajado_joyco: formData.personalInfo.ha_trabajado_joyco === "SI",
       tiene_referido: formData.personalInfo.tiene_referido === "SI",
+      nombre_cargo_otro: formData.personalInfo.nombre_cargo_otro || null,
+      otro_motivo_salida: formData.personalInfo.otro_motivo_salida || null,
+      nombre_centro_costos_otro: formData.personalInfo.nombre_centro_costos_otro || null,
       id_motivo_salida: formData.personalInfo.id_motivo_salida
         ? parseInt(formData.personalInfo.id_motivo_salida)
         : null,
@@ -210,16 +236,32 @@ const PersonalInfo = () => {
           error={errores.descripcion_perfil}
         />
 
-
         <SelectField
-          label="Ciudad de Residencia"
-          fetchFunction={getCiudades}
-          idKey="id_ciudad"
-          nameKey="nombre_ciudad"
-          value={formData.personalInfo.id_ciudad}
-          onChange={(value) => handleSelectChange("id_ciudad", value)}
-          isMulti={false} // Selección única
+          label="Departamento de Residencia"
+          fetchFunction={getDepartamentos}
+          idKey="id_departamento"
+          nameKey="nombre_departamento"
+          value={formData.personalInfo.id_departamento}
+          onChange={handleDepartamentoChange}
+          isMulti={false}
         />
+
+
+
+
+
+        {formData.personalInfo.id_departamento && (
+          <SelectField
+            label="Ciudad de Residencia"
+            fetchFunction={() => Promise.resolve(ciudadesFiltradas)}
+            idKey="id_ciudad"
+            nameKey="nombre_ciudad"
+            value={formData.personalInfo.id_ciudad}
+            onChange={(value) => handleSelectChange("id_ciudad", value)}
+            isMulti={false}
+          />
+        )}
+
 
         <SelectField
           label="Cargo Postulado"
@@ -231,12 +273,55 @@ const PersonalInfo = () => {
           isMulti={false} // Selección única
         />
 
+        {formData.personalInfo.id_cargo == ID_OTRO_CARGO && (
+          <InputField
+            label="¿Cuál es el cargo?"
+            name="nombre_cargo_otro"
+            type="text"
+            value={formData.personalInfo.nombre_cargo_otro}
+            onChange={handleChange}
+          />
+        )}
+
+        <p className="text-xs text-gray-500">
+          Valor actual de id_cargo: {formData.personalInfo.id_cargo}
+        </p>
+
+
         <label className="block mb-2">Trabaja actualmente en Joyco?</label>
         <select name="trabaja_actualmente_joyco" value={formData.personalInfo.trabaja_actualmente_joyco} onChange={handleChange} className="w-full p-2 border rounded-md">
           <option value="">Seleccione...</option>
           <option value="SI">Sí</option>
           <option value="NO">No</option>
         </select>
+
+        {formData.personalInfo.trabaja_actualmente_joyco === "SI" && (
+          <SelectField
+            label="Centro de Costos"
+            fetchFunction={getCentrosCostos}
+            idKey="id_centro_costos"
+            nameKey="nombre_centro_costos"
+            value={formData.personalInfo.id_centro_costos}
+            onChange={(value) => handleSelectChange("id_centro_costos", value)}
+            isMulti={false}
+          />
+        )}
+
+        {formData.personalInfo.id_centro_costos == ID_OTRO_CENTRO_COSTOS && (
+          <InputField
+            label="¿Cuál es el centro de costos?"
+            name="nombre_centro_costos_otro"
+            type="text"
+            value={formData.personalInfo.nombre_centro_costos_otro}
+            onChange={handleChange}
+          />
+        )}
+
+
+        <p className="text-xs text-gray-500">
+          Valor actual de <strong>id_centro_costos</strong>: {formData.personalInfo.id_centro_costos}
+        </p>
+
 
         <label className="block mb-2">Ha trabajado en Joyco?</label>
         <select name="ha_trabajado_joyco" value={formData.personalInfo.ha_trabajado_joyco} onChange={handleChange} className="w-full p-2 border rounded-md">
@@ -255,6 +340,21 @@ const PersonalInfo = () => {
             onChange={(value) => handleSelectChange("id_motivo_salida", value)}
           />
         )}
+
+        {formData.personalInfo.id_motivo_salida == ID_OTRO_MOTIVO_SALIDA && (
+          <InputField
+            label="¿Cuál fue el motivo de salida?"
+            name="otro_motivo_salida"
+            type="text"
+            value={formData.personalInfo.otro_motivo_salida}
+            onChange={handleChange}
+          />
+        )}
+
+
+        <p className="text-xs text-gray-500">
+          Valor actual de <strong>id_motivo_salida</strong>: {formData.personalInfo.id_motivo_salida}
+        </p>
 
         <label className="block mb-2">Tiene Referido?</label>
         <select name="tiene_referido" value={formData.personalInfo.tiene_referido} onChange={handleChange} className="w-full p-2 border rounded-md">

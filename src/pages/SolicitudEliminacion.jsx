@@ -76,7 +76,6 @@ const SolicitudEliminacion = () => {
 
     return (
         <div className="min-h-screen bg-formulario flex flex-col">
-
             <header className="fixed top-0 left-0 w-full bg-[#0033A0] text-white p-4 flex justify-between items-center shadow-md z-50">
                 <div className="flex items-center gap-4">
                     <a

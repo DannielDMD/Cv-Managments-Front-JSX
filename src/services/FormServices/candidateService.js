@@ -2,9 +2,26 @@
 // candidateService.js (Servicios relacionados con candidatos)
 import { axiosInstance } from "../../utils/api";
 
-export const getCiudades = async () => {
+// Obtener lista de departamentos
+export const getDepartamentos = async () => {
   try {
-    const response = await axiosInstance.get("/ciudades");
+    const response = await axiosInstance.get("/departamentos");
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener departamentos:", error.message);
+    return [];
+  }
+};
+
+
+// Obtener ciudades por id_departamento
+export const getCiudades = async (id_departamento = null) => {
+  try {
+    const url = id_departamento
+      ? `/ciudades/departamento/${id_departamento}` // ✅ esta es la ruta correcta
+      : "/ciudades";
+
+    const response = await axiosInstance.get(url);
     return response.data;
   } catch (error) {
     console.error("Error al obtener ciudades:", error.message);
@@ -22,16 +39,28 @@ export const getCargos = async () => {
   }
 };
 
+
+// Obtener lista de centros de costos
+export const getCentrosCostos = async () => {
+  try {
+    const response = await axiosInstance.get("/centros-costos");
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener centros de costos:", error.message);
+    return [];
+  }
+};
+
 export const getMotivos = async () => {
-    try {
-        const response = await axiosInstance.get("/motivos-salida");
-        console.log("Motivos de salida recibidos:", response.data);  // 👈 Agrega esto
-        return response.data;
-      } catch (error) {
-        console.error("Error al obtener los motivos de salida:", error.message);
-        return [];
-      }
-  };
+  try {
+    const response = await axiosInstance.get("/motivos-salida");
+    console.log("Motivos de salida recibidos:", response.data);  // 👈 Agrega esto
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener los motivos de salida:", error.message);
+    return [];
+  }
+};
 
 
 
