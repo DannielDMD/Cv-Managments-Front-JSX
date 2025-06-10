@@ -7,7 +7,7 @@ import { useEffect } from "react";
 const estados = ["EN_PROCESO", "ENTREVISTA", "ADMITIDO", "DESCARTADO", "CONTRATADO"];
 
 const CandidateTable = ({
-  data,
+  data = [],
   total,
   paginaActual,
   porPagina,
@@ -16,6 +16,7 @@ const CandidateTable = ({
   filtros,
   search,
 }) => {
+
   const totalPaginas = Math.ceil(total / porPagina);
   const [actualizandoId, setActualizandoId] = useState(null);
   const navigate = useNavigate();
@@ -69,7 +70,7 @@ const CandidateTable = ({
                 <td className="p-3">{candidato.cargo_ofrecido}</td>
                 <td className="p-3">{candidato.titulo_obtenido || "—"}</td>
                 <td className="p-3">{candidato.rango_experiencia || "—"}</td>
-                <td className="p-3">{candidato.herramientas.join(", ")}</td>
+                <td className="p-3">{Array.isArray(candidato.herramientas) ? candidato.herramientas.join(", ") : "—"}</td>
                 <td className="p-3">{candidato.disponibilidad_inicio || "—"}</td>
                 <td className="p-3">
                   <select

@@ -34,6 +34,8 @@ const INITIAL_STATE = {
     id_institucion: "",
     anio_graduacion: "",
     id_nivel_ingles: "",
+    nombre_titulo_otro: "",
+    nombre_institucion_otro: "",
   },
   experienceInfo: {
     id_candidato: null,

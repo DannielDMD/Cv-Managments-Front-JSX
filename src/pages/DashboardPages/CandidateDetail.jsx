@@ -5,6 +5,7 @@ import DashboardLayout from "../../components/Dashboard/DashboardLayout";
 import html2pdf from "html2pdf.js";
 import { toast } from "react-toastify";
 
+
 const CandidateDetail = () => {
   const { id } = useParams();
   const location = useLocation(); // ⬅️ para leer los valores de navegación

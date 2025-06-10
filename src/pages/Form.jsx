@@ -75,7 +75,12 @@ const Form = () => {
         id_nivel_ingles: formData.educationInfo.id_nivel_ingles
           ? parseInt(formData.educationInfo.id_nivel_ingles)
           : undefined,
+
+        // Campos nuevos para 'Otro'
+        nombre_titulo_otro: formData.educationInfo.nombre_titulo_otro || null,
+        nombre_institucion_otro: formData.educationInfo.nombre_institucion_otro || null,
       };
+
 
 
 
@@ -139,6 +144,8 @@ const Form = () => {
           ? parseInt(formData.preferencesInfo.id_motivo_salida)
           : null,
         razon_trabajar_joyco: formData.preferencesInfo.razon_trabajar_joyco || null,
+        otro_motivo_salida: formData.preferencesInfo.otro_motivo_salida || null,
+
       };
 
       console.log(preferences)
@@ -174,11 +181,11 @@ const Form = () => {
       {/* Fondo decorativo */}
 
       <div className="relative min-h-screen bg-gray-100 pt-20 flex flex-col items-center overflow-hidden">
- <DecoracionFormulario tipo="principal" />
+        <DecoracionFormulario tipo="principal" />
 
 
         <Header />
-      <div className="relative z-10 bg-white shadow-lg rounded-xl p-8 w-full max-w-4xl">
+        <div className="relative z-10 bg-white shadow-lg rounded-xl p-8 w-full max-w-4xl">
 
 
 

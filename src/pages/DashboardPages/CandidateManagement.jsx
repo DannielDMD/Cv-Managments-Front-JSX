@@ -5,12 +5,12 @@ import { obtenerEstadisticasCandidatos } from "../../services/DashboardServices/
 import { obtenerResumenCandidatos } from "../../services/DashboardServices/candidateResumenService";
 import CandidateTable from "../../components/Dashboard/CandidateTable";
 import CandidateDetailTable from "../../components/Dashboard/CandidateDetailTable";
-import SelectField from "../../components/form/SelectField";
 import { Users } from "lucide-react";
 import { SlidersHorizontal, BookOpen, Undo2 } from "lucide-react";
 import CandidatoResumenCards from "../../components/Dashboard/CandidatoResumenCards";
 import CandidateFilters from "../../components/Dashboard/CandidateFilters";
 import ActiveFilterChips from "../../components/Dashboard/ActiveFilterChips";
+import { obtenerCandidatosDetallados } from "../../services/DashboardServices/candidateDetalleService";
 
 const CandidateManagement = () => {
   const location = useLocation();
@@ -62,15 +62,23 @@ const CandidateManagement = () => {
 
   const cargarCandidatos = useCallback(async () => {
     try {
-      const resultado = await obtenerResumenCandidatos(search, filtros, paginaActual, porPagina);
-      if (resultado && resultado.data) {
-        setCandidatos(resultado.data);
-        setTotal(resultado.total || 0);
+      let resultado;
+      if (verTablaDetallada) {
+        resultado = await obtenerCandidatosDetallados(search, filtros, paginaActual, porPagina);
+      } else {
+        resultado = await obtenerResumenCandidatos(search, filtros, paginaActual, porPagina);
       }
+
+      setCandidatos(resultado.data || []);
+      setTotal(resultado.total || 0);
     } catch (error) {
       console.error("Error al obtener candidatos:", error);
+      setCandidatos([]); // Evita errores de render
+      setTotal(0);
     }
-  }, [search, filtros, paginaActual]);
+  }, [search, filtros, paginaActual, verTablaDetallada]);
+
+
 
   useEffect(() => {
     cargarCandidatos();

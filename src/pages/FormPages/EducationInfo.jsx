@@ -11,6 +11,8 @@ import useFormContext from "../../context/UseFormContext";
 import AyudaFormulario from "../../components/form/AyudaFormulario";
 
 
+const ID_OTRO_INSTITUCION = 77; // o el ID real para "Otro"
+
 const EducationInfo = () => {
   const { formData, updateFormData } = useFormContext();
 
@@ -54,10 +56,6 @@ const EducationInfo = () => {
     }
   }, [educationData.id_nivel_educacion, nivelesSinTitulo]);
 
-
-
-
-
   // Solo para debug
   useEffect(() => {
     console.log("ID Candidato visible en EducationInfo:", idCandidato);
@@ -96,6 +94,21 @@ const EducationInfo = () => {
               value={educationData.id_titulo || ""}
               onChange={(value) => handleSelectChange("id_titulo", value)}
             />
+            {(() => {
+              const tituloSeleccionado = titulos.find(
+                (t) => t.id_titulo === educationData.id_titulo
+              );
+              return tituloSeleccionado?.nombre_titulo?.toUpperCase() === "OTRO";
+            })() && (
+                <InputField
+                  label="¿Cuál es el título?"
+                  name="nombre_titulo_otro"
+                  type="text"
+                  value={educationData.nombre_titulo_otro || ""}
+                  onChange={handleChange}
+                />
+              )}
+
 
             <InputField
               label="Año de Graduación"
@@ -121,7 +134,19 @@ const EducationInfo = () => {
               onChange={(value) => handleSelectChange("id_institucion", value)}
             />
           </>
+
         )}
+        {educationData.id_institucion === ID_OTRO_INSTITUCION && (
+          <InputField
+            label="¿Cuál es la institución académica?"
+            name="nombre_institucion_otro"
+            type="text"
+            value={educationData.nombre_institucion_otro || ""}
+            onChange={handleChange}
+          />
+        )}
+
+
         <SelectField
           label="Nivel Inglés"
           fetchFunction={getIngles}

@@ -5,6 +5,9 @@ import { getDisponibilidades, getRangos, getMotivosSalida } from "../../services
 import useFormContext from "../../context/UseFormContext"; // Importa el hook correctamente
 import AyudaFormulario from "../../components/form/AyudaFormulario";
 
+
+const ID_OTRO_MOTIVO_SALIDA = 8; // según tu estructura
+
 const PreferencesInfo = () => {
   const { formData, updateFormData } = useFormContext(); // Obtiene el estado global del formulario
   // Asegurar que `formData.educationInfo` no sea undefined
@@ -81,6 +84,15 @@ const PreferencesInfo = () => {
             nameKey="descripcion_motivo"
             value={preferencesData.id_motivo_salida}
             onChange={(value) => handleSelectChange("id_motivo_salida", value)}
+          />
+        )}
+        {preferencesData.id_motivo_salida === ID_OTRO_MOTIVO_SALIDA && (
+          <InputField
+            label="¿Cuál fue el motivo de salida?"
+            name="otro_motivo_salida"
+            type="text"
+            value={preferencesData.otro_motivo_salida || ""}
+            onChange={handleChange}
           />
         )}
 

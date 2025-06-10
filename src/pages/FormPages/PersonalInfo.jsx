@@ -245,11 +245,7 @@ const PersonalInfo = () => {
           onChange={handleDepartamentoChange}
           isMulti={false}
         />
-
-
-
-
-
+        
         {formData.personalInfo.id_departamento && (
           <SelectField
             label="Ciudad de Residencia"
