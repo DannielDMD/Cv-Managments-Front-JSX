@@ -64,18 +64,24 @@ const SolicitudEliminacionTH = () => {
   }, [anioFiltro]);
 
 
-  const handleEstadoChange = async (id, nuevoEstado, observacion) => {
-    try {
-      await actualizarSolicitudEliminacion(id, {
-        estado: nuevoEstado,
-        observacion_admin: observacion,
-      });
-      toast.success("Estado actualizado con éxito");
-      fetchSolicitudes();
-    } catch {
-      toast.error("Error al actualizar estado");
-    }
-  };
+const handleEstadoChange = async (id, nuevoEstado, observacion) => {
+  if (!id) {
+    toast.warning("ID inválido: no se pudo actualizar la solicitud.");
+    return;
+  }
+
+  try {
+    await actualizarSolicitudEliminacion(id, {
+      estado: nuevoEstado,
+      observacion_admin: observacion,
+    });
+    toast.success("Estado actualizado con éxito");
+    fetchSolicitudes();
+  } catch {
+    toast.error("Error al actualizar estado");
+  }
+};
+
 
   return (
     <DashboardLayout>
@@ -215,6 +221,8 @@ const SolicitudEliminacionTH = () => {
                     key={s.id}
                     solicitud={s}
                     onEstadoChange={handleEstadoChange}
+                    recargarLista={fetchSolicitudes}
+
                   />
                 ))
               ) : (

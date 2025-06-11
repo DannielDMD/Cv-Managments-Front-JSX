@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import joycoLogo from "../assets/joyco-logo.png";
 import Footer from "../components/Footer";
-import DecoracionFormulario from "../components/form/DecoracionFormulario";
+
 
 const SolicitudEliminacion = () => {
     const [form, setForm] = useState({

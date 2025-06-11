@@ -3,7 +3,8 @@ import { FiMail, FiTrash2, FiSave } from "react-icons/fi";
 import { toast } from "react-toastify";
 import { deleteSolicitudEliminacion } from "../../services/FormServices/solicitudService";
 
-const SolicitudEliminacionRow = ({ solicitud, onEstadoChange }) => {
+const SolicitudEliminacionRow = ({ solicitud, onEstadoChange, recargarLista }) => {
+
   const [estado, setEstado] = useState(solicitud.estado);
   const [observacion, setObservacion] = useState(solicitud.observacion_admin || "");
   const [mostrarModalEliminar, setMostrarModalEliminar] = useState(false);
@@ -22,7 +23,8 @@ const SolicitudEliminacionRow = ({ solicitud, onEstadoChange }) => {
       await deleteSolicitudEliminacion(solicitud.id);
       toast.success("Solicitud eliminada correctamente");
       setMostrarModalEliminar(false);
-      onEstadoChange(); // recarga desde el padre
+      recargarLista(); // ✅ solo recarga, sin intentar PUT
+
     } catch {
       toast.error("Error al eliminar la solicitud");
     } finally {
@@ -31,9 +33,14 @@ const SolicitudEliminacionRow = ({ solicitud, onEstadoChange }) => {
   };
 
   const handleGuardar = () => {
+    if (!solicitud?.id) {
+      toast.error("No se puede guardar cambios: solicitud ya fue eliminada.");
+      return;
+    }
     onEstadoChange(solicitud.id, estado, observacion);
     setMostrarModalGuardar(false);
   };
+
 
   const generarMensajeCorreo = () => {
     const base = `De acuerdo con su solicitud de "${solicitud.motivo}", `;
@@ -129,7 +136,14 @@ const SolicitudEliminacionRow = ({ solicitud, onEstadoChange }) => {
             <p className="mb-4 text-sm">¿Deseas guardar los cambios?</p>
             <div className="flex justify-end gap-2">
               <button className="btn btn-sm bg-red-600 text-white hover:bg-red-700" onClick={() => setMostrarModalGuardar(false)}>Cancelar </button>
-              <button className="btn btn-sm bg-blue-600 text-white hover:bg-blue-700" onClick={handleGuardar}>Confirmar</button>
+              <button
+                className="btn btn-sm bg-blue-600 text-white hover:bg-blue-700"
+                onClick={handleGuardar}
+                disabled={!solicitud?.id}
+              >
+                Confirmar
+              </button>
+
             </div>
           </div>
         </div>

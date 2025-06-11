@@ -20,8 +20,8 @@ const CandidateDetailTable = ({ data = [], total, paginaActual, porPagina, setPa
                 <th className="p-3">CC</th>
                 <th className="p-3">Nacimiento</th>
                 <th className="p-3">Teléfono</th>
-                <th className="p-3">Ciudad</th>
                 <th className="p-3">Departamento</th>
+                <th className="p-3">Ciudad</th>
                 <th className="p-3">Perfil</th>
                 <th className="p-3">Cargo</th>
                 <th className="p-3">Trabaja Joyco</th>
@@ -59,8 +59,8 @@ const CandidateDetailTable = ({ data = [], total, paginaActual, porPagina, setPa
                   <td className="p-2">{c.cc}</td>
                   <td className="p-2">{c.fecha_nacimiento ? new Date(c.fecha_nacimiento).toLocaleDateString() : "—"}</td>
                   <td className="p-2">{c.telefono}</td>
-                  <td className="p-2">{c.ciudad}</td>
                   <td className="p-2">{c.departamento}</td>
+                  <td className="p-2">{c.ciudad}</td>       
                   <td className="p-2 whitespace-pre-wrap">{c.descripcion_perfil}</td>
                   <td className="p-2">{c.nombre_cargo_otro || c.cargo || "—"}</td>
                   <td className="p-2">{c.trabaja_actualmente_joyco ? "Sí" : "No"}</td>

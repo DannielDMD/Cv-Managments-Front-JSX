@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Eye } from "lucide-react";
+import { Eye, Trash2 } from "lucide-react";
 import { actualizarEstadoCandidato } from "../../services/DashboardServices/candidateResumenService";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
@@ -20,6 +20,13 @@ const CandidateTable = ({
   const totalPaginas = Math.ceil(total / porPagina);
   const [actualizandoId, setActualizandoId] = useState(null);
   const navigate = useNavigate();
+  const [idAEliminar, setIdAEliminar] = useState(null);
+  const [eliminando, setEliminando] = useState(false);
+
+
+
+
+
 
   const handleEstadoChange = async (id, nuevoEstado) => {
     try {
@@ -59,6 +66,8 @@ const CandidateTable = ({
               <th className="p-3">Estado</th>
               <th className="p-3">Postulación</th>
               <th className="p-3">Detalle</th>
+              <th className="p-3">Eliminar</th>
+
             </tr>
           </thead>
           <tbody>
@@ -105,6 +114,14 @@ const CandidateTable = ({
                     }
                   >
                     <Eye size={18} />
+                  </button>
+                </td>
+                <td className="p-3">
+                  <button
+                    className="text-red-600 hover:text-red-800"
+                    onClick={() => setIdAEliminar(candidato.id_candidato)}
+                  >
+                    <Trash2 size={18} />
                   </button>
                 </td>
 
@@ -174,6 +191,52 @@ const CandidateTable = ({
         </div>
       </div>
 
+{idAEliminar && (
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full space-y-4">
+      <h2 className="text-xl font-bold text-gray-800">¿Estás seguro?</h2>
+      <p className="text-gray-600">
+        Esta acción eliminará permanentemente al candidato seleccionado. No se podrá deshacer.
+      </p>
+
+      <div className="flex justify-end gap-3 pt-2">
+        <button
+          onClick={() => setIdAEliminar(null)}
+          className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
+        >
+          Cancelar
+        </button>
+        <button
+          onClick={async () => {
+            try {
+              setEliminando(true);
+              const res = await fetch(`http://localhost:8000/candidatos/${idAEliminar}`, {
+                method: "DELETE",
+              });
+              if (res.ok) {
+                toast.success("Candidato eliminado correctamente");
+                recargarCandidatos(); // recarga la lista
+              } else {
+                const data = await res.json();
+                toast.error(data.detail || "Error al eliminar el candidato");
+              }
+            } catch (err) {
+              console.error(err);
+              toast.error("Error inesperado al eliminar");
+            } finally {
+              setEliminando(false);
+              setIdAEliminar(null);
+            }
+          }}
+          disabled={eliminando}
+          className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50"
+        >
+          {eliminando ? "Eliminando..." : "Sí, eliminar"}
+        </button>
+      </div>
+    </div>
+  </div>
+)}
 
     </>
   );

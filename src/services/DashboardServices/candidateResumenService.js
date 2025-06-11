@@ -44,10 +44,7 @@ export const obtenerEstadisticasCandidatos = async () => {
   }
 };
 
-
-
-
-// Funcion para hacer wel fecth a la de candidatos para sacutualiza erl estado 
+// Funcion para hacer el fecth a la de candidatos para acutualizar erl estado 
 export const actualizarEstadoCandidato = async (id, nuevoEstado) => {
   const response = await axiosInstance.put(`/candidatos/${id}`, {
     estado: nuevoEstado,
@@ -55,7 +52,4 @@ export const actualizarEstadoCandidato = async (id, nuevoEstado) => {
   return response.data;
 };
 
-export const obtenerCandidatoDetalle = async (id) => {
-  const response = await axiosInstance.get(`/candidatos/${id}/detalle`);
-  return response.data;
-};
+

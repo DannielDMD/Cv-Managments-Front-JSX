@@ -1,9 +1,31 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom"; // ⬅️ añadimos useLocation y useNavigate
-import { obtenerCandidatoDetalle } from "../../services/DashboardServices/candidateResumenService";
+import { obtenerCandidatoDetalle } from "../../services/DashboardServices/candidateDetalleService";
 import DashboardLayout from "../../components/Dashboard/DashboardLayout";
-import html2pdf from "html2pdf.js";
+//import html2pdf from "html2pdf.js";
 import { toast } from "react-toastify";
+
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+pdfMake.vfs = pdfFonts.vfs; // ✅ Esta es la forma correcta
+import { crearHojaDeVidaPDF } from "../../utils/pdf/crearHojaDeVida";
+import { cargarImagenBase64 } from "../../utils/pdf/cargarImagen";
+
+import {
+  User,
+  BookOpen,
+  Briefcase,
+  Brain,
+  Settings,
+  ArrowLeft,
+  Mail,
+  FileText,
+  Trash2,
+} from "lucide-react";
+
+
+
+
 
 
 const CandidateDetail = () => {
@@ -18,7 +40,7 @@ const CandidateDetail = () => {
 
   const paginaAnterior = location.state?.paginaAnterior || 1;
   const filtros = location.state?.filtros || {};
-  const search = location.state?.search || "";  
+  const search = location.state?.search || "";
 
   useEffect(() => {
     const fetchCandidato = async () => {
@@ -34,17 +56,17 @@ const CandidateDetail = () => {
     fetchCandidato();
   }, [id]);
 
-  const handleExportPDF = () => {
-    const elemento = document.getElementById("detalle-candidato");
-    const opciones = {
-      margin: 0.5,
-      filename: `Hoja_de_vida_${candidato?.nombre_completo || "candidato"}.pdf`,
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
-    };
-    html2pdf().set(opciones).from(elemento).save();
+  const handleExportPDF = async () => {
+    if (!candidato) return;
+
+    const logoBase64 = await cargarImagenBase64("/images/LogoJoyco.png"); // ruta desde public
+    const docDefinition = crearHojaDeVidaPDF(candidato, logoBase64);
+
+    pdfMake.createPdf(docDefinition).download(`Hoja_de_vida_${candidato.nombre_completo}.pdf`);
   };
+
+
+
 
   const generarMensajeCorreo = () => {
     const nombre = candidato.nombre_completo;
@@ -91,36 +113,40 @@ const CandidateDetail = () => {
         <div className="flex flex-wrap justify-between items-center gap-2 mb-4">
           <button
             onClick={handleVolver}
-            className="bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300"
+            className="bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300 flex items-center gap-2"
           >
-            🔙 Volver a la lista
+            <ArrowLeft size={16} /> Volver a la lista
           </button>
+
 
           <div className="flex gap-2">
 
             {candidato.correo_electronico && (
               <a
                 href={`mailto:${candidato.correo_electronico}?subject=Proceso de selección en Joyco&body=${generarMensajeCorreo()}`}
-                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 flex items-center gap-2"
               >
-                📧 Enviar Correo
+                <Mail size={16} /> Enviar Correo
               </a>
+
             )}
 
 
             <button
               onClick={handleExportPDF}
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 flex items-center gap-2"
             >
-              📄 Exportar PDF
+              <FileText size={16} /> Exportar PDF
             </button>
+
 
             <button
               onClick={() => setMostrarModal(true)}
-              className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+              className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 flex items-center gap-2"
             >
-              🗑 Eliminar
+              <Trash2 size={16} /> Eliminar
             </button>
+
 
 
 
@@ -129,34 +155,64 @@ const CandidateDetail = () => {
 
 
         <div id="detalle-candidato" className="bg-white p-8 shadow-md rounded-lg space-y-8">
-          <h1 className="text-3xl font-extrabold text-gray-800 border-b pb-2 mb-6">📄 Hoja de Vida</h1>
+          <h1 className="text-3xl font-extrabold text-gray-800 border-b pb-2 mb-6 flex items-center gap-2">
+            <FileText size={24} /> Hoja de Vida
+          </h1>
 
           {/* Información Personal */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-700 mb-3 border-b pb-1">🧍 Información Personal</h2>
+            <h2 className="text-2xl font-bold text-blue-700 mb-3 border-b pb-1 flex items-center gap-2">
+              <User size={20} /> Información Personal
+            </h2>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
               <p><strong>Nombre:</strong> {candidato.nombre_completo}</p>
               <p><strong>Correo:</strong> {candidato.correo_electronico}</p>
+              <p><strong>CC:</strong> {candidato.cc}</p>
+              <p><strong>Fecha de Nacimiento:</strong> {new Date(candidato.fecha_nacimiento).toLocaleDateString()}</p>
               <p><strong>Teléfono:</strong> {candidato.telefono}</p>
+              <p> <strong> Departamento:</strong> {candidato.departamento} </p>
               <p><strong>Ciudad:</strong> {candidato.ciudad}</p>
               <p className="md:col-span-2"><strong>Perfil:</strong> {candidato.descripcion_perfil || "—"}</p>
-              <p><strong>Cargo de Interés:</strong> {candidato.cargo}</p>
+              <p><strong>Cargo de Interés:</strong> {candidato.nombre_cargo_otro || candidato.cargo || "—"}</p>
+
               <p><strong>Estado:</strong> {candidato.estado}</p>
-              <p><strong>Trabaja en Joyco:</strong> {candidato.trabaja_actualmente_joyco ? "Sí" : "No"}</p>
+              <p><strong>¿Trabaja en Joyco actualmente?:</strong> {candidato.trabaja_actualmente_joyco ? "Sí" : "No"}</p>
+
+              {candidato.trabaja_actualmente_joyco && (
+                <p><strong>Centro de Costos:</strong> {candidato.nombre_centro_costos_otro || candidato.centro_costos || "—"}</p>
+              )}
+
+
+
               <p><strong>Ha trabajado antes en Joyco:</strong> {candidato.ha_trabajado_joyco ? "Sí" : "No"}</p>
-              {candidato.motivo_salida && <p><strong>Motivo de salida:</strong> {candidato.motivo_salida}</p>}
-              {candidato.tiene_referido && <p><strong>Referido:</strong> {candidato.nombre_referido}</p>}
+                                          
+
+
+              {(candidato.otro_motivo_salida || candidato.motivo_salida) && (
+                <p><strong>Motivo de Salida:</strong> {candidato.otro_motivo_salida_candidato || candidato.motivo_salida}</p>
+              )}
+
+
+              {candidato.tiene_referido
+                ? <p><strong>Referido:</strong> {candidato.nombre_referido || "—"}</p>
+                : <p><strong>Referido:</strong> No</p>}
+
+
               <p><strong>Fecha de Registro:</strong> {new Date(candidato.fecha_registro).toLocaleDateString()}</p>
             </div>
           </section>
-
           {/* Educación */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-700 mb-3 border-b pb-1">🎓 Educación</h2>
+            <h2 className="text-2xl font-bold text-blue-700 mb-3 border-b pb-1 flex items-center gap-2">
+              <BookOpen size={20} /> Educación
+            </h2>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
               <p><strong>Nivel Educativo:</strong> {candidato.nivel_educacion}</p>
-              <p><strong>Título:</strong> {candidato.titulo || "—"}</p>
-              <p><strong>Institución:</strong> {candidato.institucion || "—"}</p>
+              <p><strong>Título:</strong> {candidato.nombre_titulo_otro || candidato.titulo || "—"}</p>
+              <p><strong>Institución:</strong> {candidato.nombre_institucion_otro || candidato.institucion || "—"}</p>
+
               <p><strong>Año de Graduación:</strong> {candidato.anio_graduacion || "—"}</p>
               <p><strong>Nivel de Inglés:</strong> {candidato.nivel_ingles}</p>
             </div>
@@ -164,11 +220,14 @@ const CandidateDetail = () => {
 
           {/* Experiencia */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-700 mb-3 border-b pb-1">💼 Experiencia Laboral</h2>
+            <h2 className="text-2xl font-bold text-blue-700 mb-3 border-b pb-1 flex items-center gap-2">
+              <Briefcase size={20} /> Experiencia Laboral
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
               <p><strong>Experiencia:</strong> {candidato.rango_experiencia}</p>
               <p><strong>Última Empresa:</strong> {candidato.ultima_empresa}</p>
               <p><strong>Último Cargo:</strong> {candidato.ultimo_cargo}</p>
+              <p><strong>Funciones realizadas: </strong>{candidato.funciones} </p>
               <p><strong>Desde:</strong> {candidato.fecha_inicio}</p>
               <p><strong>Hasta:</strong> {candidato.fecha_fin || "Actual"}</p>
               <p className="md:col-span-2"><strong>Funciones:</strong> {candidato.funciones}</p>
@@ -177,10 +236,12 @@ const CandidateDetail = () => {
 
           {/* Conocimientos */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-700 mb-3 border-b pb-1">🧠 Conocimientos</h2>
+            <h2 className="text-2xl font-bold text-blue-700 mb-3 border-b pb-1 flex items-center gap-2">
+              <Brain size={20} /> Conocimientos
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-gray-700">
               <div>
-                <h3 className="font-semibold text-sm text-gray-600 mb-1">Habilidades Blandas</h3>
+                <h3 className="font-semibold text-sm text-gray-600 mb-1"> <strong> Habilidades Blandas</strong></h3>
                 <ul className="list-disc list-inside text-sm">
                   {candidato.habilidades_blandas.length > 0
                     ? candidato.habilidades_blandas.map((hab, i) => <li key={i}>{hab}</li>)
@@ -188,7 +249,7 @@ const CandidateDetail = () => {
                 </ul>
               </div>
               <div>
-                <h3 className="font-semibold text-sm text-gray-600 mb-1">Habilidades Técnicas</h3>
+                <h3 className="font-semibold text-sm text-gray-600 mb-1"> <strong> Habilidades Técnicas </strong>    </h3>
                 <ul className="list-disc list-inside text-sm">
                   {candidato.habilidades_tecnicas.length > 0
                     ? candidato.habilidades_tecnicas.map((hab, i) => <li key={i}>{hab}</li>)
@@ -196,7 +257,7 @@ const CandidateDetail = () => {
                 </ul>
               </div>
               <div>
-                <h3 className="font-semibold text-sm text-gray-600 mb-1">Herramientas</h3>
+                <h3 className="font-semibold text-sm text-gray-600 mb-1">  <strong>Herramientas </strong> </h3>
                 <ul className="list-disc list-inside text-sm">
                   {candidato.herramientas.length > 0
                     ? candidato.herramientas.map((herr, i) => <li key={i}>{herr}</li>)
@@ -208,15 +269,18 @@ const CandidateDetail = () => {
 
           {/* Preferencias */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-700 mb-3 border-b pb-1">⚙️ Preferencias y Disponibilidad</h2>
+            <h2 className="text-2xl font-bold text-blue-700 mb-3 border-b pb-1 flex items-center gap-2">
+              <Settings size={20} /> Preferencias y Disponibilidad
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
               <p><strong>Disponibilidad para Viajar:</strong> {candidato.disponibilidad_viajar ? "Sí" : "No"}</p>
               <p><strong>Disponibilidad de Inicio:</strong> {candidato.disponibilidad_inicio}</p>
               <p><strong>Pretensión Salarial:</strong> {candidato.rango_salarial}</p>
               <p><strong>Trabaja Actualmente:</strong> {candidato.trabaja_actualmente ? "Sí" : "No"}</p>
-              {candidato.motivo_salida_preferencia && (
-                <p><strong>Motivo de Salida:</strong> {candidato.motivo_salida_preferencia}</p>
+              {(candidato.otro_motivo_salida_preferencia || candidato.motivo_salida_laboral) && (
+                <p><strong>Motivo de Salida (Preferencias):</strong> {candidato.otro_motivo_salida_preferencia || candidato.motivo_salida_laboral}</p>
               )}
+
               <p className="md:col-span-2"><strong>Razón para trabajar en Joyco:</strong> {candidato.razon_trabajar_joyco || "—"}</p>
             </div>
           </section>
