@@ -23,8 +23,12 @@ const PersonalInfo = () => {
   // Manejo de inputs normales
   const handleChange = (e) => {
     const { name, value } = e.target;
-    updateFormData("personalInfo", name, value);
+
+    const nuevoValor = name === "correo_electronico" ? value.toLowerCase() : value;
+
+    updateFormData("personalInfo", name, nuevoValor);
   };
+
 
   const handleSelectChange = (field, value) => {
     updateFormData("personalInfo", field, value);
@@ -245,7 +249,7 @@ const PersonalInfo = () => {
           onChange={handleDepartamentoChange}
           isMulti={false}
         />
-        
+
         {formData.personalInfo.id_departamento && (
           <SelectField
             label="Ciudad de Residencia"

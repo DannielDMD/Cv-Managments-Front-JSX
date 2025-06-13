@@ -17,12 +17,19 @@ const SolicitudEliminacion = () => {
 
     const [errores, setErrores] = useState({});
     const [enviado, setEnviado] = useState(false);
+    const [mostrarModalInfo, setMostrarModalInfo] = useState(true);
+
+
     const [mostrarModalConfirmacion, setMostrarModalConfirmacion] = useState(false);
+
     const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setForm((prev) => ({ ...prev, [name]: value }));
+
+        const nuevoValor = name === "correo" ? value.toLowerCase() : value;
+
+        setForm((prev) => ({ ...prev, [name]: nuevoValor }));
     };
 
     const validarCampos = () => {
@@ -186,6 +193,30 @@ const SolicitudEliminacion = () => {
                             </button>
                         </form>
                     )}
+
+
+                    {/* 🔔 Modal informativo al ingresar */}
+                    {mostrarModalInfo && (
+                        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+                            <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full text-center">
+                                <h2 className="text-lg font-semibold text-blue-800 mb-2">🔔 Información importante</h2>
+                                <p className="text-gray-700 mb-4">
+                                    Para que podamos procesar tu solicitud correctamente, asegúrate de ingresar
+                                    <span className="font-semibold"> exactamente los mismos datos</span> que usaste al registrarte:
+                                    nombre completo, cédula y correo electrónico.
+                                    <br />Si los datos no coinciden, será difícil localizar tu información y no podrá cumplirse con tu solicitud.
+                                </p>
+                                <button
+                                    onClick={() => setMostrarModalInfo(false)}
+                                    className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+                                >
+                                    Entendido
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
+
 
                     {mostrarModalConfirmacion && (
                         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
