@@ -14,7 +14,8 @@ Este proyecto es una plataforma interna para la empresa **Joyco**, desarrollada 
 - **Lucide-React** -- Iconos (npm install lucide-react --legacy-peer-deps)
 - **Recharts** – visualización de estadísticas en el dashboard
 - **@azure/msal-browser** y **@azure/msal-react** – integración con Microsoft Azure AD
--- **react-responsive-carousel** - Para generar carrusel de imagenes
+- **react-responsive-carousel** - Para generar carrusel de imagenes
+- **pdfMake** - Para PDF con JS (npm install pdfmake --legacy-peer-deps)
 
 ## ⚙️ Instalación
 
@@ -88,7 +89,7 @@ Este proyecto forma parte de las soluciones internas de Joyco. El código fuente
 ## 👨‍💻 Desarrollado por
 
 Daniel Méndez Díaz  
-Desarrollador Web – Joyco  
+Desarrollador de Innovación – Joyco  
 2025
 
 ---
