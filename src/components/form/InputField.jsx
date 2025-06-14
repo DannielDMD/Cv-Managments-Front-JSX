@@ -7,7 +7,18 @@ const InputField = ({ label, name, type, value = "", onChange, error }) => {
         {label}
       </label>
 
-      {type === "select" ? (
+      {type === "textarea" ? (
+        <textarea
+          id={name}
+          name={name}
+          value={value}
+          onChange={onChange}
+          rows={3}
+          className={`border rounded-md p-2 text-gray-700 focus:ring-2 ${
+            error ? "border-red-500 ring-red-500" : "focus:ring-blue-500"
+          }`}
+        />
+      ) : type === "select" ? (
         <select
           id={name}
           name={name}

@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import joycoLogo from "../assets/joyco-logo.png";
 import Footer from "../components/Footer";
+import InputField from "../components/form/InputField";
 
 
 const SolicitudEliminacion = () => {
@@ -13,7 +14,9 @@ const SolicitudEliminacion = () => {
         cc: "",
         correo: "",
         motivo: "",
+        descripcion_motivo: "", // <-- nuevo campo
     });
+
 
     const [errores, setErrores] = useState({});
     const [enviado, setEnviado] = useState(false);
@@ -122,52 +125,35 @@ const SolicitudEliminacion = () => {
                         </div>
                     ) : (
                         <form onSubmit={handleSubmit} className="space-y-4">
-                            <div>
-                                <label className="block mb-1 font-medium">Nombre completo</label>
-                                <input
-                                    type="text"
-                                    name="nombre_completo"
-                                    value={form.nombre_completo}
-                                    onChange={handleChange}
-                                    className={`w-full border p-2 rounded ${errores.nombre_completo ? "border-red-500" : ""}`}
-                                    autoComplete="off"
-                                />
-                                {errores.nombre_completo && (
-                                    <p className="text-red-500 text-sm mt-1">{errores.nombre_completo}</p>
-                                )}
-                            </div>
-
-                            <div>
-                                <label className="block mb-1 font-medium">Cédula</label>
-                                <input
-                                    type="text"
-                                    name="cc"
-                                    value={form.cc}
-                                    autoComplete="off"
-                                    onChange={(e) => {
-                                        const value = e.target.value;
-                                        if (/^\d{0,10}$/.test(value)) {
-                                            setForm((prev) => ({ ...prev, cc: value }));
-                                        }
-                                    }}
-                                    className="w-full border p-2 rounded"
-                                />
-
-                                {errores.cc && <p className="text-red-500 text-sm mt-1">{errores.cc}</p>}
-                            </div>
-
-                            <div>
-                                <label className="block mb-1 font-medium">Correo electrónico</label>
-                                <input
-                                    type="email"
-                                    name="correo"
-                                    value={form.correo}
-                                    onChange={handleChange}
-                                    className={`w-full border p-2 rounded ${errores.correo ? "border-red-500" : ""}`}
-                                    autoComplete="off"
-                                />
-                                {errores.correo && <p className="text-red-500 text-sm mt-1">{errores.correo}</p>}
-                            </div>
+                            <InputField
+                                label="Nombre completo"
+                                name="nombre_completo"
+                                type="text"
+                                value={form.nombre_completo}
+                                onChange={handleChange}
+                                error={errores.nombre_completo}
+                            />
+                            <InputField
+                                label="Cédula"
+                                name="cc"
+                                type="text"
+                                value={form.cc}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    if (/^\d{0,10}$/.test(value)) {
+                                        setForm((prev) => ({ ...prev, cc: value }));
+                                    }
+                                }}
+                                error={errores.cc}
+                            />
+                            <InputField
+                                label="Correo electrónico"
+                                name="correo"
+                                type="email"
+                                value={form.correo}
+                                onChange={handleChange}
+                                error={errores.correo}
+                            />
 
                             <div>
                                 <label className="block mb-1 font-medium">Motivo de la solicitud</label>
@@ -184,6 +170,14 @@ const SolicitudEliminacion = () => {
                                 {errores.motivo && <p className="text-red-500 text-sm mt-1">{errores.motivo}</p>}
                             </div>
 
+                            <InputField
+                                label="Descripción del motivo"
+                                name="descripcion_motivo"
+                                type="textarea"
+                                value={form.descripcion_motivo}
+                                onChange={handleChange}
+                            />
+
                             <button
                                 type="button"
                                 onClick={() => setMostrarModalConfirmacion(true)}
@@ -193,7 +187,6 @@ const SolicitudEliminacion = () => {
                             </button>
                         </form>
                     )}
-
 
                     {/* 🔔 Modal informativo al ingresar */}
                     {mostrarModalInfo && (
@@ -215,8 +208,6 @@ const SolicitudEliminacion = () => {
                             </div>
                         </div>
                     )}
-
-
 
                     {mostrarModalConfirmacion && (
                         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">

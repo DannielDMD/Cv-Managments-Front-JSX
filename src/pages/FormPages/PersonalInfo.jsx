@@ -234,7 +234,7 @@ const PersonalInfo = () => {
         <InputField
           label="Descripción del Perfil"
           name="descripcion_perfil"
-          type="text"
+          type="textarea"
           value={formData.personalInfo.descripcion_perfil}
           onChange={handleChange}
           error={errores.descripcion_perfil}

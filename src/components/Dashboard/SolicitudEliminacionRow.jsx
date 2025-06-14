@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FiMail, FiTrash2, FiSave } from "react-icons/fi";
+import { FiMail, FiTrash2, FiSave, FiEye } from "react-icons/fi";
 import { toast } from "react-toastify";
 import { deleteSolicitudEliminacion } from "../../services/FormServices/solicitudService";
 
@@ -11,6 +11,7 @@ const SolicitudEliminacionRow = ({ solicitud, onEstadoChange, recargarLista }) =
   const [mostrarModalGuardar, setMostrarModalGuardar] = useState(false);
   const [mostrarModalCorreo, setMostrarModalCorreo] = useState(false);
   const [eliminando, setEliminando] = useState(false);
+  const [mostrarModalObservacion, setMostrarModalObservacion] = useState(false);
 
   const formatearFecha = (fechaISO) => {
     const fecha = new Date(fechaISO);
@@ -79,7 +80,10 @@ const SolicitudEliminacionRow = ({ solicitud, onEstadoChange, recargarLista }) =
         <td className="p-3 border border-gray-300">{solicitud.correo}</td>
         <td className="p-3 border border-gray-300">{solicitud.cc}</td>
         <td className="p-3 border border-gray-300">{solicitud.motivo}</td>
-        <td className="p-3 border border-gray-300">
+        <td className="p-3 border border-gray-300 whitespace-pre-line text-sm text-gray-700">
+          {solicitud.descripcion_motivo || <em className="text-gray-400">—</em>}
+        </td>
+        <td className="p-3 border border-gray-300 min-w-[120px]">
           <select
             value={estado}
             onChange={(e) => setEstado(e.target.value)}
@@ -89,17 +93,33 @@ const SolicitudEliminacionRow = ({ solicitud, onEstadoChange, recargarLista }) =
             <option value="Rechazada">Rechazada</option>
             <option value="Aceptada">Aceptada</option>
           </select>
+        </td>
 
+        <td className="p-3 border border-gray-300 align-top">
+          <div className="flex flex-col items-center gap-1">
+            <input
+              type="text"
+              value={observacion}
+              onChange={(e) => setObservacion(e.target.value)}
+              className="border border-gray-300 rounded px-2 py-1 text-xs w-full"
+              placeholder="Observación"
+            />
+
+            {observacion.trim().length > 0 && (
+              <button
+                type="button"
+                onClick={() => setMostrarModalObservacion(true)}
+                className="text-blue-700 hover:text-blue-900"
+                title="Ver observación completa"
+              >
+                <FiEye className="w-4 h-4" />
+              </button>
+            )}
+          </div>
         </td>
-        <td className="p-3 border border-gray-300">
-          <input
-            type="text"
-            value={observacion}
-            onChange={(e) => setObservacion(e.target.value)}
-            className="border border-gray-300 rounded px-2 py-1 text-xs w-full"
-            placeholder="Observación"
-          />
-        </td>
+
+
+
         <td className="p-3 border border-gray-300">{formatearFecha(solicitud.fecha_solicitud)}</td>
         <td className="p-3 border border-gray-300">
           <div className="flex gap-2 flex-wrap">
@@ -185,6 +205,22 @@ const SolicitudEliminacionRow = ({ solicitud, onEstadoChange, recargarLista }) =
                 disabled={eliminando}
               >
                 {eliminando ? "Eliminando..." : "Eliminar"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {mostrarModalObservacion && (
+        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+          <div className="bg-white p-4 rounded-lg shadow-lg w-full max-w-sm">
+            <h3 className="text-lg font-semibold mb-2 text-blue-800">Observación completa</h3>
+            <p className="text-sm text-gray-800 whitespace-pre-line">{observacion}</p>
+            <div className="flex justify-end mt-4">
+              <button
+                onClick={() => setMostrarModalObservacion(false)}
+                className="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700 text-sm"
+              >
+                Cerrar
               </button>
             </div>
           </div>

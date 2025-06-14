@@ -202,6 +202,7 @@ const handleEstadoChange = async (id, nuevoEstado, observacion) => {
                 <th>Correo</th>
                 <th>Cédula</th>
                 <th>Motivo</th>
+                <th>Descripción</th>
                 <th>Estado</th>
                 <th>Observación</th>
                 <th>Fecha</th>
@@ -211,7 +212,7 @@ const handleEstadoChange = async (id, nuevoEstado, observacion) => {
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan="8" className="text-center">
+                  <td colSpan="9" className="text-center">
                     Cargando...
                   </td>
                 </tr>
@@ -227,7 +228,7 @@ const handleEstadoChange = async (id, nuevoEstado, observacion) => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="8" className="text-center">
+                  <td colSpan="9" className="text-center">
                     No hay resultados
                   </td>
                 </tr>
