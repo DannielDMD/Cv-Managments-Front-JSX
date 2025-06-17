@@ -15,7 +15,8 @@ import ProtectedRouteIncomplete from "./components/form/ProtectedRouteIncomplete
 import { AuthProvider } from "./context/AuthContext";
 import SolicitudEliminacion from "./pages/SolicitudEliminacion";
 import SolicitudEliminacionTH from "./pages/DashboardPages/SolicitudEliminacionTH";
-
+import Configuracion from "./pages/DashboardPages/Settings";
+import Usuarios from "./pages/DashboardPages/Usuarios";
 
 
 
@@ -93,6 +94,27 @@ const App = () => {
             }
           />
           <Route
+            path="/dashboard/configuracion"
+            element={
+              <AuthProvider>
+                <ProtectedRoute>
+                  <Configuracion />
+                </ProtectedRoute>
+              </AuthProvider>
+            }
+          />
+          <Route
+            path="/dashboard/configuracion/usuarios"
+            element={
+              <AuthProvider>
+                <ProtectedRoute>
+                  <Usuarios />
+                </ProtectedRoute>
+              </AuthProvider>
+            }
+          />
+
+          <Route
             path="/dashboard/solicitudes-eliminacion"
             element={
               <AuthProvider>
@@ -102,7 +124,6 @@ const App = () => {
               </AuthProvider>
             }
           />
-
         </Routes>
       </Router>
     </FormProvider>

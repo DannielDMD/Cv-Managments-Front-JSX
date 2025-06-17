@@ -16,6 +16,7 @@ Este proyecto es una plataforma interna para la empresa **Joyco**, desarrollada 
 - **@azure/msal-browser** y **@azure/msal-react** – integración con Microsoft Azure AD
 - **react-responsive-carousel** - Para generar carrusel de imagenes
 - **pdfMake** - Para PDF con JS (npm install pdfmake --legacy-peer-deps)
+-- **@headlessui/react** - Componentes accesibles (npm install @headlessui/react--legacy-peer-deps)
 
 ## ⚙️ Instalación
 
