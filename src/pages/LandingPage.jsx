@@ -1,20 +1,18 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMsal } from "@azure/msal-react";
-import HeaderLanding from "../components/HeaderLanding";
-import { validarAcceso } from "../services/AuthService";
+import { validarAcceso } from "../services/authService";
+import useFormContext from "../context/useFormContext";
 import { FiSend } from "react-icons/fi";
+//Componentes
+import HeaderLanding from "../components/HeaderLanding";
 import Footer from "../components/Footer";
 import ValoresCorporativos from "../components/ValoresCorporativos";
-import useFormContext from "../context/UseFormContext";
 import ModalPolitica from "../components/ModalPolitica"; // ✅ nuevo import
 import CarruselLanding from "../components/CarruselLanding";
-
-// ✅ Nuevos componentes importados
 import BeneficiosLanding from "../components/BeneficiosLanding";
 import NotaImportante from "../components/NotaImportante";
 import SeccionReingreso from "../components/SeccionReingreso";
-
 
 const LandingPage = () => {
   const { accounts } = useMsal();

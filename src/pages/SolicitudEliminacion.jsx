@@ -1,12 +1,12 @@
-// src/pages/SolicitudEliminacion.jsx
 import { useState } from "react";
-import { postSolicitudEliminacion } from "../services/FormServices/solicitudService";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import joycoLogo from "../assets/joyco-logo.png";
+//Componentes
 import Footer from "../components/Footer";
 import InputField from "../components/form/InputField";
-
+//Servicios
+import { postSolicitudEliminacion } from "../services/form-services/solicitudService";
 
 const SolicitudEliminacion = () => {
     const [form, setForm] = useState({

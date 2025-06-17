@@ -1,21 +1,20 @@
-import { useEffect, useState, useRef } from "react"; // agrega useRef
+import { useEffect, useState, useRef } from "react"; 
 import { useNavigate, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
+import useFormContext from "../context/useFormContext";
+//Componentes
 import FormStepper from "../components/form/FormStepper";
 import Header from "../components/form/Header";
-import { toast } from "react-toastify";
-import useFormContext from "../context/UseFormContext";
-import Footer from "../components/Footer";
-// Servicios individuales
-import { postEducation } from "../services/FormServices/educationService";
-import { postExperiencia } from "../services/FormServices/experienceService";
-import { postConocimientos } from "../services/FormServices/skillService";
-import { postPreferencias } from "../services/FormServices/preferencesService";
-import { mostrarErroresBackend } from "../utils/mostrarErroresBackend"; // asegúrate de tener este import al inicio
-
-import { marcarFormularioCompleto } from "../services/FormServices/candidateService";
 import DecoracionFormulario from "../components/form/DecoracionFormulario";
-
-
+import Footer from "../components/Footer";
+//Servicios
+import { postEducation } from "../services/form-services/educationService";
+import { postExperiencia } from "../services/form-services/experienceService";
+import { postConocimientos } from "../services/form-services/skillService";
+import { postPreferencias } from "../services/form-services/preferencesService";
+import { marcarFormularioCompleto } from "../services/form-services/candidateService";
+//Utilitarios
+import { mostrarErroresBackend } from "../utils/mostrarErroresBackend"; 
 
 
 const Form = () => {

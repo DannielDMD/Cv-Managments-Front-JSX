@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   BarChart,
   Bar,
@@ -9,8 +9,10 @@ import {
   CartesianGrid,
   Cell,
 } from "recharts";
-import { getGeneralStats } from "../../services/DashboardServices/candidateStatsService";
 import { CalendarDays } from "lucide-react";
+//Servicios
+import { getGeneralStats } from "../../services/dashboard-services/stats/candidateStatsService";
+
 
 const meses = [
   "", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",

@@ -1,4 +1,4 @@
-import AuthButton from "../Auth/AuthButton";
+import AuthButton from "../auth/AuthButton";
 import joycoLogo from "../../assets/joyco-logo.png"; // Asegúrate que la imagen esté ahí
 
 const HeaderTH = () => {

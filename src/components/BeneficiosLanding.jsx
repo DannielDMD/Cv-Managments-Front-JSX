@@ -1,5 +1,3 @@
-// src/components/BeneficiosLanding.jsx
-
 import { FiBookOpen, FiHeart, FiTrendingUp } from "react-icons/fi";
 
 const BeneficiosLanding = () => {

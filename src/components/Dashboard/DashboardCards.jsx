@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { getGeneralStats } from "../../services/DashboardServices/candidateStatsService";
+import { useEffect, useState } from "react";
 import {
   Users,
   CalendarDays,
@@ -7,6 +6,9 @@ import {
   MapPin,
   Briefcase,
 } from "lucide-react";
+//Servicios
+import { getGeneralStats } from "../../services/dashboard-services/stats/candidateStatsService";
+
 
 const OverviewCards = ({ anio }) => {
   const [stats, setStats] = useState(null);

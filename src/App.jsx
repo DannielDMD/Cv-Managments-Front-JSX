@@ -1,25 +1,28 @@
-// src/App.jsx
-
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { FormProvider } from "./context/FormContext";
-import LandingPage from "./pages/LandingPage";
-import Form from "./pages/Form";
-import Dashboard from "./pages/DashboardPages/Dashboard";
-import CandidateManagement from "./pages/DashboardPages/CandidateManagement";
-import CandidateDetail from "./pages/DashboardPages/CandidateDetail";
-import Reports from "./pages/DashboardPages/Reports"; // ← Importamos Reports
-import ProtectedRoute from "./components/Auth/ProtectedRoute";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ProtectedRouteIncomplete from "./components/form/ProtectedRouteIncomplete";
-import { AuthProvider } from "./context/AuthContext";
+//Vista de Home o Principal
+import LandingPage from "./pages/LandingPage";
+//Vistas del Formulario
+import Form from "./pages/Form";
 import SolicitudEliminacion from "./pages/SolicitudEliminacion";
-import SolicitudEliminacionTH from "./pages/DashboardPages/SolicitudEliminacionTH";
-import Configuracion from "./pages/DashboardPages/Settings";
-import Usuarios from "./pages/DashboardPages/Usuarios";
-
-
-
+//Ruta Protegidas
+import ProtectedRouteIncomplete from "./components/form/ProtectedRouteIncomplete";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
+//Contextos
+import { AuthProvider } from "./context/AuthContext";
+import { FormProvider } from "./context/FormContext";
+//Vistas del Dashboard
+import Dashboard from "./pages/dashboard-pages/Dashboard";
+import Reports from "./pages/dashboard-pages/Reports"; 
+import CandidateManagement from "./pages/dashboard-pages/gestion-candidatos/CandidateManagement";
+import CandidateDetail from "./pages/dashboard-pages/gestion-candidatos/CandidateDetail";
+import SolicitudEliminacionTH from "./pages/dashboard-pages/gestion-candidatos/SolicitudEliminacionTH";
+//Rutas de la Vista de Configuración (Dashboard)
+import Configuracion from "./pages/dashboard-pages/settings/Settings";
+import Usuarios from "./pages/dashboard-pages/settings/usuarios/Usuarios";
+import Catalogos from "./pages/dashboard-pages/settings/catalogos/Catalogos";
+import CiudadesCatalogo from "./pages/dashboard-pages/settings/catalogos/Ciudades";
 
 const App = () => {
   return (
@@ -114,6 +117,30 @@ const App = () => {
             }
           />
 
+
+          <Route
+            path="/dashboard/configuracion/catalogos"
+            element={
+              <AuthProvider>
+                <ProtectedRoute>
+                  <Catalogos />
+                </ProtectedRoute>
+              </AuthProvider>
+            }
+          />
+
+          {/* Rutas para catalogos */}
+          <Route
+            path="/dashboard/configuracion/catalogos/ciudades"
+            element={
+              <AuthProvider>
+                <ProtectedRoute>
+                  <CiudadesCatalogo />
+                </ProtectedRoute>
+              </AuthProvider>
+            }
+          />
+{/* Otras rutas*/}
           <Route
             path="/dashboard/solicitudes-eliminacion"
             element={

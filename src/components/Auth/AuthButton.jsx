@@ -1,7 +1,8 @@
 import { useMsal } from "@azure/msal-react";
-import { loginRequest } from "../../utils/authConfig";
-import { FiLogIn, FiLogOut } from "react-icons/fi";
 import { InteractionStatus } from "@azure/msal-browser";
+import { FiLogIn, FiLogOut } from "react-icons/fi";
+//Utilitarios
+import { loginRequest } from "../../utils/authConfig";
 
 const AuthButton = ({ mode = "landing" }) => {
   const { instance, accounts, inProgress } = useMsal();

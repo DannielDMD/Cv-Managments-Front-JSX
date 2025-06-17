@@ -1,6 +1,6 @@
 import { FaMoon, FaGlobe } from "react-icons/fa";
 import { toast } from "react-toastify";
-import AuthButton from "../components/Auth/AuthButton";
+import AuthButton from "./auth/AuthButton";
 import joycoLogo from "../assets/joyco-logo.png"; // Asegúrate que la imagen esté ahí
 const HeaderLanding = () => {
   return (

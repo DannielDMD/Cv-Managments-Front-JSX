@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import useFormContext from "../../context/UseFormContext";
+import useFormContext from "../../context/useFormContext";
 import joycoLogo from "../../assets/joyco-logo.png"; // Asegúrate que la imagen esté ahí
 
 const Header = () => {

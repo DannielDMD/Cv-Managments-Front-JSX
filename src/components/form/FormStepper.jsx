@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import PersonalInfo from "../../pages/FormPages/PersonalInfo";
-import EducationInfo from "../../pages/FormPages/EducationInfo";
-import ExperienceInfo from "../../pages/FormPages/ExperienceInfo";
-import SkillsInfo from "../../pages/FormPages/SkillsInfo";
-import PreferencesInfo from "../../pages/FormPages/PreferencesInfo";
-import useFormContext from "../../context/UseFormContext";
 import { toast } from "react-toastify";
+import useFormContext from "../../context/useFormContext";
+//Páginas
+import PersonalInfo from "../../pages/form-pages/PersonalInfo";
+import EducationInfo from "../../pages/form-pages/EducationInfo";
+import ExperienceInfo from "../../pages/form-pages/ExperienceInfo";
+import SkillsInfo from "../../pages/form-pages/SkillsInfo";
+import PreferencesInfo from "../../pages/form-pages/PreferencesInfo";
 
 const steps = [
   "Información Personal",

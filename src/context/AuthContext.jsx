@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import { useMsal } from "@azure/msal-react";
-import { validarAcceso } from "../services/AuthService";
+import { validarAcceso } from "../services/authService";
 
 const AuthContext = createContext();
 

@@ -1,4 +1,3 @@
-import React from "react";
 
 const InputField = ({ label, name, type, value = "", onChange, error }) => {
   return (

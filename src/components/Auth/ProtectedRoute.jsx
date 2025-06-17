@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useMsal } from "@azure/msal-react";
-import AccesoDenegado from "./AccesoDenegado";
 import { toast } from "react-toastify";
-import { validarAcceso } from "../../services/AuthService";
+//Componentes
+import AccesoDenegado from "./AccesoDenegado";
+//Servicios
+import { validarAcceso } from "../../services/authService";
 
 const ProtectedRoute = ({ children }) => {
   const { accounts } = useMsal();
