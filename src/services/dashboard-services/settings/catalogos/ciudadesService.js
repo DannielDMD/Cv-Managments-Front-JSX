@@ -1,39 +1,34 @@
-import { axiosInstance } from  "../../../../utils/api";
+// src/services/dashboard-services/settings/catalogos/ciudadesService.js
 
+import { axiosInstance } from "../../../../utils/api";
 
-export const getCiudades = async () => {
+// Obtener ciudades con paginación y filtros
+export const getCiudades = async ({ skip = 0, limit = 10, search = "", id_departamento = null } = {}) => {
   try {
-    const response = await axiosInstance.get("/ciudades");
-    return response.data;
+    const params = new URLSearchParams();
+    params.append("skip", skip);
+    params.append("limit", limit);
+    if (search) params.append("search", search);
+    if (id_departamento !== null) params.append("id_departamento", id_departamento);
+
+    const response = await axiosInstance.get(`/ciudades?${params.toString()}`);
+    return response.data; // Objeto con paginación
   } catch (error) {
-    console.error("Error al obtener ciudades:", error);
-    return [];
+    console.error("Error al obtener ciudades con paginación:", error);
+    return {
+      total: 0,
+      page: 1,
+      per_page: limit,
+      total_pages: 1,
+      resultados: [],
+    };
   }
 };
 
-export const getCiudadesPorDepartamento = async (idDepartamento) => {
+// Crear ciudad
+export const crearCiudad = async (data) => {
   try {
-    const response = await axiosInstance.get(`/ciudades/departamento/${idDepartamento}`);
-    return response.data;
-  } catch (error) {
-    console.error("Error al obtener ciudades por departamento:", error);
-    return [];
-  }
-};
-
-export const getCiudadPorId = async (idCiudad) => {
-  try {
-    const response = await axiosInstance.get(`/ciudades/${idCiudad}`);
-    return response.data;
-  } catch (error) {
-    console.error("Error al obtener ciudad:", error);
-    return null;
-  }
-};
-
-export const crearCiudad = async (datos) => {
-  try {
-    const response = await axiosInstance.post("/ciudades", datos);
+    const response = await axiosInstance.post("/ciudades", data);
     return response.data;
   } catch (error) {
     console.error("Error al crear ciudad:", error);
@@ -41,11 +36,23 @@ export const crearCiudad = async (datos) => {
   }
 };
 
+// Eliminar ciudad
 export const eliminarCiudad = async (idCiudad) => {
   try {
     await axiosInstance.delete(`/ciudades/${idCiudad}`);
   } catch (error) {
     console.error("Error al eliminar ciudad:", error);
     throw error;
+  }
+};
+
+// Obtener lista de departamentos (para mostrar en el modal de creación)
+export const getDepartamentos = async () => {
+  try {
+    const response = await axiosInstance.get("/departamentos/todas");
+    return response.data; // Lista sin paginación
+  } catch (error) {
+    console.error("Error al obtener departamentos:", error);
+    return [];
   }
 };

@@ -1,4 +1,4 @@
-import { Dialog, Transition } from "@headlessui/react";
+import { Dialog, Transition, TransitionChild } from "@headlessui/react";
 import { Fragment } from "react";
 import { X } from "lucide-react";
 
@@ -6,7 +6,8 @@ const Modal = ({ isOpen, onClose, title, children }) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={onClose}>
-        <Transition.Child
+        {/* Fondo oscuro */}
+        <TransitionChild
           as={Fragment}
           enter="ease-out duration-300"
           enterFrom="opacity-0"
@@ -16,11 +17,12 @@ const Modal = ({ isOpen, onClose, title, children }) => {
           leaveTo="opacity-0"
         >
           <div className="fixed inset-0 bg-black bg-opacity-25" />
-        </Transition.Child>
+        </TransitionChild>
 
+        {/* Contenedor central */}
         <div className="fixed inset-0 overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4">
-            <Transition.Child
+            <TransitionChild
               as={Fragment}
               enter="ease-out duration-300"
               enterFrom="opacity-0 scale-95"
@@ -29,21 +31,20 @@ const Modal = ({ isOpen, onClose, title, children }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+              {/* Modal propiamente */}
+<div className="w-full max-w-2xl transform overflow-visible rounded-2xl bg-white p-6 text-left shadow-xl transition-all">
                 {/* Encabezado */}
                 <div className="flex justify-between items-center mb-4">
-                  <Dialog.Title as="h3" className="text-lg font-medium text-gray-900">
-                    {title}
-                  </Dialog.Title>
+                  <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
                   <button onClick={onClose} className="text-gray-400 hover:text-red-500">
                     <X className="w-5 h-5" />
                   </button>
                 </div>
 
                 {/* Contenido dinámico */}
-                <div className="mt-2">{children}</div>
-              </Dialog.Panel>
-            </Transition.Child>
+                <div>{children}</div>
+              </div>
+            </TransitionChild>
           </div>
         </div>
       </Dialog>

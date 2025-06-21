@@ -5,7 +5,7 @@ import { axiosInstance } from "../../utils/api";
 // Fetch a la tabla de Rangos de Experiencia
 export const getHabilidadesBlandas = async () => {
     try {
-        const response = await axiosInstance.get("/conocimientos/habilidades-blandas");
+        const response = await axiosInstance.get("/conocimientos/habilidades-blandas/todas");
         return response.data;
     } catch (error) {
         console.error("Error al obtener las habilidades blandas:", error.message);
@@ -15,7 +15,7 @@ export const getHabilidadesBlandas = async () => {
 
 export const getHabilidadesTecnicas = async () => {
     try {
-        const response = await axiosInstance.get("/conocimientos/habilidades-tecnicas");
+        const response = await axiosInstance.get("/conocimientos/habilidades-tecnicas/todas");
         return response.data;
     } catch (error) {
         console.error("Error al obtener las habilidades:", error.message);
@@ -25,7 +25,7 @@ export const getHabilidadesTecnicas = async () => {
 
 export const getHerramientas = async () => {
     try {
-        const response = await axiosInstance.get("/conocimientos/herramientas");
+        const response = await axiosInstance.get("/conocimientos/herramientas/todas");
         return response.data;
     } catch (error) {
         console.error("Error al obtener las herramientas:", error.message);

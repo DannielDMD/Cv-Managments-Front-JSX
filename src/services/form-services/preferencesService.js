@@ -3,7 +3,7 @@ import { axiosInstance } from "../../utils/api";
 //Fetch para Disponibilidad de Inicio
 export const getDisponibilidades = async () => {
     try {
-        const response = await axiosInstance.get("/disponibilidades");
+        const response = await axiosInstance.get("/disponibilidades/todas");
         return response.data;
     } catch (error) {
         console.error("Error al obtener las disponibilidades:", error.message);
@@ -14,7 +14,7 @@ export const getDisponibilidades = async () => {
 // Fetch para Rangos Salariales
 export const getRangos = async () => {
     try {
-        const response = await axiosInstance.get("/rangos-salariales");
+        const response = await axiosInstance.get("/rangos-salariales/todas");
         return response.data;
     } catch (error) {
         console.error("Error al obtener los rangos salariales:", error.message);
@@ -25,7 +25,7 @@ export const getRangos = async () => {
 //Fetch para Motivos de Salida
 export const getMotivosSalida = async () => {
     try {
-        const response = await axiosInstance.get("/motivos-salida");
+        const response = await axiosInstance.get("/motivos-salida/todas");
         return response.data;
     } catch (error) {
         console.error("Error al obtener los motivos de salida:", error.message);

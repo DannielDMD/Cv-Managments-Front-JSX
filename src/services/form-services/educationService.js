@@ -3,7 +3,7 @@ import { axiosInstance } from "../../utils/api";
 
 export const getNiveles = async () => {
     try {
-      const response = await axiosInstance.get("/nivel-educacion");
+      const response = await axiosInstance.get("/nivel-educacion/todas");
       return response.data;
     } catch (error) {
       console.error("Error al obtener los niveles de educación:", error.message);
@@ -34,7 +34,7 @@ export const getNiveles = async () => {
 
   export const getInstituciones = async () => {
     try {
-        const response = await axiosInstance.get("/instituciones");
+        const response = await axiosInstance.get("/instituciones/todas");
         return response.data;
     } catch (error){
         console.error ("Error al obtener las instituciones", error.message);
@@ -44,7 +44,7 @@ export const getNiveles = async () => {
 
   export const getIngles = async () => {
     try {
-        const response = await axiosInstance.get("/nivel-ingles");
+        const response = await axiosInstance.get("/nivel-ingles/todas");
         return response.data;
     } catch (error) {
         console.error ("Error al obtener los niveles de ingles", error.message);

@@ -11,9 +11,10 @@ const SelectField = ({
   onChange,
   placeholder = "Seleccione...",
   isMulti = false,
+  error,
 }) => {
   const [options, setOptions] = useState([]);
-  const [loading, setLoading] = useState(true); // NUEVO
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,7 +62,22 @@ const SelectField = ({
         placeholder={placeholder}
         isClearable
         className="w-full"
+        styles={{
+          control: (base, state) => ({
+            ...base,
+            borderColor: error ? "#f87171" : base.borderColor,
+            boxShadow: error
+              ? "0 0 0 1px #f87171"
+              : state.isFocused
+              ? "0 0 0 1px #3b82f6"
+              : base.boxShadow,
+            "&:hover": {
+              borderColor: error ? "#f87171" : "#3b82f6",
+            },
+          }),
+        }}
       />
+      {error && <span className="text-red-500 text-xs mt-1">{error}</span>}
     </div>
   );
 };

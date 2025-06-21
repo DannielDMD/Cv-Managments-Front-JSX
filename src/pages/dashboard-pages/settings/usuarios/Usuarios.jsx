@@ -3,9 +3,9 @@ import { Users, Pencil, Trash2 } from "lucide-react";
 import { toast } from "react-toastify";
 //Componentes
 import DashboardLayout from "../../../../components/dashboard/DashboardLayout";
-import UsuarioModal from "../../../../components/dashboard/settings/UsuarioModal";
-import ConfirmacionModal from "../../../../components/dashboard/settings/ConfirmacionModal";
-import EstadoUsuarioModal from "../../../../components/dashboard/settings/EstadoUsuarioModal";
+import UsuarioModal from "../../../../components/dashboard/settings/usuarios/UsuarioModal";
+import EstadoUsuarioModal from "../../../../components/dashboard/settings/usuarios/EstadoUsuarioModal";
+import ConfirmacionModal from "../../../../components/common/EliminacionModal";
 //Servicios
 import {
     obtenerUsuarios,
@@ -13,9 +13,6 @@ import {
     actualizarUsuario,
     eliminarUsuario,
 } from "../../../../services/dashboard-services/settings/userService";
-
-
-
 
 const Usuarios = () => {
     const [usuarios, setUsuarios] = useState([]);

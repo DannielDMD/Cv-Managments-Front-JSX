@@ -5,7 +5,7 @@ import { axiosInstance } from "../../utils/api";
 // Fetch a la tabla de Rangos de Experiencia
 export const getExperiencia = async () => {
     try {
-        const response = await axiosInstance.get("/rangos-experiencia");
+        const response = await axiosInstance.get("/rangos-experiencia/todas");
         return response.data;
     } catch (error) {
         console.error("Error al obtener los rangos de experiencia:", error.message);

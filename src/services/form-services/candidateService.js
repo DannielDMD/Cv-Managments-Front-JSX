@@ -5,7 +5,7 @@ import { axiosInstance } from "../../utils/api";
 // Obtener lista de departamentos
 export const getDepartamentos = async () => {
   try {
-    const response = await axiosInstance.get("/departamentos");
+    const response = await axiosInstance.get("/departamentos/todas");
     return response.data;
   } catch (error) {
     console.error("Error al obtener departamentos:", error.message);
@@ -16,10 +16,10 @@ export const getDepartamentos = async () => {
 
 // Obtener ciudades por id_departamento
 export const getCiudades = async (id_departamento = null) => {
-  try {
+try {
     const url = id_departamento
-      ? `/ciudades/departamento/${id_departamento}` // ✅ esta es la ruta correcta
-      : "/ciudades";
+      ? `/ciudades/departamento/${id_departamento}` // ✅ filtra por departamento
+      : "/ciudades/todas"; // ✅ lista completa sin paginación
 
     const response = await axiosInstance.get(url);
     return response.data;
@@ -31,7 +31,7 @@ export const getCiudades = async (id_departamento = null) => {
 
 export const getCargos = async () => {
   try {
-    const response = await axiosInstance.get("/cargo-ofrecido");
+    const response = await axiosInstance.get("/cargo-ofrecido/todas");
     return response.data;
   } catch (error) {
     console.error("Error al obtener cargos:", error.message);
@@ -43,7 +43,7 @@ export const getCargos = async () => {
 // Obtener lista de centros de costos
 export const getCentrosCostos = async () => {
   try {
-    const response = await axiosInstance.get("/centros-costos");
+    const response = await axiosInstance.get("/centros-costos/todas");
     return response.data;
   } catch (error) {
     console.error("Error al obtener centros de costos:", error.message);
@@ -53,7 +53,7 @@ export const getCentrosCostos = async () => {
 
 export const getMotivos = async () => {
   try {
-    const response = await axiosInstance.get("/motivos-salida");
+    const response = await axiosInstance.get("/motivos-salida/todas");
     console.log("Motivos de salida recibidos:", response.data);  // 👈 Agrega esto
     return response.data;
   } catch (error) {

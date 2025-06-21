@@ -7,7 +7,7 @@ import CandidateTable from "../../../components/dashboard/gestion-candidatos-com
 import CandidateDetailTable from "../../../components/dashboard/gestion-candidatos-components/CandidateDetailTable";
 import CandidatoResumenCards from "../../../components/dashboard/gestion-candidatos-components/CandidatoResumenCards";
 import CandidateFilters from "../../../components/dashboard/gestion-candidatos-components/CandidateFilters";
-import ActiveFilterChips from "../../../components/dashboard/gestion-candidatos-components/CandidateFilters";
+import ActiveFilterChips from "../../../components/dashboard/gestion-candidatos-components/ActiveFilterChips";
 //Servicios
 import { obtenerEstadisticasCandidatos } from "../../../services/dashboard-services/candidateResumenService";
 import { obtenerResumenCandidatos } from "../../../services/dashboard-services/candidateResumenService";
