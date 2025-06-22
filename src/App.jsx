@@ -14,7 +14,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { FormProvider } from "./context/FormContext";
 //Vistas del Dashboard
 import Dashboard from "./pages/dashboard-pages/Dashboard";
-import Reports from "./pages/dashboard-pages/Reports"; 
+import Reports from "./pages/dashboard-pages/Reports";
 import CandidateManagement from "./pages/dashboard-pages/gestion-candidatos/CandidateManagement";
 import CandidateDetail from "./pages/dashboard-pages/gestion-candidatos/CandidateDetail";
 import SolicitudEliminacionTH from "./pages/dashboard-pages/gestion-candidatos/SolicitudEliminacionTH";
@@ -23,7 +23,11 @@ import Configuracion from "./pages/dashboard-pages/settings/Settings";
 import Usuarios from "./pages/dashboard-pages/settings/usuarios/Usuarios";
 import Catalogos from "./pages/dashboard-pages/settings/catalogos/Catalogos";
 import CiudadesCatalogo from "./pages/dashboard-pages/settings/catalogos/Ciudades";
-
+import DepartamentosCatalago from "./pages/dashboard-pages/settings/catalogos/Departamentos";
+import CargosOfrecidosCatalogo from "./pages/dashboard-pages/settings/catalogos/CargosOfrecidos";
+import CentroCostosCatalogo from "./pages/dashboard-pages/settings/catalogos/CentrosCostos";
+import MotivosSalidaCatalogo from "./pages/dashboard-pages/settings/catalogos/MotivosSalida";
+import NivelesEducacionCatalogo from "./pages/dashboard-pages/settings/catalogos/NivelesEducacion";
 const App = () => {
   return (
     <FormProvider>
@@ -140,7 +144,66 @@ const App = () => {
               </AuthProvider>
             }
           />
-{/* Otras rutas*/}
+
+          <Route
+            path="/dashboard/configuracion/catalogos/departamentos"
+            element={
+              <AuthProvider>
+                <ProtectedRoute>
+                  <DepartamentosCatalago />
+                </ProtectedRoute>
+              </AuthProvider>
+            }
+          />
+
+
+
+          <Route
+            path="/dashboard/configuracion/catalogos/cargos"
+            element={
+              <AuthProvider>
+                <ProtectedRoute>
+                  <CargosOfrecidosCatalogo />
+                </ProtectedRoute>
+              </AuthProvider>
+            }
+          />
+
+          <Route
+            path="/dashboard/configuracion/catalogos/centros-costos"
+            element={
+              <AuthProvider>
+                <ProtectedRoute>
+                  <CentroCostosCatalogo />
+                </ProtectedRoute>
+              </AuthProvider>
+            }
+          />
+
+          <Route
+            path="/dashboard/configuracion/catalogos/motivos-salida"
+            element={
+              <AuthProvider>
+                <ProtectedRoute>
+                  <MotivosSalidaCatalogo />
+                </ProtectedRoute>
+              </AuthProvider>
+            }
+          />
+  {/* Rutas de Educacion*/}
+
+          <Route
+            path="/dashboard/configuracion/catalogos/niveles-educacion"
+            element={
+              <AuthProvider>
+                <ProtectedRoute>
+                  <NivelesEducacionCatalogo />
+                </ProtectedRoute>
+              </AuthProvider>
+            }
+          />
+
+          {/* Otras rutas*/}
           <Route
             path="/dashboard/solicitudes-eliminacion"
             element={
