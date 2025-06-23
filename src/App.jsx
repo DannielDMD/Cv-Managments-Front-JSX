@@ -32,9 +32,9 @@ import InstitucionesCatalago from "./pages/dashboard-pages/settings/catalogos/In
 import NivelInglesCatalogo from "./pages/dashboard-pages/settings/catalogos/NivelesIngles";
 import RangosExperienciaCatalogo from "./pages/dashboard-pages/settings/catalogos/RangosExperiencia";
 
-
-
-
+import HabilidadesTecnicasCatalago from "./pages/dashboard-pages/settings/catalogos/HabilidadesTecnicas";
+import HabilidadesBlandasCatalogo from "./pages/dashboard-pages/settings/catalogos/HabilidadesBlandas";
+import HerramientasCatalogo from "./pages/dashboard-pages/settings/catalogos/Herramientas";
 
 
 
@@ -255,7 +255,38 @@ const App = () => {
 
 
 
+          <Route
+            path="/dashboard/configuracion/catalogos/habilidades-tecnicas"
+            element={
+              <AuthProvider>
+                <ProtectedRoute>
+                  <HabilidadesTecnicasCatalago />
+                </ProtectedRoute>
+              </AuthProvider>
+            }
+          />
 
+        <Route
+            path="/dashboard/configuracion/catalogos/habilidades-blandas"
+            element={
+              <AuthProvider>
+                <ProtectedRoute>
+                  <HabilidadesBlandasCatalogo />
+                </ProtectedRoute>
+              </AuthProvider>
+            }
+          />
+
+        <Route
+            path="/dashboard/configuracion/catalogos/herramientas"
+            element={
+              <AuthProvider>
+                <ProtectedRoute>
+                  <HerramientasCatalogo />
+                </ProtectedRoute>
+              </AuthProvider>
+            }
+          />
 
 
 
