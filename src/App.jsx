@@ -30,14 +30,15 @@ import MotivosSalidaCatalogo from "./pages/dashboard-pages/settings/catalogos/Mo
 import NivelesEducacionCatalogo from "./pages/dashboard-pages/settings/catalogos/NivelesEducacion";
 import InstitucionesCatalago from "./pages/dashboard-pages/settings/catalogos/Instituciones";
 import NivelInglesCatalogo from "./pages/dashboard-pages/settings/catalogos/NivelesIngles";
+
 import RangosExperienciaCatalogo from "./pages/dashboard-pages/settings/catalogos/RangosExperiencia";
 
 import HabilidadesTecnicasCatalago from "./pages/dashboard-pages/settings/catalogos/HabilidadesTecnicas";
 import HabilidadesBlandasCatalogo from "./pages/dashboard-pages/settings/catalogos/HabilidadesBlandas";
 import HerramientasCatalogo from "./pages/dashboard-pages/settings/catalogos/Herramientas";
 
-
-
+import DisponibilidadesCatalogo from "./pages/dashboard-pages/settings/catalogos/Disponibilidades";
+import RangosSalarialesCatalogo from "./pages/dashboard-pages/settings/catalogos/RangosSalariales";
 
 
 const App = () => {
@@ -283,6 +284,30 @@ const App = () => {
               <AuthProvider>
                 <ProtectedRoute>
                   <HerramientasCatalogo />
+                </ProtectedRoute>
+              </AuthProvider>
+            }
+          />
+
+        <Route
+            path="/dashboard/configuracion/catalogos/disponibilidad"
+            element={
+              <AuthProvider>
+                <ProtectedRoute>
+                  <DisponibilidadesCatalogo/>
+                </ProtectedRoute>
+              </AuthProvider>
+            }
+          />
+
+
+
+        <Route
+            path="/dashboard/configuracion/catalogos/rangos-salariales"
+            element={
+              <AuthProvider>
+                <ProtectedRoute>
+                  <RangosSalarialesCatalogo/>
                 </ProtectedRoute>
               </AuthProvider>
             }

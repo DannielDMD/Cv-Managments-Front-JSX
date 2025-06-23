@@ -55,3 +55,4 @@ export const eliminarHerramienta = async (id) => {
     throw error;
   }
 };
+ 
