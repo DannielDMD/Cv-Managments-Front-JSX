@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { Users, Pencil, Trash2 } from "lucide-react";
+import { Users, Pencil, Trash2, ArrowLeft } from "lucide-react";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
+
 //Componentes
 import DashboardLayout from "../../../../components/dashboard/DashboardLayout";
 import UsuarioModal from "../../../../components/dashboard/settings/usuarios/UsuarioModal";
@@ -94,6 +96,12 @@ const Usuarios = () => {
                     <Users className="w-6 h-6 text-blue-600" />
                     Gestión de Usuarios
                 </h1>
+                <Link
+                    to="/dashboard/configuracion/"
+                    className="text-blue-600 hover:underline text-sm inline-flex items-center gap-1 mt-1"
+                >
+                    <ArrowLeft className="w-4 h-4" /> Volver a Configuraciones
+                </Link>
                 <p className="text-gray-600">
                     Administra los usuarios que pueden acceder al sistema.
                 </p>

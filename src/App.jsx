@@ -27,7 +27,9 @@ import DepartamentosCatalago from "./pages/dashboard-pages/settings/catalogos/De
 import CargosOfrecidosCatalogo from "./pages/dashboard-pages/settings/catalogos/CargosOfrecidos";
 import CentroCostosCatalogo from "./pages/dashboard-pages/settings/catalogos/CentrosCostos";
 import MotivosSalidaCatalogo from "./pages/dashboard-pages/settings/catalogos/MotivosSalida";
+
 import NivelesEducacionCatalogo from "./pages/dashboard-pages/settings/catalogos/NivelesEducacion";
+import TitulosObtenidos from "./pages/dashboard-pages/settings/catalogos/TitulosObtenidos";
 import InstitucionesCatalago from "./pages/dashboard-pages/settings/catalogos/Instituciones";
 import NivelInglesCatalogo from "./pages/dashboard-pages/settings/catalogos/NivelesIngles";
 
@@ -216,6 +218,16 @@ const App = () => {
             }
           />
 
+        <Route
+            path="/dashboard/configuracion/catalogos/titulos-obtenidos"
+            element={
+              <AuthProvider>
+                <ProtectedRoute>
+                  <TitulosObtenidos/>
+                </ProtectedRoute>
+              </AuthProvider>
+            }
+          />
 
           <Route
             path="/dashboard/configuracion/catalogos/instituciones"

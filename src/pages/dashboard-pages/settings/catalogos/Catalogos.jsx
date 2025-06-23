@@ -1,10 +1,10 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import DashboardLayout from "../../../../components/dashboard/DashboardLayout";
 import {
     MapPin, Building2, Briefcase, UserCog, GraduationCap,
     School, Languages, BadgePercent, ListChecks,
     Settings2, HandHeart, AlarmClock, Wallet,
-    Wrench, Cpu, User, BookOpen, ClipboardList, Lightbulb, Clock
+    Wrench, Cpu, User, BookOpen, ClipboardList, Lightbulb, Clock, ArrowLeft,
 } from "lucide-react";
 
 
@@ -36,6 +36,12 @@ const Catalogos = () => {
         <DashboardLayout>
             <div className="space-y-10">
                 <h1 className="text-4xl font-bold text-gray-800">Catálogos del Sistema</h1>
+                <Link
+                    to="/dashboard/configuracion"
+                    className="text-blue-600 hover:underline text-sm inline-flex items-center gap-1 mt-1"
+                >
+                    <ArrowLeft className="w-4 h-4" /> Volver a Configuraciones
+                </Link>
                 <p className="text-gray-600">Administra las listas desplegables del formulario de candidatos.</p>
 
                 {/* Información Personal */}
