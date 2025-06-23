@@ -28,6 +28,18 @@ import CargosOfrecidosCatalogo from "./pages/dashboard-pages/settings/catalogos/
 import CentroCostosCatalogo from "./pages/dashboard-pages/settings/catalogos/CentrosCostos";
 import MotivosSalidaCatalogo from "./pages/dashboard-pages/settings/catalogos/MotivosSalida";
 import NivelesEducacionCatalogo from "./pages/dashboard-pages/settings/catalogos/NivelesEducacion";
+import InstitucionesCatalago from "./pages/dashboard-pages/settings/catalogos/Instituciones";
+import NivelInglesCatalogo from "./pages/dashboard-pages/settings/catalogos/NivelesIngles";
+import RangosExperienciaCatalogo from "./pages/dashboard-pages/settings/catalogos/RangosExperiencia";
+
+
+
+
+
+
+
+
+
 const App = () => {
   return (
     <FormProvider>
@@ -202,6 +214,51 @@ const App = () => {
               </AuthProvider>
             }
           />
+
+
+          <Route
+            path="/dashboard/configuracion/catalogos/instituciones"
+            element={
+              <AuthProvider>
+                <ProtectedRoute>
+                  <InstitucionesCatalago />
+                </ProtectedRoute>
+              </AuthProvider>
+            }
+          />
+
+
+
+
+          <Route
+            path="/dashboard/configuracion/catalogos/nivel-ingles"
+            element={
+              <AuthProvider>
+                <ProtectedRoute>
+                  <NivelInglesCatalogo />
+                </ProtectedRoute>
+              </AuthProvider>
+            }
+          />
+
+
+          <Route
+            path="/dashboard/configuracion/catalogos/rangos-experiencia"
+            element={
+              <AuthProvider>
+                <ProtectedRoute>
+                  <RangosExperienciaCatalogo />
+                </ProtectedRoute>
+              </AuthProvider>
+            }
+          />
+
+
+
+
+
+
+
 
           {/* Otras rutas*/}
           <Route
