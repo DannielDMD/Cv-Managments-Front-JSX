@@ -179,7 +179,7 @@ const Form = () => {
     <>
       {/* Fondo decorativo */}
 
-      <div className="relative min-h-screen bg-gray-100 pt-20 pb-40 flex flex-col items-center overflow-hidden">
+      <div className="relative min-h-screen bg-gray-100 pt-52 pb-40 flex flex-col items-center overflow-hidden">
         <DecoracionFormulario tipo="principal" />
 
 

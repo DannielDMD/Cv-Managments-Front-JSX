@@ -29,7 +29,7 @@ const SolicitudEliminacionTH = () => {
   const [anioFiltro, setAnioFiltro] = useState(null);
   const [mesFiltro, setMesFiltro] = useState(null);
   const totalPages = Math.ceil(total / 10); // Asumiendo 10 por página
-  const opcionesAnios = [2023, 2024, 2025].map((a) => ({ value: a, label: String(a) }));
+  const opcionesAnios = [2024, 2025, 2026, 2027, 2028, 2029, 2030].map((a) => ({ value: a, label: String(a) }));
 
   const opcionesMeses = [
     "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",

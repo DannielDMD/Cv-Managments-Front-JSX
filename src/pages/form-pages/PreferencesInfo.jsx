@@ -96,7 +96,7 @@ const PreferencesInfo = () => {
           />
         )}
 
-        <InputField label="Razón para trabajar en Joyco" name="razon_trabajar_joyco" type="text" value={preferencesData.razon_trabajar_joyco} onChange={handleChange} />
+        <InputField label="Razón para trabajar en Joyco" name="razon_trabajar_joyco" type="textarea" value={preferencesData.razon_trabajar_joyco} onChange={handleChange} />
       </div>
     </div>
   );

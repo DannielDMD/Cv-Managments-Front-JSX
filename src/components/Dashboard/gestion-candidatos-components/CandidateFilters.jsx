@@ -8,7 +8,7 @@ import { getHerramientas } from "../../../services/form-services/skillService";
 
 const CandidateFilters = ({ filtros, setFiltros, setPaginaActual }) => {
   // Opciones estáticas para Año y Mes
-  const opcionesAnios = [2023, 2024, 2025].map((a) => ({ value: a, label: String(a) }));
+  const opcionesAnios = [2024, 2025, 2026, 2027, 2028, 2029, 2030].map((a) => ({ value: a, label: String(a) }));
   const opcionesMeses = [
     "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
     "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
