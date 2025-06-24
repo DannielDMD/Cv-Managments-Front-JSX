@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Modal from "../../../common/Modal";
-import InputField from "../../../form/InputField";
-import SelectField from "../../../form/SelectField";
+import InputField from "../../../common/InputField";
+import SelectField from "../../../common/SelectField";
 import { getNivelesEducacion } from "../../../../services/dashboard-services/settings/catalogos/nivelesEducacionService";
 
 const TituloObtenidoModal = ({ isOpen, onClose, onSubmit }) => {

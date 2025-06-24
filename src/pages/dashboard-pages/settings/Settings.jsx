@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Users, Database } from "lucide-react";
+import { Users, Database, Settings2 } from "lucide-react";
 //Servicios
 import DashboardLayout from "../../../components/dashboard/DashboardLayout";
 
@@ -10,7 +10,12 @@ const Settings = () => {
   return (
     <DashboardLayout>
       <div className="space-y-6">
-        <h1 className="text-4xl font-bold text-gray-800">Configuración del Sistema</h1>
+        
+        <h1 className="text-4xl font-bold text-gray-800 flex items-center gap-2">
+           <Settings2 className="w-6 h-6 text-blue-600" />
+          Configuración del Sistema
+
+        </h1>
         <p className="text-gray-600">Administra catálogos maestros y usuarios autorizados.</p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">

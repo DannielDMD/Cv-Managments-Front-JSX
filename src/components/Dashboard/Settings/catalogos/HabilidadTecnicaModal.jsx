@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Modal from "../../../common/Modal";
-import InputField from "../../../form/InputField";
+import InputField from "../../../common/InputField";
 
 const HabilidadTecnicaModal = ({ isOpen, onClose, onSubmit, modo, nombreInicial = "" }) => {
   const [nombre, setNombre] = useState("");

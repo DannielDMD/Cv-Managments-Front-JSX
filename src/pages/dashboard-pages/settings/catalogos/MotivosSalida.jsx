@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { toast } from "react-toastify";
-import { Plus, Trash2, Pencil, ArrowLeft } from "lucide-react";
+import { Plus, Trash2, Pencil, ArrowLeft, SquareArrowOutUpLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 
 // Componentes
@@ -102,7 +102,10 @@ const MotivosSalida = () => {
       <div className="space-y-6">
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold text-gray-800">Gestión de Motivos de Salida</h1>
+            <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-2">
+              <SquareArrowOutUpLeft className="w-6 h-6 text-blue-600" />
+              Gestión de Motivos de Salida
+            </h1>
             <Link
               to="/dashboard/configuracion/catalogos"
               className="text-blue-600 hover:underline text-sm inline-flex items-center gap-1 mt-1"

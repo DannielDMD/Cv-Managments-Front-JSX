@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import InputField from "../../../form/InputField";
-import SelectField from "../../../form/SelectField";
+import InputField from "../../../common/InputField";
+import SelectField from "../../../common/SelectField";
 import Modal from "../../../common/Modal";
 import { getDepartamentos } from "../../../../services/dashboard-services/settings/catalogos/ciudadesService";
 

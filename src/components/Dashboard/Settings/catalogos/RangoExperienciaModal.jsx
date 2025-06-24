@@ -1,8 +1,7 @@
 // src/components/dashboard/settings/catalogos/RangoExperienciaModal.jsx
-
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import Modal from "../../../common/Modal";
-import InputField from "../../../form/InputField";
+import InputField from "../../../common/InputField";
 
 const RangoExperienciaModal = ({
   isOpen,

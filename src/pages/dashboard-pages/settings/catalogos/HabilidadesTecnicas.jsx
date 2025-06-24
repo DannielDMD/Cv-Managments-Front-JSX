@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { toast } from "react-toastify";
-import { Plus, Trash2, Pencil, ArrowLeft } from "lucide-react";
+import { Plus, Trash2, Pencil, ArrowLeft, ArrowUp01 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 // Componentes
@@ -104,7 +104,10 @@ const HabilidadesTecnicas = () => {
       <div className="space-y-6">
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold text-gray-800">Gestión de Habilidades Técnicas</h1>
+            <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-2">
+              <ArrowUp01 className="w-6 h-6 text-blue-600" />
+              Gestión de Habilidades Técnicas
+            </h1>
             <Link
               to="/dashboard/configuracion/catalogos"
               className="text-blue-600 hover:underline text-sm inline-flex items-center gap-1 mt-1"

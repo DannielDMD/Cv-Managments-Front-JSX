@@ -1,7 +1,7 @@
 import useFormContext from "../../context/useFormContext";
 //Componentes
-import InputField from "../../components/form/InputField";
-import SelectField from "../../components/form/SelectField";
+import InputField from "../../components/common/InputField";
+import SelectField from "../../components/common/SelectField";
 import AyudaFormulario from "../../components/form/AyudaFormulario";
 //Servicios
 import { getDisponibilidades, getRangos, getMotivosSalida } from "../../services/form-services/preferencesService";

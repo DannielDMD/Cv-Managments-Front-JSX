@@ -1,7 +1,7 @@
 import useFormContext from "../../context/useFormContext";
 import { toast } from "react-toastify";
 //Componentes
-import SelectField from "../../components/form/SelectField";
+import SelectField from "../../components/common/SelectField";
 import AyudaFormulario from "../../components/form/AyudaFormulario";
 //Servicios
 import { getHabilidadesBlandas, getHabilidadesTecnicas, getHerramientas } from "../../services/form-services/skillService";

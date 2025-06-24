@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Modal from "../../../common/Modal";
-import InputField from "../../../form/InputField";
+import InputField from "../../../common/InputField";
 
 const CargoOfrecidoModal = ({ isOpen, onClose, onSubmit, modo = "crear", nombreInicial = "" }) => {
   const [nombre, setNombre] = useState("");

@@ -8,6 +8,7 @@ import CandidateDetailTable from "../../../components/dashboard/gestion-candidat
 import CandidatoResumenCards from "../../../components/dashboard/gestion-candidatos-components/CandidatoResumenCards";
 import CandidateFilters from "../../../components/dashboard/gestion-candidatos-components/CandidateFilters";
 import ActiveFilterChips from "../../../components/dashboard/gestion-candidatos-components/ActiveFilterChips";
+import Select from "react-select";
 //Servicios
 import { obtenerEstadisticasCandidatos } from "../../../services/dashboard-services/candidateResumenService";
 import { obtenerResumenCandidatos } from "../../../services/dashboard-services/candidateResumenService";
@@ -35,7 +36,10 @@ const CandidateManagement = () => {
   const [mostrarFiltros, setMostrarFiltros] = useState(false);
   const [verTablaDetallada, setVerTablaDetallada] = useState(false);
   const porPagina = 10;
-
+  const opcionesOrden = [
+    { value: "recientes", label: "Más recientes primero" },
+    { value: "antiguos", label: "Más antiguos primero" },
+  ];
   useEffect(() => {
     if (state) {
       if (state.paginaAnterior) setPaginaActual(state.paginaAnterior);
@@ -95,6 +99,7 @@ const CandidateManagement = () => {
         </h1>
       </div>
       <CandidatoResumenCards estadisticas={estadisticas} navigate={navigate} />
+
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700 mb-1">Buscador:</label>
         <input
@@ -108,20 +113,22 @@ const CandidateManagement = () => {
           className="w-full md:w-1/2 p-2 border border-gray-300 rounded"
         />
       </div>
-      <div className="mb-4">
+
+
+      <div className="mb-4 md:w-1/3">
         <label className="block text-sm font-medium text-gray-700 mb-1">Ordenar por fecha:</label>
-        <select
-          value={filtros.ordenar_por_fecha}
-          onChange={(e) => {
-            setFiltros((prev) => ({ ...prev, ordenar_por_fecha: e.target.value }));
+        <Select
+          options={opcionesOrden}
+          value={opcionesOrden.find((o) => o.value === filtros.ordenar_por_fecha)}
+          onChange={(selected) => {
+            setFiltros((prev) => ({ ...prev, ordenar_por_fecha: selected?.value || "recientes" }));
             setPaginaActual(1);
           }}
-          className="p-2 border border-gray-300 rounded text-sm"
-        >
-          <option value="recientes">Más recientes primero</option>
-          <option value="antiguos">Más antiguos primero</option>
-        </select>
+          isClearable={false}
+          className="w-full"
+        />
       </div>
+
 
       <div className="mb-4">
         <button

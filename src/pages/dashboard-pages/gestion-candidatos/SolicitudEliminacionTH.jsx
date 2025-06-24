@@ -1,13 +1,19 @@
 import { useEffect, useState, useCallback } from "react";
 import { toast } from "react-toastify";
+import { FiTrash2 } from "react-icons/fi";
+import { ArrowLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 //Componentes
 import SolicitudEliminacionRow from "../../../components/dashboard/gestion-candidatos-components/SolicitudEliminacionRow";
 import DashboardLayout from "../../../components/dashboard/DashboardLayout";
+import Pagination from "../../../components/common/Pagination";
+import Select from "react-select";
+
 //Servicios
 import {
   getSolicitudesEliminacion,
   actualizarSolicitudEliminacion,
-  getEstadisticasSolicitudes 
+  getEstadisticasSolicitudes
 } from "../../../services/form-services/solicitudService";
 
 const SolicitudEliminacionTH = () => {
@@ -22,6 +28,24 @@ const SolicitudEliminacionTH = () => {
   const [ordenar, setOrdenar] = useState("recientes");
   const [anioFiltro, setAnioFiltro] = useState(null);
   const [mesFiltro, setMesFiltro] = useState(null);
+  const totalPages = Math.ceil(total / 10); // Asumiendo 10 por página
+  const opcionesAnios = [2023, 2024, 2025].map((a) => ({ value: a, label: String(a) }));
+
+  const opcionesMeses = [
+    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+  ].map((mes, i) => ({ value: i + 1, label: mes }));
+
+  const opcionesEstados = [
+    { value: "Pendiente", label: "Pendiente" },
+    { value: "Rechazada", label: "Rechazada" },
+    { value: "Aceptada", label: "Aceptada" },
+  ];
+
+  const opcionesOrden = [
+    { value: "recientes", label: "Más recientes primero" },
+    { value: "antiguos", label: "Más antiguos primero" },
+  ];
 
 
 
@@ -66,30 +90,42 @@ const SolicitudEliminacionTH = () => {
   }, [anioFiltro]);
 
 
-const handleEstadoChange = async (id, nuevoEstado, observacion) => {
-  if (!id) {
-    toast.warning("ID inválido: no se pudo actualizar la solicitud.");
-    return;
-  }
+  const handleEstadoChange = async (id, nuevoEstado, observacion) => {
+    if (!id) {
+      toast.warning("ID inválido: no se pudo actualizar la solicitud.");
+      return;
+    }
 
-  try {
-    await actualizarSolicitudEliminacion(id, {
-      estado: nuevoEstado,
-      observacion_admin: observacion,
-    });
-    toast.success("Estado actualizado con éxito");
-    fetchSolicitudes();
-  } catch {
-    toast.error("Error al actualizar estado");
-  }
-};
+    try {
+      await actualizarSolicitudEliminacion(id, {
+        estado: nuevoEstado,
+        observacion_admin: observacion,
+      });
+      toast.success("Estado actualizado con éxito");
+      fetchSolicitudes();
+    } catch {
+      toast.error("Error al actualizar estado");
+    }
+  };
 
 
   return (
     <DashboardLayout>
       <div className="p-6">
-        <h2 className="text-xl font-semibold mb-2">Solicitudes de Eliminación</h2>
-        <p className="mb-4 text-sm text-gray-500">Total: {total} solicitudes</p>
+        <div className="space-y-1 mb-6">
+          <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-2">
+            <FiTrash2 className="w-6 h-6 text-red-600" />
+            Solicitudes de Eliminación
+          </h1>
+          <Link
+            to="/dashboard/candidatos/"
+            className="text-blue-600 hover:underline text-sm inline-flex items-center gap-1"
+          >
+            <ArrowLeft className="w-4 h-4" /> Volver a Gestión de Candidatos
+          </Link>
+        </div>
+
+
         {estadisticas && (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6 text-sm">
             <div className="bg-white p-4 rounded shadow text-center">
@@ -119,79 +155,84 @@ const handleEstadoChange = async (id, nuevoEstado, observacion) => {
           </div>
         )}
 
-        {/* Filtros */}
-        <div className="flex gap-4 mb-4 items-center flex-wrap">
-          <select
-            value={anioFiltro || ""}
-            onChange={(e) => {
-              const value = e.target.value ? parseInt(e.target.value) : null;
-              setPagina(1);
-              setAnioFiltro(value);
-            }}
-
-            className="select select-bordered"
-          >
-            <option value="">Todos los años</option>
-            {[2023, 2024, 2025].map((a) => (
-              <option key={a} value={a}>{a}</option>
-            ))}
-          </select>
-
-          <select
-            value={mesFiltro || ""}
-            onChange={(e) => {
-              const value = e.target.value ? parseInt(e.target.value) : null;
-              setPagina(1);
-              setMesFiltro(value);
-            }}
-            className="select select-bordered"
-          >
-            <option value="">Todos los meses</option>
-            {[
-              "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-              "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-            ].map((mes, index) => (
-              <option key={index + 1} value={index + 1}>{mes}</option>
-            ))}
-          </select>
-
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700 mb-1">Buscador:</label>
           <input
             type="text"
-            placeholder="Buscar por nombre, correo o cédula"
+            placeholder="Buscar por nombre, correo o cédula..."
             value={search}
             onChange={(e) => {
               setPagina(1);
               setSearch(e.target.value);
             }}
-            className="input input-bordered w-full max-w-xs"
+            className="w-full md:w-1/2 p-2 border border-gray-300 rounded"
           />
+        </div>
 
-          <select
-            value={estadoFiltro}
-            onChange={(e) => {
-              setPagina(1);
-              setEstadoFiltro(e.target.value);
-            }}
-            className="select select-bordered"
-          >
-            <option value="">Todos los estados</option>
-            <option value="Pendiente">Pendiente</option>
-            <option value="Rechazada">Rechazada</option>
-            <option value="Aceptada">Aceptada</option>
-          </select>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+          {/* Año */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Filtrar por año:</label>
+            <Select
+              options={opcionesAnios}
+              value={opcionesAnios.find((o) => o.value === anioFiltro) || null}
+              onChange={(selected) => {
+                setPagina(1);
+                setAnioFiltro(selected?.value || null);
+              }}
+              placeholder="Todos los años"
+              isClearable
+              className="w-full"
+            />
+          </div>
 
+          {/* Mes */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Filtrar por mes:</label>
+            <Select
+              options={opcionesMeses}
+              value={opcionesMeses.find((o) => o.value === mesFiltro) || null}
+              onChange={(selected) => {
+                setPagina(1);
+                setMesFiltro(selected?.value || null);
+              }}
+              placeholder="Todos los meses"
+              isClearable
+              className="w-full"
+            />
+          </div>
 
-          <select
-            value={ordenar}
-            onChange={(e) => {
-              setPagina(1);
-              setOrdenar(e.target.value);
-            }}
-            className="select select-bordered"
-          >
-            <option value="recientes">Más recientes primero</option>
-            <option value="antiguos">Más antiguos primero</option>
-          </select>
+          {/* Estado */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Filtrar por estado:</label>
+            <Select
+              options={opcionesEstados}
+              value={opcionesEstados.find((o) => o.value === estadoFiltro) || null}
+              onChange={(selected) => {
+                setPagina(1);
+                setEstadoFiltro(selected?.value || "");
+              }}
+              placeholder="Todos los estados"
+              isClearable
+              className="w-full"
+            />
+          </div>
+
+          {/* Orden */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Ordenar por fecha:</label>
+            <Select
+              options={opcionesOrden}
+              value={opcionesOrden.find((o) => o.value === ordenar) || null}
+              onChange={(selected) => {
+                setPagina(1);
+                setOrdenar(selected?.value || "recientes");
+              }}
+              placeholder="Ordenar"
+              isClearable
+              className="w-full"
+            />
+          </div>
         </div>
 
         {/* Tabla */}
@@ -240,23 +281,13 @@ const handleEstadoChange = async (id, nuevoEstado, observacion) => {
         </div>
 
         {/* Paginación */}
-        <div className="flex justify-end mt-4 gap-2">
-          <button
-            className="btn btn-sm"
-            onClick={() => setPagina((prev) => Math.max(prev - 1, 1))}
-            disabled={pagina === 1}
-          >
-            Anterior
-          </button>
-          <span className="text-sm mt-1">Página {pagina}</span>
-          <button
-            className="btn btn-sm"
-            onClick={() => setPagina((prev) => prev + 1)}
-            disabled={solicitudes.length < 10}
-          >
-            Siguiente
-          </button>
-        </div>
+        <Pagination
+          page={pagina}
+          totalPages={totalPages}
+          totalItems={total}
+          onPageChange={(nuevaPagina) => setPagina(nuevaPagina)}
+        />
+
       </div>
     </DashboardLayout>
   );

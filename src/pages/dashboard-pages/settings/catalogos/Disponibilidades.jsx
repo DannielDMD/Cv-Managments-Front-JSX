@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { toast } from "react-toastify";
-import { Plus, Trash2, Pencil, ArrowLeft } from "lucide-react";
+import { Plus, Trash2, Pencil, ArrowLeft, CalendarClock } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import DashboardLayout from "../../../../components/dashboard/DashboardLayout";
@@ -102,7 +102,10 @@ const Disponibilidades = () => {
       <div className="space-y-6">
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold text-gray-800">Gestión de Disponibilidad</h1>
+            <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-2">
+              <CalendarClock className="w-6 h-6 text-blue-600" />
+              Gestión de Disponibilidades
+            </h1>
             <Link
               to="/dashboard/configuracion/catalogos"
               className="text-blue-600 hover:underline text-sm inline-flex items-center gap-1 mt-1"

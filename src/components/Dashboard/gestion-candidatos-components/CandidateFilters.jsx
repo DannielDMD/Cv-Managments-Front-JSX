@@ -1,51 +1,51 @@
 //Componentes
-import SelectField from "../../form/SelectField";
+import SelectField from "../../common/SelectField";
+import Select from "react-select";
+
 //Servicios
 import { getCiudades, getCargos } from "../../../services/form-services/candidateService";
 import { getHerramientas } from "../../../services/form-services/skillService";
 
 const CandidateFilters = ({ filtros, setFiltros, setPaginaActual }) => {
+  // Opciones estáticas para Año y Mes
+  const opcionesAnios = [2023, 2024, 2025].map((a) => ({ value: a, label: String(a) }));
+  const opcionesMeses = [
+    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+  ].map((mes, i) => ({ value: i + 1, label: mes }));
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-      {/* Año */}
+      {/* Año de postulación */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">Año de postulación</label>
-        <select
-          value={filtros.anio || ""}
-          onChange={(e) => {
-            const value = e.target.value ? parseInt(e.target.value) : null;
-            setFiltros((prev) => ({ ...prev, anio: value }));
+        <Select
+          options={opcionesAnios}
+          value={opcionesAnios.find((o) => o.value === filtros.anio) || null}
+          onChange={(selected) => {
+            setFiltros((prev) => ({ ...prev, anio: selected?.value || null }));
             setPaginaActual(1);
           }}
-          className="select select-bordered w-full"
-        >
-          <option value="">Todos los años</option>
-          {[2023, 2024, 2025].map((a) => (
-            <option key={a} value={a}>{a}</option>
-          ))}
-        </select>
+          placeholder="Todos los años"
+          isClearable
+          className="w-full"
+        />
       </div>
 
-      {/* Mes */}
+      {/* Mes de postulación */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">Mes de postulación</label>
-        <select
-          value={filtros.mes || ""}
-          onChange={(e) => {
-            const value = e.target.value ? parseInt(e.target.value) : null;
-            setFiltros((prev) => ({ ...prev, mes: value }));
+        <Select
+          options={opcionesMeses}
+          value={opcionesMeses.find((o) => o.value === filtros.mes) || null}
+          onChange={(selected) => {
+            setFiltros((prev) => ({ ...prev, mes: selected?.value || null }));
             setPaginaActual(1);
           }}
-          className="select select-bordered w-full"
-        >
-          <option value="">Todos los meses</option>
-          {[
-            "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-            "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-          ].map((mes, i) => (
-            <option key={i + 1} value={i + 1}>{mes}</option>
-          ))}
-        </select>
+          placeholder="Todos los meses"
+          isClearable
+          className="w-full"
+        />
       </div>
 
       {/* Ciudad */}

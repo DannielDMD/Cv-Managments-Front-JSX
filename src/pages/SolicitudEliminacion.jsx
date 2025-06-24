@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import joycoLogo from "../assets/joyco-logo.png";
 //Componentes
 import Footer from "../components/Footer";
-import InputField from "../components/form/InputField";
+import InputField from "../components/common/InputField";
 //Servicios
 import { postSolicitudEliminacion } from "../services/form-services/solicitudService";
 

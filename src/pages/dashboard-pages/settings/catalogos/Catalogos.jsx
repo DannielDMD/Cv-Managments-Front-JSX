@@ -4,7 +4,7 @@ import {
     MapPin, Building2, Briefcase, UserCog, GraduationCap,
     School, Languages, BadgePercent, ListChecks,
     Settings2, HandHeart, AlarmClock, Wallet,
-    Wrench, Cpu, User, BookOpen, ClipboardList, Lightbulb, Clock, ArrowLeft,
+    Wrench, Cpu, User, BookOpen, ClipboardList, Lightbulb, Clock, ArrowLeft, FolderHeart,
 } from "lucide-react";
 
 
@@ -35,7 +35,11 @@ const Catalogos = () => {
     return (
         <DashboardLayout>
             <div className="space-y-10">
-                <h1 className="text-4xl font-bold text-gray-800">Catálogos del Sistema</h1>
+                <h1 className="text-4xl font-bold text-gray-800 flex items-center gap-2">
+                     <FolderHeart className="w-6 h-6 text-blue-600" />
+
+                    Catálogos del Sistema
+                    </h1>
                 <Link
                     to="/dashboard/configuracion"
                     className="text-blue-600 hover:underline text-sm inline-flex items-center gap-1 mt-1"
