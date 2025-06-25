@@ -30,7 +30,8 @@ const OverviewCards = ({ anio }) => {
           <Users className="w-6 h-6 text-blue-700" />
           <h2 className="text-xl font-bold text-gray-700">Estadísticas Generales</h2>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+
           <Card title="Total Candidatos" value={stats.total_candidatos} />
           <Card title="Registrados hoy" value={stats.candidatos_hoy} />
           <Card title="Esta Semana" value={stats.candidatos_ultima_semana} />
@@ -81,7 +82,8 @@ const OverviewCards = ({ anio }) => {
 };
 
 const Card = ({ title, value }) => (
-  <div className="bg-white rounded-2xl shadow-md p-5 border border-gray-100 hover:shadow-lg transition">
+  <div className="bg-white rounded-lg shadow p-3 border border-gray-200 hover:shadow transition text-center">
+
     <h3 className="text-sm font-semibold text-gray-500">{title}</h3>
     <p className="text-2xl font-bold text-gray-800 mt-2">{value}</p>
   </div>

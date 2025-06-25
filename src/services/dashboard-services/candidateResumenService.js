@@ -34,6 +34,7 @@ export const obtenerResumenCandidatos = async (search = "", filtros = {}, pagina
   }
 };
 
+//Estadisticas del dashboard
 export const obtenerEstadisticasCandidatos = async () => {
   try {
     const response = await axiosInstance.get("/candidatos/estadisticas");

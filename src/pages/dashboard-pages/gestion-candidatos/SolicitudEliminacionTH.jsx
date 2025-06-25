@@ -15,6 +15,8 @@ import {
   actualizarSolicitudEliminacion,
   getEstadisticasSolicitudes
 } from "../../../services/form-services/solicitudService";
+import { obtenerAniosDisponibles } from "../../../services/dashboard-services/aniosService";
+
 
 const SolicitudEliminacionTH = () => {
   const [solicitudes, setSolicitudes] = useState([]);
@@ -29,7 +31,7 @@ const SolicitudEliminacionTH = () => {
   const [anioFiltro, setAnioFiltro] = useState(null);
   const [mesFiltro, setMesFiltro] = useState(null);
   const totalPages = Math.ceil(total / 10); // Asumiendo 10 por página
-  const opcionesAnios = [2024, 2025, 2026, 2027, 2028, 2029, 2030].map((a) => ({ value: a, label: String(a) }));
+  const [opcionesAnios, setOpcionesAnios] = useState([]);
 
   const opcionesMeses = [
     "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
@@ -70,6 +72,15 @@ const SolicitudEliminacionTH = () => {
     }
   }, [pagina, search, ordenar, estadoFiltro, anioFiltro, mesFiltro]);
 
+  useEffect(() => {
+    const cargarAnios = async () => {
+      const anios = await obtenerAniosDisponibles();
+      const opciones = anios.map((a) => ({ value: a, label: String(a) }));
+      setOpcionesAnios(opciones);
+    };
+
+    cargarAnios();
+  }, []);
 
   useEffect(() => {
     fetchSolicitudes();

@@ -1,19 +1,31 @@
 //Componentes
 import SelectField from "../../common/SelectField";
 import Select from "react-select";
+import { useEffect, useState } from "react";
 
 //Servicios
 import { getCiudades, getCargos } from "../../../services/form-services/candidateService";
 import { getHerramientas } from "../../../services/form-services/skillService";
+import { obtenerAniosDisponibles } from "../../../services/dashboard-services/aniosService";
+
 
 const CandidateFilters = ({ filtros, setFiltros, setPaginaActual }) => {
   // Opciones estáticas para Año y Mes
-  const opcionesAnios = [2024, 2025, 2026, 2027, 2028, 2029, 2030].map((a) => ({ value: a, label: String(a) }));
+  const [opcionesAnios, setOpcionesAnios] = useState([]);
   const opcionesMeses = [
     "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
     "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
   ].map((mes, i) => ({ value: i + 1, label: mes }));
 
+  useEffect(() => {
+    const cargarAnios = async () => {
+      const anios = await obtenerAniosDisponibles();
+      const opciones = anios.map((a) => ({ value: a, label: String(a) }));
+      setOpcionesAnios(opciones);
+    };
+
+    cargarAnios();
+  }, []);
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
       {/* Año de postulación */}
