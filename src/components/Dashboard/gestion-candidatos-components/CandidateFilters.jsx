@@ -5,8 +5,18 @@ import { useEffect, useState } from "react";
 
 //Servicios
 import { getCiudades, getCargos } from "../../../services/form-services/candidateService";
-import { getHerramientas } from "../../../services/form-services/skillService";
+import { getHerramientas, getHabilidadesBlandas, getHabilidadesTecnicas } from "../../../services/form-services/skillService";
+import { getNiveles, getTitulos, getIngles } from "../../../services/form-services/educationService";
+import { getExperiencia } from "../../../services/form-services/experienceService";
+import { getDisponibilidades, getRangos } from "../../../services/form-services/preferencesService";
+
+
 import { obtenerAniosDisponibles } from "../../../services/dashboard-services/aniosService";
+
+
+//Vamos añadir los nuevos filtros
+
+
 
 
 const CandidateFilters = ({ filtros, setFiltros, setPaginaActual }) => {
@@ -26,6 +36,9 @@ const CandidateFilters = ({ filtros, setFiltros, setPaginaActual }) => {
 
     cargarAnios();
   }, []);
+
+
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
       {/* Año de postulación */}
@@ -60,6 +73,27 @@ const CandidateFilters = ({ filtros, setFiltros, setPaginaActual }) => {
         />
       </div>
 
+
+      {/* Estado */}
+      <SelectField
+        label="Estado"
+        options={[
+          { value: "EN_PROCESO", nombre: "En Proceso" },
+          { value: "ENTREVISTA", nombre: "Entrevista" },
+          { value: "ADMITIDO", nombre: "Admitido" },
+          { value: "DESCARTADO", nombre: "Descartado" },
+          { value: "CONTRATADO", nombre: "Contratado" },
+        ]}
+        idKey="value"
+        nameKey="nombre"
+        value={filtros.estado}
+        onChange={(value) => {
+          setFiltros((prev) => ({ ...prev, estado: value }));
+          setPaginaActual(1);
+        }}
+      />
+
+      {/* Filtros de Info Personal */}
       {/* Ciudad */}
       <SelectField
         label="Ciudad"
@@ -85,40 +119,151 @@ const CandidateFilters = ({ filtros, setFiltros, setPaginaActual }) => {
           setPaginaActual(1);
         }}
       />
+      {/* Filtros de Experiencia */}
 
-      {/* Estado */}
+      {/* Rango de experiencia */}
       <SelectField
-        label="Estado"
-        options={[
-          { value: "EN_PROCESO", nombre: "En Proceso" },
-          { value: "ENTREVISTA", nombre: "Entrevista" },
-          { value: "ADMITIDO", nombre: "Admitido" },
-          { value: "DESCARTADO", nombre: "Descartado" },
-          { value: "CONTRATADO", nombre: "Contratado" },
-        ]}
-        idKey="value"
-        nameKey="nombre"
-        value={filtros.estado}
+        label="Rango de experiencia"
+        fetchFunction={getExperiencia}
+        idKey="id_rango_experiencia"
+        nameKey="descripcion_rango"
+        value={filtros.id_experiencia}
         onChange={(value) => {
-          setFiltros((prev) => ({ ...prev, estado: value }));
+          setFiltros((prev) => ({ ...prev, id_experiencia: value }));
+          setPaginaActual(1);
+        }}
+      />
+      {/* Filtros de Educación */}
+      {/* Nivel educativo */}
+      <SelectField
+        label="Nivel educativo"
+        fetchFunction={getNiveles}
+        idKey="id_nivel_educacion"
+        nameKey="descripcion_nivel"
+        value={filtros.id_nivel_educacion}
+        onChange={(value) => {
+          setFiltros((prev) => ({ ...prev, id_nivel_educacion: value }));
           setPaginaActual(1);
         }}
       />
 
+      {/* Título obtenido */}
+      <SelectField
+        label="Título obtenido"
+        fetchFunction={getTitulos}
+        idKey="id_titulo"
+        nameKey="nombre_titulo"
+        value={filtros.id_titulo}
+        onChange={(value) => {
+          setFiltros((prev) => ({ ...prev, id_titulo: value }));
+          setPaginaActual(1);
+        }}
+      />
+
+      {/* Nivel de inglés */}
+      <SelectField
+        label="Nivel de inglés"
+        fetchFunction={getIngles}
+        idKey="id_nivel_ingles"
+        nameKey="nivel"
+        value={filtros.id_nivel_ingles}
+        onChange={(value) => {
+          setFiltros((prev) => ({ ...prev, id_nivel_ingles: value }));
+          setPaginaActual(1);
+        }}
+      />
+
+
+      {/* Filtros de Conocimientos del Candidato */}
       {/* Herramientas */}
       <SelectField
         label="Herramientas"
         fetchFunction={getHerramientas}
         idKey="id_herramienta"
         nameKey="nombre_herramienta"
-        value={filtros.herramientas}
+        value={filtros.id_herramienta}
         onChange={(value) => {
-          setFiltros((prev) => ({ ...prev, herramientas: value }));
+          setFiltros((prev) => ({ ...prev, id_herramienta: value }));
           setPaginaActual(1);
         }}
-        isMulti={true}
+      />
+      {/* Habilidad blanda */}
+      <SelectField
+        label="Habilidad blanda"
+        fetchFunction={getHabilidadesBlandas}
+        idKey="id_habilidad_blanda"
+        nameKey="nombre_habilidad_blanda"
+        value={filtros.id_habilidad_blanda}
+        onChange={(value) => {
+          setFiltros((prev) => ({ ...prev, id_habilidad_blanda: value }));
+          setPaginaActual(1);
+        }}
+      />
+      {/* Habilidad técnica */}
+      <SelectField
+        label="Habilidad técnica"
+        fetchFunction={getHabilidadesTecnicas}
+        idKey="id_habilidad_tecnica"
+        nameKey="nombre_habilidad_tecnica"
+        value={filtros.id_habilidad_tecnica}
+        onChange={(value) => {
+          setFiltros((prev) => ({ ...prev, id_habilidad_tecnica: value }));
+          setPaginaActual(1);
+        }}
       />
 
+      {/* Filtros de Preferencias y Disponibilidad */}
+      {/* Disponibilidad de inicio */}
+      <SelectField
+        label="Disponibilidad de inicio"
+        fetchFunction={getDisponibilidades}
+        idKey="id_disponibilidad"
+        nameKey="descripcion_disponibilidad"
+        value={filtros.id_disponibilidad}
+        onChange={(value) => {
+          setFiltros((prev) => ({ ...prev, id_disponibilidad: value }));
+          setPaginaActual(1);
+        }}
+      />
+
+      {/* Rango salarial */}
+      <SelectField
+        label="Rango salarial"
+        fetchFunction={getRangos}
+        idKey="id_rango_salarial"
+        nameKey="descripcion_rango"
+        value={filtros.id_rango_salarial}
+        onChange={(value) => {
+          setFiltros((prev) => ({ ...prev, id_rango_salarial: value }));
+          setPaginaActual(1);
+        }}
+      />
+
+      {/* Filtros Booleanos */}
+      {/* ¿Ha trabajado en Joyco? */}
+      <SelectField
+        label="¿Ha trabajado en Joyco?"
+        options={[
+          { value: "true", nombre: "Sí" },
+          { value: "false", nombre: "No" },
+        ]}
+        idKey="value"
+        nameKey="nombre"
+        value={
+          filtros.ha_trabajado_joyco === true
+            ? "true"
+            : filtros.ha_trabajado_joyco === false
+              ? "false"
+              : null
+        }
+        onChange={(value) => {
+          setFiltros((prev) => ({
+            ...prev,
+            ha_trabajado_joyco: value === "true" ? true : value === "false" ? false : null,
+          }));
+          setPaginaActual(1);
+        }}
+      />
       {/* ¿Trabaja en Joyco? */}
       <SelectField
         label="¿Trabaja en Joyco?"
@@ -143,6 +288,81 @@ const CandidateFilters = ({ filtros, setFiltros, setPaginaActual }) => {
           setPaginaActual(1);
         }}
       />
+      {/* ¿Tiene referido? */}
+      <SelectField
+        label="¿Tiene referido?"
+        options={[
+          { value: "true", nombre: "Sí" },
+          { value: "false", nombre: "No" },
+        ]}
+        idKey="value"
+        nameKey="nombre"
+        value={
+          filtros.tiene_referido === true
+            ? "true"
+            : filtros.tiene_referido === false
+              ? "false"
+              : null
+        }
+        onChange={(value) => {
+          setFiltros((prev) => ({
+            ...prev,
+            tiene_referido: value === "true" ? true : value === "false" ? false : null,
+          }));
+          setPaginaActual(1);
+        }}
+      />
+
+      {/* ¿Disponibilidad para viajar? */}
+      <SelectField
+        label="¿Disponibilidad para viajar?"
+        options={[
+          { value: "true", nombre: "Sí" },
+          { value: "false", nombre: "No" },
+        ]}
+        idKey="value"
+        nameKey="nombre"
+        value={
+          filtros.disponibilidad_viajar === true
+            ? "true"
+            : filtros.disponibilidad_viajar === false
+              ? "false"
+              : null
+        }
+        onChange={(value) => {
+          setFiltros((prev) => ({
+            ...prev,
+            disponibilidad_viajar: value === "true" ? true : value === "false" ? false : null,
+          }));
+          setPaginaActual(1);
+        }}
+      />
+
+      {/* ¿Trabaja actualmente? */}
+      <SelectField
+        label="¿Trabaja actualmente?"
+        options={[
+          { value: "true", nombre: "Sí" },
+          { value: "false", nombre: "No" },
+        ]}
+        idKey="value"
+        nameKey="nombre"
+        value={
+          filtros.trabaja_actualmente === true
+            ? "true"
+            : filtros.trabaja_actualmente === false
+              ? "false"
+              : null
+        }
+        onChange={(value) => {
+          setFiltros((prev) => ({
+            ...prev,
+            trabaja_actualmente: value === "true" ? true : value === "false" ? false : null,
+          }));
+          setPaginaActual(1);
+        }}
+      />
+
     </div>
   );
 };

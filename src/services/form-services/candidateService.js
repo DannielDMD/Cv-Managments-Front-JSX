@@ -19,7 +19,7 @@ export const getCiudades = async (id_departamento = null) => {
 try {
     const url = id_departamento
       ? `/ciudades/departamento/${id_departamento}` // ✅ filtra por departamento
-      : "/ciudades/todas"; // ✅ lista completa sin paginación
+      : "/ciudades/todas"; // ✅ lista completa sin paginaciónseñor 
 
     const response = await axiosInstance.get(url);
     return response.data;

@@ -27,9 +27,24 @@ const CandidateManagement = () => {
     id_cargo: null,
     estado: null,
     herramientas: [],
-    trabaja_joyco: null,
     ordenar_por_fecha: "recientes",
+    anio: null,
+    mes: null,
+    id_nivel_educacion: null,
+    id_titulo: null,
+    id_nivel_ingles: null,
+    id_experiencia: null,
+    id_habilidad_tecnica: null,
+    habilidades_blandas: [],
+    id_disponibilidad: null,
+    id_rango_salarial: null,
+    ha_trabajado_joyco: null,
+    tiene_referido: null,
+    disponibilidad_viajar: null,
+    trabaja_actualmente: null,
+    trabaja_joyco: null,
   });
+
 
   const [candidatos, setCandidatos] = useState([]);
   const [total, setTotal] = useState(0);
@@ -51,9 +66,24 @@ const CandidateManagement = () => {
         id_cargo: null,
         estado: null,
         herramientas: [],
-        trabaja_joyco: null,
         ordenar_por_fecha: "recientes",
+        anio: null,
+        mes: null,
+        id_nivel_educacion: null,
+        id_titulo: null,
+        id_nivel_ingles: null,
+        id_experiencia: null,
+        id_habilidad_tecnica: null,
+        habilidades_blandas: [],
+        id_disponibilidad: null,
+        id_rango_salarial: null,
+        ha_trabajado_joyco: null,
+        tiene_referido: null,
+        disponibilidad_viajar: null,
+        trabaja_actualmente: null,
+        trabaja_joyco: null,
       });
+
       setPaginaActual(1);
     }
   }, [state]);

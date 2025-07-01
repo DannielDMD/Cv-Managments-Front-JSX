@@ -13,7 +13,7 @@ export const getNiveles = async () => {
   
   export const getTitulos = async () => {
     try {
-        const response = await axiosInstance.get("/titulos");
+        const response = await axiosInstance.get("/titulos/todas");
         return response.data;
     } catch (error){
         console.error ("Error al obtener los titulos", error.message);
