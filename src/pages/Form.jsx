@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react"; 
+import { useEffect, useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import useFormContext from "../context/useFormContext";
@@ -14,7 +14,7 @@ import { postConocimientos } from "../services/form-services/skillService";
 import { postPreferencias } from "../services/form-services/preferencesService";
 import { marcarFormularioCompleto } from "../services/form-services/candidateService";
 //Utilitarios
-import { mostrarErroresBackend } from "../utils/mostrarErroresBackend"; 
+import { mostrarErroresBackend } from "../utils/mostrarErroresBackend";
 
 
 const Form = () => {
@@ -155,7 +155,7 @@ const Form = () => {
       await marcarFormularioCompleto(id); // << aquí
 
 
-      toast.success("✅ Todos los datos fueron enviados correctamente.");
+      toast.success("Todos los datos fueron enviados correctamente.");
 
       // ✅ Marca que se completó
       updateFormData("formulario_completo", true);
@@ -210,7 +210,9 @@ const Form = () => {
                 ¿Está seguro de enviar esta información?
               </h3>
               <p className="text-gray-600 mb-6">
-                Una vez enviada, no podrá modificar los datos. Por favor revise que todo esté correcto.
+                Una vez enviada, no podrá modificar los datos. Por favor revise que todo esté correcto, 
+                si requiere modificar los datos luego de enviados solicite una eliminación de los datos en el formulario que encontrará en la vista principal 
+                abajo del botón de postulación.
               </p>
               <div className="flex justify-end space-x-4">
                 <button
@@ -240,7 +242,8 @@ const Form = () => {
                 Información importante antes de continuar
               </h3>
               <p className="text-gray-600 mb-6">
-                Si ya te registraste anteriormente y deseas modificar tu información, debes solicitar la eliminación de tus datos para volver a registrarte. Puedes hacerlo desde la Landing Page, el formulario o el botón de ayuda.
+                Si ya te registraste anteriormente y deseas modificar tu información, debes solicitar la eliminación de tus datos para volver a registrarte. 
+                Puedes hacerlo desde la vista principal abajo del botón de Postularse o al enviar la información en este formulario encontrará un acceso al formulario de eiminación.
               </p>
               <div className="flex justify-end">
                 <button

@@ -147,10 +147,6 @@ const CandidateDetail = () => {
             >
               <Trash2 size={16} /> Eliminar
             </button>
-
-
-
-
           </div>
         </div>
 
@@ -167,13 +163,13 @@ const CandidateDetail = () => {
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
-              <p><strong>Nombre:</strong> {candidato.nombre_completo}</p>
-              <p><strong>Correo:</strong> {candidato.correo_electronico}</p>
-              <p><strong>CC:</strong> {candidato.cc}</p>
+              <p><strong>Nombre Completo:</strong> {candidato.nombre_completo}</p>
+              <p><strong>Correo Electrónico:</strong> {candidato.correo_electronico}</p>
+              <p><strong>Número de Identificación:</strong> {candidato.cc}</p>
               <p><strong>Fecha de Nacimiento:</strong> {new Date(candidato.fecha_nacimiento).toLocaleDateString()}</p>
-              <p><strong>Teléfono:</strong> {candidato.telefono}</p>
-              <p> <strong> Departamento:</strong> {candidato.departamento} </p>
-              <p><strong>Ciudad:</strong> {candidato.ciudad}</p>
+              <p><strong>Teléfono de Contacto:</strong> {candidato.telefono}</p>
+              <p> <strong> Departamento de Residencia:</strong> {candidato.departamento} </p>
+              <p><strong>Ciudad/Municipio de Residencia:</strong> {candidato.ciudad}</p>
               <p className="md:col-span-2"><strong>Perfil:</strong> {candidato.descripcion_perfil || "—"}</p>
               <p><strong>Cargo de Interés:</strong> {candidato.nombre_cargo_otro || candidato.cargo || "—"}</p>
 
@@ -186,7 +182,7 @@ const CandidateDetail = () => {
 
 
 
-              <p><strong>Ha trabajado antes en Joyco:</strong> {candidato.ha_trabajado_joyco ? "Sí" : "No"}</p>
+              <p><strong>¿Ha trabajado antes en Joyco?:</strong> {candidato.ha_trabajado_joyco ? "Sí" : "No"}</p>
                                           
 
 
@@ -212,7 +208,7 @@ const CandidateDetail = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
               <p><strong>Nivel Educativo:</strong> {candidato.nivel_educacion}</p>
               <p><strong>Título:</strong> {candidato.nombre_titulo_otro || candidato.titulo || "—"}</p>
-              <p><strong>Institución:</strong> {candidato.nombre_institucion_otro || candidato.institucion || "—"}</p>
+              <p><strong>Institución Académica:</strong> {candidato.nombre_institucion_otro || candidato.institucion || "—"}</p>
 
               <p><strong>Año de Graduación:</strong> {candidato.anio_graduacion || "—"}</p>
               <p><strong>Nivel de Inglés:</strong> {candidato.nivel_ingles}</p>
@@ -225,13 +221,13 @@ const CandidateDetail = () => {
               <Briefcase size={20} /> Experiencia Laboral
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
-              <p><strong>Experiencia:</strong> {candidato.rango_experiencia}</p>
-              <p><strong>Última Empresa:</strong> {candidato.ultima_empresa}</p>
-              <p><strong>Último Cargo:</strong> {candidato.ultimo_cargo}</p>
+              <p><strong>Experiencia Laboral:</strong> {candidato.rango_experiencia}</p>
+              <p><strong>Última Empresa Trabajada:</strong> {candidato.ultima_empresa}</p>
+              <p><strong>Último Cargo Ejercido:</strong> {candidato.ultimo_cargo}</p>
               <p><strong>Funciones realizadas: </strong>{candidato.funciones} </p>
               <p><strong>Desde:</strong> {candidato.fecha_inicio}</p>
               <p><strong>Hasta:</strong> {candidato.fecha_fin || "Actual"}</p>
-              <p className="md:col-span-2"><strong>Funciones:</strong> {candidato.funciones}</p>
+
             </div>
           </section>
 
@@ -274,10 +270,10 @@ const CandidateDetail = () => {
               <Settings size={20} /> Preferencias y Disponibilidad
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
-              <p><strong>Disponibilidad para Viajar:</strong> {candidato.disponibilidad_viajar ? "Sí" : "No"}</p>
+              <p><strong>¿Disponibilidad para Viajar?</strong> {candidato.disponibilidad_viajar ? "Sí" : "No"}</p>
               <p><strong>Disponibilidad de Inicio:</strong> {candidato.disponibilidad_inicio}</p>
               <p><strong>Pretensión Salarial:</strong> {candidato.rango_salarial}</p>
-              <p><strong>Trabaja Actualmente:</strong> {candidato.trabaja_actualmente ? "Sí" : "No"}</p>
+              <p><strong>¿Trabaja Actualmente?</strong> {candidato.trabaja_actualmente ? "Sí" : "No"}</p>
               {(candidato.otro_motivo_salida_preferencia || candidato.motivo_salida_laboral) && (
                 <p><strong>Motivo de Salida (Preferencias):</strong> {candidato.otro_motivo_salida_preferencia || candidato.motivo_salida_laboral}</p>
               )}

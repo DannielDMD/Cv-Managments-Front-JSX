@@ -30,7 +30,7 @@ const Header = () => {
       <button
         className={`px-4 py-2 rounded-lg shadow-md transition ${formData.id_candidato
             ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-            : "bg-white text-blue-900 hover:bg-gray-200"
+            : "bg-white text-[#0033A0] hover:bg-gray-200"
           }`}
         disabled={!!formData.id_candidato}
         onClick={() => navigate("/")}

@@ -167,9 +167,9 @@ const PersonalInfo = () => {
     <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg relative">
       <AyudaFormulario
         titulo="Ayuda para Información Personal"
-        contenido={`📌 Instrucciones para completar esta sección:
+        contenido={`Instrucciones para completar esta sección:
 
-• Este es el primer paso obligatorio del formulario. 
+• Este es el primer paso obligatorio del formulario e indispensable para crear un registro. 
 • Asegúrate de ingresar tu nombre completo sin caracteres especiales.
 • El correo electrónico debe ser válido.
 • La cédula debe tener entre 6 y 10 dígitos numéricos.
@@ -296,12 +296,14 @@ const PersonalInfo = () => {
         </p>
 
 
-        <label className="block mb-2">Trabaja actualmente en Joyco?</label>
-        <select name="trabaja_actualmente_joyco" value={formData.personalInfo.trabaja_actualmente_joyco} onChange={handleChange} className="w-full p-2 border rounded-md">
-          <option value="">Seleccione...</option>
-          <option value="SI">Sí</option>
-          <option value="NO">No</option>
-        </select>
+        <InputField
+          label="¿Actualmente trabaja en Joyco?"
+          name="trabaja_actualmente_joyco"
+          type="select"
+          value={formData.personalInfo.trabaja_actualmente_joyco}
+          onChange={handleChange}
+        />
+
 
         {formData.personalInfo.trabaja_actualmente_joyco === "SI" && (
           <SelectField
@@ -331,12 +333,14 @@ const PersonalInfo = () => {
         </p>
 
 
-        <label className="block mb-2">Ha trabajado en Joyco?</label>
-        <select name="ha_trabajado_joyco" value={formData.personalInfo.ha_trabajado_joyco} onChange={handleChange} className="w-full p-2 border rounded-md">
-          <option value="">Seleccione...</option>
-          <option value="SI">Sí</option>
-          <option value="NO">No</option>
-        </select>
+        <InputField
+          label="¿Ha trabajado anteriormente en Joyco?"
+          name="ha_trabajado_joyco"
+          type="select"
+          value={formData.personalInfo.ha_trabajado_joyco}
+          onChange={handleChange}
+        />
+
 
         {formData.personalInfo.ha_trabajado_joyco === "SI" && (
           <SelectField
@@ -364,12 +368,14 @@ const PersonalInfo = () => {
           Valor actual de <strong>id_motivo_salida</strong>: {formData.personalInfo.id_motivo_salida}
         </p>
 
-        <label className="block mb-2">Tiene Referido?</label>
-        <select name="tiene_referido" value={formData.personalInfo.tiene_referido} onChange={handleChange} className="w-full p-2 border rounded-md">
-          <option value="">Seleccione...</option>
-          <option value="SI">Sí</option>
-          <option value="NO">No</option>
-        </select>
+        <InputField
+          label="¿Tiene algún referido?"
+          name="tiene_referido"
+          type="select"
+          value={formData.personalInfo.tiene_referido}
+          onChange={handleChange}
+        />
+
 
         {formData.personalInfo.tiene_referido === "SI" && (
           <InputField label="Nombre del Referido" name="nombre_referido" type="text" value={formData.personalInfo.nombre_referido} onChange={handleChange} />

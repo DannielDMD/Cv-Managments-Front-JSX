@@ -5,6 +5,7 @@ import joycoLogo from "../assets/joyco-logo.png";
 //Componentes
 import Footer from "../components/Footer";
 import InputField from "../components/common/InputField";
+import SelectField from "../components/common/SelectField";
 //Servicios
 import { postSolicitudEliminacion } from "../services/form-services/solicitudService";
 
@@ -77,7 +78,7 @@ const SolicitudEliminacion = () => {
 
         try {
             await postSolicitudEliminacion(form);
-            toast.success("✅ Solicitud enviada correctamente.");
+            toast.success("Solicitud enviada correctamente.");
             setEnviado(true);
         } catch (error) {
             toast.error(`Error al enviar la solicitud: ${error.message}`);
@@ -155,20 +156,19 @@ const SolicitudEliminacion = () => {
                                 error={errores.correo}
                             />
 
-                            <div>
-                                <label className="block mb-1 font-medium">Motivo de la solicitud</label>
-                                <select
-                                    name="motivo"
-                                    value={form.motivo}
-                                    onChange={handleChange}
-                                    className={`w-full border p-2 rounded ${errores.motivo ? "border-red-500" : ""}`}
-                                >
-                                    <option value="">Selecciona un motivo</option>
-                                    <option value="Actualizar datos">Actualizar datos</option>
-                                    <option value="Eliminar candidatura">Eliminar candidatura</option>
-                                </select>
-                                {errores.motivo && <p className="text-red-500 text-sm mt-1">{errores.motivo}</p>}
-                            </div>
+                            <SelectField
+                                label="Motivo de la solicitud"
+                                idKey="value"
+                                nameKey="label"
+                                value={form.motivo}
+                                onChange={(value) => handleChange({ target: { name: "motivo", value } })}
+                                options={[
+                                    { value: "Actualizar datos", label: "Actualizar datos" },
+                                    { value: "Eliminar candidatura", label: "Eliminar candidatura" },
+                                ]}
+                                isMulti={false}
+                                error={errores.motivo}
+                            />
 
                             <InputField
                                 label="Descripción del motivo"

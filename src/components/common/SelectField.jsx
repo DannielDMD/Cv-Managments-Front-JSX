@@ -69,8 +69,8 @@ const SelectField = ({
             boxShadow: error
               ? "0 0 0 1px #f87171"
               : state.isFocused
-              ? "0 0 0 1px #3b82f6"
-              : base.boxShadow,
+                ? "0 0 0 1px #3b82f6"
+                : base.boxShadow,
             "&:hover": {
               borderColor: error ? "#f87171" : "#3b82f6",
             },

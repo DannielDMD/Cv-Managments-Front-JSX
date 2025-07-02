@@ -31,7 +31,7 @@ const PreferencesInfo = () => {
 
 • Indica si estás disponible para viajar en caso de que el trabajo lo requiera.
 • Selecciona en qué momento estarías disponible para iniciar labores (inmediato, en 15 días, etc.).
-• Especifica tu rango salarial esperado.
+• Especifica tu rango salarial esperado dentro de la Lista Desplegable.
 • Si estás trabajando actualmente, indícalo con sinceridad.
 • Si seleccionaste que trabajaste anteriormente, deberás indicar un motivo de salida.
 • Escribe brevemente por qué te interesa trabajar en Joyco.
@@ -41,15 +41,15 @@ const PreferencesInfo = () => {
       <h2 className="text-xl font-semibold mb-4">Preferencias del Candidato</h2>
       <div>
 
-        <label className="block mb-2">Disponibilidad para viajar?</label>
-        <select name="disponibilidad_viajar" value={preferencesData.disponibilidad_viajar} onChange={handleChange} className="w-full p-2 border rounded-md">
-          <option value="">Seleccione...</option>
-          <option value="SI">Sí</option>
-          <option value="NO">No</option>
-        </select>
-
+        <InputField
+          label="¿Está disponible para viajar?"
+          name="disponibilidad_viajar"
+          type="select"
+          value={preferencesData.disponibilidad_viajar}
+          onChange={handleChange}
+        />
         <SelectField
-          label="Disponibilidad para trabajar?"
+          label="¿Disponibilidad para trabajar?"
           fetchFunction={getDisponibilidades}
           idKey="id_disponibilidad"
           nameKey="descripcion_disponibilidad"
@@ -60,7 +60,7 @@ const PreferencesInfo = () => {
 
 
         <SelectField
-          label="Pretensión Salarial?"
+          label="¿Pretensión salarial?"
           fetchFunction={getRangos}
           idKey="id_rango_salarial"
           nameKey="descripcion_rango"
@@ -69,16 +69,18 @@ const PreferencesInfo = () => {
           isMulti={false}
         />
 
-        <label className="block mb-2">Trabaja Actualmente?</label>
-        <select name="trabaja_actualmente" value={preferencesData.trabaja_actualmente} onChange={handleChange} className="w-full p-2 border rounded-md">
-          <option value="">Seleccione...</option>
-          <option value="SI">Sí</option>
-          <option value="NO">No</option>
-        </select>
+        <InputField
+          label="¿Actualmente se encuentra trabajando?"
+          name="trabaja_actualmente"
+          type="select"
+          value={preferencesData.trabaja_actualmente}
+          onChange={handleChange}
+        />
+
 
         {preferencesData.trabaja_actualmente === "SI" && (
           <SelectField
-            label="Motivo de Salida"
+            label="¿Cuál es el motivo por el que desea cambiar de empleo?"
             fetchFunction={getMotivosSalida}
             idKey="id_motivo_salida"
             nameKey="descripcion_motivo"
@@ -96,7 +98,7 @@ const PreferencesInfo = () => {
           />
         )}
 
-        <InputField label="Razón para trabajar en Joyco" name="razon_trabajar_joyco" type="textarea" value={preferencesData.razon_trabajar_joyco} onChange={handleChange} />
+        <InputField label="¿Qué lo motiva a trabajar en Joyco Consultores S.A.S.?" name="razon_trabajar_joyco" type="textarea" value={preferencesData.razon_trabajar_joyco} onChange={handleChange} />
       </div>
     </div>
   );

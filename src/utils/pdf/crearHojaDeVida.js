@@ -17,12 +17,12 @@ export function crearHojaDeVidaPDF(candidato, logoBase64) {
         table: {
           widths: ["50%", "50%"],
           body: [
-            ["Nombre", candidato.nombre_completo],
-            ["Correo", candidato.correo_electronico],
+            ["Nombre Completo", candidato.nombre_completo],
+            ["Correo Electrónico", candidato.correo_electronico],
             ["CC", candidato.cc],
-            ["Teléfono", candidato.telefono],
-            ["Departamento", candidato.departamento],
-            ["Ciudad", candidato.ciudad],
+            ["Teléfono de Contacto", candidato.telefono],
+            ["Departamento de Residencia", candidato.departamento],
+            ["Ciudad/Municipio", candidato.ciudad],
             ["Fecha de Nacimiento", new Date(candidato.fecha_nacimiento).toLocaleDateString()],
             ["Cargo de Interés", candidato.nombre_cargo_otro || candidato.cargo || "—"],
             ["Perfil", candidato.descripcion_perfil || "—"],
@@ -51,9 +51,9 @@ export function crearHojaDeVidaPDF(candidato, logoBase64) {
         table: {
           widths: ["50%", "50%"],
           body: [
-            ["Nivel", candidato.nivel_educacion],
+            ["Nivel Educativo", candidato.nivel_educacion],
             ["Título", candidato.nombre_titulo_otro || candidato.titulo],
-            ["Institución", candidato.nombre_institucion_otro || candidato.institucion],
+            ["Institución Académica", candidato.nombre_institucion_otro || candidato.institucion],
             ["Año de Graduación", candidato.anio_graduacion || "—"],
             ["Nivel de Inglés", candidato.nivel_ingles],
           ],
@@ -67,12 +67,12 @@ export function crearHojaDeVidaPDF(candidato, logoBase64) {
         table: {
           widths: ["50%", "50%"],
           body: [
-            ["Rango de Experiencia", candidato.rango_experiencia],
-            ["Última Empresa", candidato.ultima_empresa],
-            ["Último Cargo", candidato.ultimo_cargo],
+            ["Experiencia Laboral", candidato.rango_experiencia],
+            ["Última Empresa Trabajada", candidato.ultima_empresa],
+            ["Último Cargo Ejercido", candidato.ultimo_cargo],
             ["Desde", candidato.fecha_inicio],
             ["Hasta", candidato.fecha_fin || "Actual"],
-            ["Funciones", candidato.funciones],
+            ["Funciones Realizadas", candidato.funciones],
           ],
         },
         layout: "lightHorizontalLines",
@@ -128,7 +128,7 @@ export function crearHojaDeVidaPDF(candidato, logoBase64) {
         table: {
           widths: ["50%", "50%"],
           body: [
-            ["Disponibilidad para viajar", candidato.disponibilidad_viajar ? "Sí" : "No"],
+            ["¿Disponibilidad para Viajar?", candidato.disponibilidad_viajar ? "Sí" : "No"],
             ["Disponibilidad de inicio", candidato.disponibilidad_inicio],
             ["Pretensión salarial", candidato.rango_salarial],
             ["¿Trabaja actualmente?", candidato.trabaja_actualmente ? "Sí" : "No"],

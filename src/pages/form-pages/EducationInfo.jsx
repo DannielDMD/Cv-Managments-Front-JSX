@@ -69,16 +69,18 @@ const EducationInfo = () => {
         contenido={`🎓 Instrucciones para completar la sección de Educación:
 
 • Selecciona el nivel educativo más alto que hayas alcanzado.
-• El título debe coincidir con el nivel educativo (por ejemplo, no pongas un doctorado si elegiste secundaria).
-• La institución debe existir en el listado. Si no la encuentras, contacta con soporte.
+• Si seleccionas un Nivel Educativo anterior al Técnico solo llenas el Nivel de Inglés
+• Si seleccionas un Nivel Educativo igual o superior al Técnico llenas toda la información restante
+• El título debe coincidir con el nivel educativo. (Selecciona el más cercano si no lo encuentras elige la opción de 'Otro' y escribes el nombre)
+• La institución debe existir en el listado. Si no la encuentras elige la opción de 'Otro' y escribes el nombre.
 • El año de graduación no puede ser futuro ni inválido.
-• El nivel de inglés debe ser seleccionado si aplica.
+• El nivel de inglés debe ser seleccionado obligatoriamente.
 • Esta sección es obligatoria para continuar con el formulario.`}
       />
       <h2 className="text-xl font-semibold mb-4">Información Educacional</h2>
       <div>
         <SelectField
-          label="Nivel Educación"
+          label="¿Último nivel educativo alcanzado?"
           fetchFunction={getNiveles}
           idKey="id_nivel_educacion"
           nameKey="descripcion_nivel"
@@ -88,7 +90,7 @@ const EducationInfo = () => {
         {!nivelesSinTitulo.has(educationData.id_nivel_educacion) && (
           <>
             <SelectField
-              label="Título Obtenido"
+              label="Título obtenido:"
               options={titulos}
               idKey="id_titulo"
               nameKey="nombre_titulo"
@@ -112,7 +114,7 @@ const EducationInfo = () => {
 
 
             <InputField
-              label="Año de Graduación"
+              label="Año de graduación:"
               name="anio_graduacion"
               type="number"
               value={educationData.anio_graduacion || ""}
@@ -124,10 +126,8 @@ const EducationInfo = () => {
             />
 
 
-
-
             <SelectField
-              label="Institución Académica"
+              label="Institución académica donde cursó sus estudios:"
               fetchFunction={getInstituciones}
               idKey="id_institucion"
               nameKey="nombre_institucion"
@@ -149,7 +149,7 @@ const EducationInfo = () => {
 
 
         <SelectField
-          label="Nivel Inglés"
+          label="Nivel Inglés:"
           fetchFunction={getIngles}
           idKey="id_nivel_ingles"
           nameKey="nivel"
