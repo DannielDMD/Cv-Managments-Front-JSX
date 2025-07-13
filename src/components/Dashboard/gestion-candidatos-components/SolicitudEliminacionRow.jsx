@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FiMail, FiTrash2, FiSave, FiEye } from "react-icons/fi";
 import { toast } from "react-toastify";
 //Servicios
-import { deleteSolicitudEliminacion } from "../../../services/form-services/solicitudService";
+import { deleteSolicitudEliminacion } from "../../../services/dashboard-services/solicitudServiceDashboard";
 
 const SolicitudEliminacionRow = ({ solicitud, onEstadoChange, recargarLista }) => {
 

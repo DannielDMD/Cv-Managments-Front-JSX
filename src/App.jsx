@@ -21,6 +21,10 @@ import SolicitudEliminacionTH from "./pages/dashboard-pages/gestion-candidatos/S
 //Rutas de la Vista de Configuración (Dashboard)
 import Configuracion from "./pages/dashboard-pages/settings/Settings";
 import Usuarios from "./pages/dashboard-pages/settings/usuarios/Usuarios";
+import EliminacionCandidatos from "./pages/dashboard-pages/settings/EliminacionCandidatos";
+import EliminacionSolicitudesTH from "./pages/dashboard-pages/settings/EliminacionSolicitudesTH";
+
+
 import Catalogos from "./pages/dashboard-pages/settings/catalogos/Catalogos";
 import CiudadesCatalogo from "./pages/dashboard-pages/settings/catalogos/Ciudades";
 import DepartamentosCatalago from "./pages/dashboard-pages/settings/catalogos/Departamentos";
@@ -136,6 +140,26 @@ const App = () => {
             }
           />
 
+          <Route
+            path="/dashboard/configuracion/eliminacion"
+            element={
+              <AuthProvider>
+                <ProtectedRoute>
+                  <EliminacionCandidatos />
+                </ProtectedRoute>
+              </AuthProvider>
+            }
+          />
+          <Route
+            path="/dashboard/configuracion/solicitudes-eliminacion"
+            element={
+              <AuthProvider>
+                <ProtectedRoute>
+                  <EliminacionSolicitudesTH />
+                </ProtectedRoute>
+              </AuthProvider>
+            }
+          />
 
           <Route
             path="/dashboard/configuracion/catalogos"
@@ -205,7 +229,7 @@ const App = () => {
               </AuthProvider>
             }
           />
-  {/* Rutas de Educacion*/}
+          {/* Rutas de Educacion*/}
 
           <Route
             path="/dashboard/configuracion/catalogos/niveles-educacion"
@@ -218,12 +242,12 @@ const App = () => {
             }
           />
 
-        <Route
+          <Route
             path="/dashboard/configuracion/catalogos/titulos-obtenidos"
             element={
               <AuthProvider>
                 <ProtectedRoute>
-                  <TitulosObtenidos/>
+                  <TitulosObtenidos />
                 </ProtectedRoute>
               </AuthProvider>
             }
@@ -279,7 +303,7 @@ const App = () => {
             }
           />
 
-        <Route
+          <Route
             path="/dashboard/configuracion/catalogos/habilidades-blandas"
             element={
               <AuthProvider>
@@ -290,7 +314,7 @@ const App = () => {
             }
           />
 
-        <Route
+          <Route
             path="/dashboard/configuracion/catalogos/herramientas"
             element={
               <AuthProvider>
@@ -301,12 +325,12 @@ const App = () => {
             }
           />
 
-        <Route
+          <Route
             path="/dashboard/configuracion/catalogos/disponibilidad"
             element={
               <AuthProvider>
                 <ProtectedRoute>
-                  <DisponibilidadesCatalogo/>
+                  <DisponibilidadesCatalogo />
                 </ProtectedRoute>
               </AuthProvider>
             }
@@ -314,12 +338,12 @@ const App = () => {
 
 
 
-        <Route
+          <Route
             path="/dashboard/configuracion/catalogos/rangos-salariales"
             element={
               <AuthProvider>
                 <ProtectedRoute>
-                  <RangosSalarialesCatalogo/>
+                  <RangosSalarialesCatalogo />
                 </ProtectedRoute>
               </AuthProvider>
             }

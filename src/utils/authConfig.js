@@ -12,9 +12,9 @@ export const msalConfig = {
 };
 
 
-  
-  export const loginRequest = {
-    scopes: ["User.Read"],
-    prompt: "select_account", 
-  };
-  
+
+export const loginRequest = {
+  scopes: ["api://932854ce-78e0-4973-8ad5-875b3addcaf0/access_as_user"],
+  prompt: "select_account",
+};
+

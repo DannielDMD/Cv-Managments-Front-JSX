@@ -14,7 +14,7 @@ import {
   getSolicitudesEliminacion,
   actualizarSolicitudEliminacion,
   getEstadisticasSolicitudes
-} from "../../../services/form-services/solicitudService";
+} from "../../../services/dashboard-services/solicitudServiceDashboard";
 import { obtenerAniosDisponibles } from "../../../services/dashboard-services/aniosService";
 
 

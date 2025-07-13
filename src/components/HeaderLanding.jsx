@@ -1,5 +1,5 @@
-import { FaMoon, FaGlobe } from "react-icons/fa";
-import { toast } from "react-toastify";
+//import { FaMoon, FaGlobe } from "react-icons/fa";
+//import { toast } from "react-toastify";
 import AuthButton from "./auth/AuthButton";
 import joycoLogo from "../assets/joyco-logo.png"; // Asegúrate que la imagen esté ahí
 const HeaderLanding = () => {
@@ -23,15 +23,6 @@ const HeaderLanding = () => {
 
       {/* Iconos a la derecha */}
       <div className="flex gap-4 items-center">
-        <button
-          onClick={() => {
-            toast.info("Modo oscuro aún no implementado 👀");
-          }}
-          className="text-white hover:text-gray-300 transition"
-        >
-          <FaMoon size={20} />
-        </button>
-
         <AuthButton mode="landing" />
       </div>
     </header>

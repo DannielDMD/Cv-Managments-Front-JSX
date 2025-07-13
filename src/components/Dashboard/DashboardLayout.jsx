@@ -21,7 +21,7 @@ const DashboardLayout = ({ children }) => {
             <aside className="w-64 fixed top-0 left-0 h-screen bg-[#0033A0] shadow-lg z-50 p-6 pt-10 flex flex-col justify-between">
                 {/* Parte superior: Logo + navegación */}
                 <div>
-                    <h2 className="text-4xl font-bold text-white text-center mb-6">TalentFlow</h2>
+                    <h2 className="text-2xl font-bold text-white text-center mb-6">#ExperienciaJoyco</h2>
 
                     <nav className="flex flex-col space-y-4 text-gray-700 font-medium">
                         <NavLink

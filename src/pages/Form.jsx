@@ -243,7 +243,7 @@ const Form = () => {
               </h3>
               <p className="text-gray-600 mb-6">
                 Si ya te registraste anteriormente y deseas modificar tu información, debes solicitar la eliminación de tus datos para volver a registrarte. 
-                Puedes hacerlo desde la vista principal abajo del botón de Postularse o al enviar la información en este formulario encontrará un acceso al formulario de eiminación.
+                Puedes hacerlo desde la vista principal abajo del botón de Postularse o al enviar la información en este formulario encontrará un acceso al formulario de eliminación.
               </p>
               <div className="flex justify-end">
                 <button

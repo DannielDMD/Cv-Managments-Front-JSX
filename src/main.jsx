@@ -1,22 +1,24 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { PublicClientApplication } from "@azure/msal-browser";
 import { MsalProvider } from "@azure/msal-react";
 import App from "./App.jsx";
-import { msalConfig } from "./utils/authConfig";
 import './index.css';
 
+// ⛔ Ya no importas esto:
+// import { PublicClientApplication } from "@azure/msal-browser";
+// import { msalConfig } from "./utils/authConfig";
 
-const msalInstance = new PublicClientApplication(msalConfig);
+// ✅ Ahora importas la instancia compartida:
+import { msalInstance } from "./utils/msalInstance";
 
 const renderApp = async () => {
-  await msalInstance.initialize(); // ✅ inicializa MSAL
-  await msalInstance.handleRedirectPromise(); // ✅ detecta el retorno del login
+  await msalInstance.initialize(); // ✅ inicializa MSAL solo una vez
+  await msalInstance.handleRedirectPromise(); // ✅ detecta redirección de login
 
   createRoot(document.getElementById("root")).render(
     <StrictMode>
       <MsalProvider instance={msalInstance}>
-        <App /> {/* 👈 ya no envuelves con AuthProvider aquí */}
+        <App />
       </MsalProvider>
     </StrictMode>
   );

@@ -139,7 +139,7 @@ const CandidateManagement = () => {
             setSearch(e.target.value);
             setPaginaActual(1);
           }}
-          placeholder="Buscar por nombre, correo o cargo..."
+          placeholder="Buscar por nombre, correo, cargo o cédula..."
           className="w-full md:w-1/2 p-2 border border-gray-300 rounded"
         />
       </div>

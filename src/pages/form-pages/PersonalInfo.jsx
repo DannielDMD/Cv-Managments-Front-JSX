@@ -395,10 +395,10 @@ const PersonalInfo = () => {
           <div className="bg-white rounded-lg shadow-lg max-w-md w-full p-6 relative">
             <h3 className="text-xl font-semibold text-gray-800 mb-4">¿Estás seguro de continuar?</h3>
             <p className="text-gray-700 text-sm whitespace-pre-line mb-4">
-              Al enviar esta información:
+              Al enviar esta información:                  
               • Los datos personales serán almacenados en la base de datos.{"\n"}
               • No podrás modificarlos más adelante.{"\n"}
-              • No se permitirá volver al dashboard luego del registro.{"\n"}
+              • No se permitirá volver a la vista principal luego del registro.{"\n"}
               • Asegúrate de que todo esté correcto antes de continuar.
             </p>
 
