@@ -32,8 +32,9 @@ Este proyecto es una plataforma interna para la empresa **Joyco**, desarrollada 
 ```bash
 npm install --legacy-peer-deps
 ```
-
-3. Inicia el entorno de desarrollo:
+3. Crear un archivo .env para manejar las variables de entorno del Backend y las credenciales de Azure AD.
+   
+4. Inicia el entorno de desarrollo:
 
 ```bash
 npm run dev
