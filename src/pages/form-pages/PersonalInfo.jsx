@@ -291,9 +291,6 @@ const PersonalInfo = () => {
           />
         )}
 
-        <p className="text-xs text-gray-500">
-          Valor actual de id_cargo: {formData.personalInfo.id_cargo}
-        </p>
 
 
         <InputField
@@ -328,9 +325,6 @@ const PersonalInfo = () => {
         )}
 
 
-        <p className="text-xs text-gray-500">
-          Valor actual de <strong>id_centro_costos</strong>: {formData.personalInfo.id_centro_costos}
-        </p>
 
 
         <InputField
@@ -364,9 +358,6 @@ const PersonalInfo = () => {
         )}
 
 
-        <p className="text-xs text-gray-500">
-          Valor actual de <strong>id_motivo_salida</strong>: {formData.personalInfo.id_motivo_salida}
-        </p>
 
         <InputField
           label="¿Tiene algún referido?"
