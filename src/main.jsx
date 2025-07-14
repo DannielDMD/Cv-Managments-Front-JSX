@@ -4,11 +4,7 @@ import { MsalProvider } from "@azure/msal-react";
 import App from "./App.jsx";
 import './index.css';
 
-// ⛔ Ya no importas esto:
-// import { PublicClientApplication } from "@azure/msal-browser";
-// import { msalConfig } from "./utils/authConfig";
 
-// ✅ Ahora importas la instancia compartida:
 import { msalInstance } from "./utils/msalInstance";
 
 const renderApp = async () => {
