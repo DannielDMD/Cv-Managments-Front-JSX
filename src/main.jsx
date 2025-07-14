@@ -12,8 +12,8 @@ import './index.css';
 import { msalInstance } from "./utils/msalInstance";
 
 const renderApp = async () => {
-  await msalInstance.initialize(); // ✅ inicializa MSAL solo una vez
-  await msalInstance.handleRedirectPromise(); // ✅ detecta redirección de login
+  await msalInstance.initialize(); 
+  await msalInstance.handleRedirectPromise(); 
 
   createRoot(document.getElementById("root")).render(
     <StrictMode>

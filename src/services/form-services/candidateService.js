@@ -9,7 +9,7 @@ export const getDepartamentos = async () => {
     return response.data;
   } catch (error) {
     console.error("Error al obtener departamentos:", error.message);
-    return [];
+    return [];  
   }
 };
 
@@ -18,8 +18,8 @@ export const getDepartamentos = async () => {
 export const getCiudades = async (id_departamento = null) => {
 try {
     const url = id_departamento
-      ? `/ciudades/departamento/${id_departamento}` // ✅ filtra por departamento
-      : "/ciudades/todas"; // ✅ lista completa sin paginaciónseñor 
+      ? `/ciudades/departamento/${id_departamento}`
+      : "/ciudades/todas"; //
 
     const response = await axiosInstance.get(url);
     return response.data;
@@ -54,7 +54,6 @@ export const getCentrosCostos = async () => {
 export const getMotivos = async () => {
   try {
     const response = await axiosInstance.get("/motivos-salida/todas");
-    console.log("Motivos de salida recibidos:", response.data);  // 👈 Agrega esto
     return response.data;
   } catch (error) {
     console.error("Error al obtener los motivos de salida:", error.message);

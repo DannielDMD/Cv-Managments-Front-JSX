@@ -9,7 +9,7 @@ import { getHabilidadesBlandas, getHabilidadesTecnicas, getHerramientas } from "
 
 const SkillsInfo = () => {
   const { formData, updateFormData } = useFormContext();
-  console.log("ID Candidato:", formData.id_candidato);
+
 
   const skillsData = formData.skillsInfo || {};
 

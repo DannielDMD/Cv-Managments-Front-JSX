@@ -34,7 +34,7 @@ const ProtectedRoute = ({ children }) => {
   }, [accounts]);
 
   if (autorizado === null) {
-    // Mostramos loader temporal
+
     return (
       <div className="min-h-screen flex justify-center items-center text-blue-800 text-lg">
         Verificando acceso...

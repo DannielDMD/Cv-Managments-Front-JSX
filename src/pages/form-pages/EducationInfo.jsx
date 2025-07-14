@@ -12,13 +12,13 @@ import {
   getIngles,
 } from "../../services/form-services/educationService";
 
-const ID_OTRO_INSTITUCION = 77; // o el ID real para "Otro"
+const ID_OTRO_INSTITUCION = 77; 
 
 const EducationInfo = () => {
   const { formData, updateFormData } = useFormContext();
 
   const educationData = formData.educationInfo || {};
-  const idCandidato = formData.id_candidato;
+  //const idCandidato = formData.id_candidato;
 
   const [errores, setErrores] = useState({});
 
@@ -57,10 +57,7 @@ const EducationInfo = () => {
     }
   }, [educationData.id_nivel_educacion, nivelesSinTitulo]);
 
-  // Solo para debug
-  useEffect(() => {
-    console.log("ID Candidato visible en EducationInfo:", idCandidato);
-  }, [idCandidato]);
+  
 
   return (
     <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg relative">

@@ -63,7 +63,6 @@ export const obtenerCandidatosDetallados = async (search = "", filtros = {}, pag
     params.skip = isNaN(skip) ? 0 : skip;
     params.limit = isNaN(limit) ? 10 : limit;
 
-    console.log("📦 Parámetros enviados:", params);
 
 
     const response = await axiosInstance.get("/candidatos/detalle-lista", { params });
