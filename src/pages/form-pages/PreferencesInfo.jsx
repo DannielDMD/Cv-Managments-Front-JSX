@@ -10,8 +10,6 @@ const ID_OTRO_MOTIVO_SALIDA = 8; // según tu estructura
 
 const PreferencesInfo = () => {
   const { formData, updateFormData } = useFormContext(); // Obtiene el estado global del formulario
-  // Asegurar que `formData.educationInfo` no sea undefined
-  console.log("ID Candidato:", formData.id_candidato);
 
   const preferencesData = formData.preferencesInfo || {};
 

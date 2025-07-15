@@ -1,5 +1,4 @@
-import useFormContext from "../../context/useFormContext"; // Importa el hook correctamente
-//Componentes
+import useFormContext from "../../context/useFormContext"; 
 import InputField from "../../components/common/InputField";
 import SelectField from "../../components/common/SelectField";
 import AyudaFormulario from "../../components/form/AyudaFormulario";
@@ -8,7 +7,6 @@ import { getExperiencia } from "../../services/form-services/experienceService";
 
 const ExperienceInfo = () => {
   const { formData, updateFormData } = useFormContext(); // Obtiene el estado global del formulario
-  console.log("ID Candidato:", formData.id_candidato);
 
   const experienceData = formData.experienceInfo || {};
 
@@ -39,7 +37,7 @@ const ExperienceInfo = () => {
       <h2 className="text-xl font-semibold mb-4">Información de Experiencia</h2>
       <div>
 
-        {/* Select de Nivel de Inglés */}
+        {/* Select de Rango de Experiencia Laboral   */}
         <SelectField
           label="¿Cuál es su nivel de experiencia laboral? "
           fetchFunction={getExperiencia}
@@ -47,7 +45,7 @@ const ExperienceInfo = () => {
           nameKey="descripcion_rango"
           value={experienceData.id_rango_experiencia || ""}
           onChange={(value) => handleSelectChange("id_rango_experiencia", value)}
-          isMulti={false} // Selección única
+          isMulti={false} 
 
         />
         <InputField label="Nombre de la última empresa en la que trabajó:" name="ultima_empresa" type="text" value={experienceData.ultima_empresa} onChange={handleChange} />
@@ -63,6 +61,6 @@ const ExperienceInfo = () => {
     </div>
   );
 
-}; // Corchete de finalización de Experience Info
+}; 
 
 export default ExperienceInfo;

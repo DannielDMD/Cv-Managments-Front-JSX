@@ -68,7 +68,6 @@ useEffect(() => {
 
   const handleSubmit = async () => {
     const id = formData.id_candidato;
-    console.log("ID del candidato antes de enviar todo:", id);
 
     if (!id) {
       toast.info("No se ha registrado aún el candidato.");
@@ -166,7 +165,7 @@ useEffect(() => {
 
       };
 
-      console.log(preferences)
+
       await postPreferencias(preferences); // Si falla, se detiene aquí
 
 

@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 import useFormContext from "../../context/useFormContext";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 // Componentes
 import InputField from "../../components/common/InputField";
 import SelectField from "../../components/common/SelectField";
@@ -26,6 +27,7 @@ const PersonalInfo = () => {
   const { formData, updateFormData, setIdCandidatoEnTodo } = useFormContext();
   const [errores, setErrores] = useState({});
   const [ciudadesFiltradas, setCiudadesFiltradas] = useState([]);
+  const navigate = useNavigate();
 
 
   // Manejo de inputs normales
@@ -140,7 +142,6 @@ const PersonalInfo = () => {
       id_motivo_salida: formData.personalInfo.id_motivo_salida
         ? parseInt(formData.personalInfo.id_motivo_salida)
         : null,
-      // ✅ este es el nuevo campo
       acepta_politica_datos: formData.acepta_politica_datos === true,
     };
 
@@ -291,9 +292,6 @@ const PersonalInfo = () => {
           />
         )}
 
-        <p className="text-xs text-gray-500">
-          Valor actual de id_cargo: {formData.personalInfo.id_cargo}
-        </p>
 
 
         <InputField
@@ -328,9 +326,6 @@ const PersonalInfo = () => {
         )}
 
 
-        <p className="text-xs text-gray-500">
-          Valor actual de <strong>id_centro_costos</strong>: {formData.personalInfo.id_centro_costos}
-        </p>
 
 
         <InputField
@@ -364,9 +359,6 @@ const PersonalInfo = () => {
         )}
 
 
-        <p className="text-xs text-gray-500">
-          Valor actual de <strong>id_motivo_salida</strong>: {formData.personalInfo.id_motivo_salida}
-        </p>
 
         <InputField
           label="¿Tiene algún referido?"
@@ -395,7 +387,7 @@ const PersonalInfo = () => {
           <div className="bg-white rounded-lg shadow-lg max-w-md w-full p-6 relative">
             <h3 className="text-xl font-semibold text-gray-800 mb-4">¿Estás seguro de continuar?</h3>
             <p className="text-gray-700 text-sm whitespace-pre-line mb-4">
-              Al enviar esta información:                  
+              Al enviar esta información:
               • Los datos personales serán almacenados en la base de datos.{"\n"}
               • No podrás modificarlos más adelante.{"\n"}
               • No se permitirá volver a la vista principal luego del registro.{"\n"}
@@ -405,9 +397,7 @@ const PersonalInfo = () => {
             <p className="text-blue-600 text-sm mb-6">
               ¿Ya completaste este formulario antes o necesitas modificar tus datos?{" "}
               <button
-                onClick={() => {
-                  window.location.href = "/solicitud-eliminacion";
-                }}
+                onClick={() => navigate("/solicitud-eliminacion")}
                 className="underline text-blue-800 hover:text-blue-600 font-medium"
               >
                 Solicita eliminar tu candidatura aquí.

@@ -49,7 +49,6 @@ const Ciudades = () => {
             search: search.trim(),
             id_departamento: departamentoFiltro || null,
         });
-        console.log(data);
         setCiudades(data.resultados || []);
         setTotalPaginas(data.total_pages || 1);
         setTotalRegistros(data.total || 0);

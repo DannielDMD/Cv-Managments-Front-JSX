@@ -8,16 +8,12 @@ const AuthButton = ({ mode = "landing" }) => {
   const { instance, accounts, inProgress } = useMsal();
 
   const handleLogin = () => {
-    if (inProgress !== InteractionStatus.None) {
-      console.warn("🛑 Login en progreso, evitando conflicto MSAL");
-      return;
-    }
 
     instance.loginRedirect(loginRequest);
   };
 
   const handleLogout = () => {
-    sessionStorage.setItem("logout_intencional", "true"); // 🧠 evitar validación post-logout
+    sessionStorage.setItem("logout_intencional", "true"); 
     instance.logoutRedirect({
       postLogoutRedirectUri: "/",
     });
