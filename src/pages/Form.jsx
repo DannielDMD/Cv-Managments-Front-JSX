@@ -12,7 +12,8 @@ import { postEducation } from "../services/form-services/educationService";
 import { postExperiencia } from "../services/form-services/experienceService";
 import { postConocimientos } from "../services/form-services/skillService";
 import { postPreferencias } from "../services/form-services/preferencesService";
-import { marcarFormularioCompleto } from "../services/form-services/candidateService";
+import { marcarFormularioCompleto, verificarCandidato } from "../services/form-services/candidateService";
+
 //Utilitarios
 import { mostrarErroresBackend } from "../utils/mostrarErroresBackend";
 
@@ -29,7 +30,19 @@ const Form = () => {
   const { formData, resetFormData, updateFormData } = useFormContext();
 
 
-  useEffect(() => {
+useEffect(() => {
+  const verificarEstadoCandidato = async () => {
+    if (formData.id_candidato) {
+      const existe = await verificarCandidato(formData.id_candidato);
+      if (!existe) {
+        toast.warn("El candidato ya no existe. El formulario se reiniciará.");
+        localStorage.removeItem("formData");
+        resetFormData();
+        navigate("/", { replace: true });
+        return; // detiene la ejecución del resto
+      }
+    }
+
     if (!formData.acepta_politica_datos) {
       navigate("/", { replace: true });
       return;
@@ -44,7 +57,13 @@ const Form = () => {
       resetFormData();
       navigate(location.pathname, { replace: true });
     }
-  }, [formData.acepta_politica_datos, location, resetFormData, navigate]);
+  };
+
+  verificarEstadoCandidato();
+}, [formData.id_candidato, formData.acepta_politica_datos, location, resetFormData, navigate]);
+
+
+
 
 
   const handleSubmit = async () => {

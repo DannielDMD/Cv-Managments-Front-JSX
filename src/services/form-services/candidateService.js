@@ -84,3 +84,13 @@ export const marcarFormularioCompleto = async (id_candidato) => {
     throw error;
   }
 };  
+
+export const verificarCandidato = async (id_candidato) => {
+  try {
+    const response = await axiosInstance.get(`/candidatos/${id_candidato}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error al buscar el id del candidato", error);
+    return null; // Si no existe, devuelve null
+  }
+};
